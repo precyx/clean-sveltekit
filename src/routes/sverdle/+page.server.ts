@@ -6,6 +6,8 @@ export const load = (({ cookies }) => {
 	const game = new Game(cookies.get('sverdle'));
 
 	return {
+
+		x: "5",
 		/**
 		 * The player's guessed words so far
 		 */

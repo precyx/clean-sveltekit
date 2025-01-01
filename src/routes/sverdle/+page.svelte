@@ -10,6 +10,9 @@
 	}
 	let { data, form = $bindable() }: Props = $props();
 
+	console.log("data", data);
+
+
 	/** Whether or not the user has won */
 	let won = $derived(data.answers.at(-1) === 'xxxxx');
 

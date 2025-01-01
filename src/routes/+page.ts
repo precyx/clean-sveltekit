@@ -1,3 +1,19 @@
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
-export const prerender = true;
+import type { PageLoad } from './$types';
+import { fetchAPI } from '$lib/api/api';
+
+//export const ssr = false;
+//export const ssr = true;  // Ensure SSR is enabled
+
+
+
+export const load: PageLoad =  ( async ({ fetch }) => {
+
+    const response = await fetchAPI('articles', fetch);
+
+    console.log("respone", response)
+    return {
+      articles: response.data || [],
+      cars: ["a","b"]
+    };
+  });
+
