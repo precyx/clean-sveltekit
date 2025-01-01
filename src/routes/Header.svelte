@@ -44,18 +44,19 @@
 		<a href="https://svelte.dev/docs/kit">
 			<img src={logo} alt="SvelteKit" />
 		</a>
+		<div class="login-container">
+			{#if currentUser}
+				<div class="user">Welcome, {currentUser.username}</div>
+				<button onclick={() => {
+				localStorage.removeItem('token');
+				user.set(null);
+				window.location.href = '/login';
+				}}>Logout</button>
+			{/if}
+		</div>
 	</div>
 
-	<div>
-		{#if currentUser}
-			<p>Welcome, {currentUser.username}</p>
-			<button onclick={() => {
-			localStorage.removeItem('token');
-			user.set(null);
-			window.location.href = '/login';
-			}}>Logout</button>
-		{/if}
-	</div>
+
 
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
@@ -91,8 +92,17 @@
 	}
 
 	.corner {
-		width: 3em;
+		display: flex;
+		align-items: center;
 		height: 3em;
+	}
+
+	.login-container{
+		display: flex;
+	}
+
+	.login-container .user {
+		width:120px;
 	}
 
 	.corner a {
