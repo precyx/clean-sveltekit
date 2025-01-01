@@ -1,6 +1,8 @@
 <script lang="ts">
     import { register } from '$lib/api/api';
     import { goto } from '$app/navigation';
+
+    import TextInput from '$lib/components/TextInput.svelte';
   
     let username = '';
     let email = '';
@@ -16,18 +18,50 @@
       }
     };
   </script>
+
+
+<form on:submit|preventDefault={handleRegister}
+class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
+
+<h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Register</h2>
+
+
+    <div class="mb-4">
+      <TextInput
+        id="username"
+        label="Username"
+        type="text"
+        bind:value={username}
+        required={true}
+        error={error}
+      />
+    </div>
   
-  <form on:submit|preventDefault={handleRegister}>
-    <label>Username:</label>
-    <input type="text" bind:value={username} required />
+    <div class="mb-4">
+      <TextInput
+        id="email"
+        label="Email"
+        type="email"
+        bind:value={email}
+        required={true}
+        error={error}
+      />
+    </div>
   
-    <label>Email:</label>
-    <input type="email" bind:value={email} required />
+    <div class="mb-6">
+      <TextInput
+        id="password"
+        label="Password"
+        type="password"
+        bind:value={password}
+        required={true}
+        error={error}
+      />
+    </div>
   
-    <label>Password:</label>
-    <input type="password" bind:value={password} required />
-  
-    <button type="submit">Register</button>
+    <button type="submit"
+    class="w-full bg-primary-light hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-offset-gray-800">
+    Register</button>
     {#if error}
       <p>{error}</p>
     {/if}

@@ -15,6 +15,7 @@ export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
     return response.json();
   }
 
+  /* Auth */
   
   export interface AuthResponse {
     jwt: string;
@@ -77,3 +78,19 @@ export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
     window.location.href = '/login';
   };
 
+
+  /* Course */
+
+  export interface Course {
+    id: number;
+    title: string;
+    description: string;
+    publicContent: string;
+    fullContent?: string | null;
+    price: number;
+  }
+
+  export const getCourses = async (): Promise<{data: Course[]}> => {
+    const res = await axios.get<{data: Course[]}>(`${API_URL}/api/courses`, {});
+    return res.data;
+  };

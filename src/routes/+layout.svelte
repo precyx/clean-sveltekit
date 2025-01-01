@@ -1,58 +1,36 @@
 <script lang="ts">
 	import Header from './Header.svelte';
-	import '../app.css';
-
-
-	let { children } = $props();
-</script>
-
-<div class="app">
+	import '../app.postcss';
+  </script>
+  
+<div class="app bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
 	<Header />
-
-	<main>
-		{@render children()}
+  
+	<main class="flex-1 p-6 mx-auto w-full max-w-5xl">
+	  <slot />
 	</main>
-
-	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
+  
+	<footer class="flex items-center justify-center py-4">
+	  <p class="text-center">
+		visit
+		<a href="https://svelte.dev/docs/kit" class="font-semibold hover:underline">
+		  svelte.dev/docs/kit
+		</a>
+		to learn about SvelteKit
+	  </p>
 	</footer>
-</div>
+  
+  </div>
 
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
+  
+<svelte:head>
+  <style>
+    html, body {
+      @apply bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark ;
+	}
+	body {
 		min-height: 100vh;
 	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
+  </style>
+</svelte:head>
+  

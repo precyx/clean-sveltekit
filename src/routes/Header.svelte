@@ -10,6 +10,10 @@
 	import { browser } from '$app/environment';
 	import { getUser } from '$lib/api/api';
 	import { user } from '$lib/stores/user';
+	import { theme } from '$lib/stores/theme';
+
+	import NavLink from "$lib/components/NavLink.svelte";
+
 
 	onMount(async () => {
 
@@ -37,149 +41,98 @@
 		});
 	});
 
+	function toggleTheme() {
+		const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+		console.log("theme", newTheme)
+		theme.set(newTheme);
+	}
+
+	let currentTheme: string;
+
+	$effect(() => {
+		theme.subscribe((value) => {
+			currentTheme = value;
+			console.log("cc", value)
+		});
+	});
+
 </script>
 
-<header>
-	<div class="corner">
-		<a href="https://svelte.dev/docs/kit">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-		<div class="login-container">
-			{#if currentUser}
-				<div class="user">Welcome, {currentUser.username}</div>
-				<button onclick={() => {
-				localStorage.removeItem('token');
-				user.set(null);
-				window.location.href = '/login';
-				}}>Logout</button>
-			{/if}
-		</div>
-	</div>
 
+<header
+  class="w-full bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark shadow-md"
+>
+  <div class="container mx-auto flex justify-between items-center p-4">
+    <!-- Logo Section -->
+    <div class="flex items-center space-x-4">
+      <a href="https://svelte.dev/docs/kit">
+        <img src={logo} alt="SvelteKit" class="h-10 w-auto" />
+      </a>
+      {#if currentUser}
+        <div class="hidden sm:block text-sm font-semibold">
+          Welcome, {currentUser.username}
+        </div>
+      {/if}
+    </div>
 
+    <!-- Navigation -->
+    <nav class="hidden md:flex items-center space-x-6">
+		<NavLink href={"/"}>
+			Home
+		</NavLink>
+		{#if currentUser}
 
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/register' ? 'page' : undefined}>
-				<a href="/register">Register</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
-				<a href="/login">Login</a>
-			</li>
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
+			<NavLink href={"/dashboard"}>
+				Dashboard
+			</NavLink>
+		{/if}
+		<NavLink href={"/register"}>
+			Register
+		</NavLink>
+		<NavLink href={"/login"}>
+			Login
+		</NavLink>
+    </nav>
 
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
+    <!-- Action Buttons -->
+    <div class="flex items-center space-x-4">
+      <button
+        on:click={toggleTheme}
+        class="p-2 rounded bg-gray-200 dark:bg-gray-700 dark:text-white hover:scale-110 transform transition"
+      >
+        {$theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+      </button>
+
+      {#if currentUser}
+        <button
+          on:click={logout}
+          class="p-2 rounded bg-primary-light dark:bg-primary-dark text-white hover:scale-110 transform transition"
+        >
+          Logout
+        </button>
+      {/if}
+
+      <a href="https://github.com/sveltejs/kit">
+        <img src={github} alt="GitHub" class="h-8 w-auto" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="md:hidden flex justify-center py-4">
+    <nav class="flex flex-col space-y-3">
+      <a href="/" class="hover:underline">Home</a>
+      {#if currentUser}
+        <a href="/dashboard" class="hover:underline">Dashboard</a>
+      {/if}
+      <a href="/register" class="hover:underline">Register</a>
+      <a href="/login" class="hover:underline">Login</a>
+    </nav>
+  </div>
 </header>
 
+
 <style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
 
-	.corner {
-		display: flex;
-		align-items: center;
-		height: 3em;
-	}
 
-	.login-container{
-		display: flex;
-	}
-
-	.login-container .user {
-		width:120px;
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
-
-	nav {
-		display: flex;
-		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
-	}
-
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
-	}
-
-	li {
-		position: relative;
-		height: 100%;
-	}
-
-	li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--color-theme-1);
-	}
-
-	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 0.5rem;
-		color: var(--color-text);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	}
-
-	a:hover {
-		color: var(--color-theme-1);
-	}
 </style>
