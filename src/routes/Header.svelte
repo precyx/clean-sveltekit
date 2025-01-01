@@ -2,6 +2,41 @@
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+
+	import {logout} from "$lib/api/api";
+
+	import { onMount } from 'svelte';
+
+	import { browser } from '$app/environment';
+	import { getUser } from '$lib/api/api';
+	import { user } from '$lib/stores/user';
+
+	onMount(async () => {
+
+		if (browser) {
+			const token = localStorage.getItem('token');
+			if (token) {
+				try {
+				const userData = await getUser(token);
+				user.set(userData);
+				} catch (err) {
+				console.error('Failed to fetch user:', err);
+				localStorage.removeItem('token');
+				}
+			}
+		}
+	});
+
+	let currentUser = $state($user);
+
+	// Automatically update currentUser whenever the user store changes
+	$effect(() => {
+		user.subscribe((value) => {
+			console.log("user", value)
+			currentUser = value;
+		});
+	});
+
 </script>
 
 <header>
@@ -9,6 +44,17 @@
 		<a href="https://svelte.dev/docs/kit">
 			<img src={logo} alt="SvelteKit" />
 		</a>
+	</div>
+
+	<div>
+		{#if currentUser}
+			<p>Welcome, {currentUser.username}</p>
+			<button onclick={() => {
+			localStorage.removeItem('token');
+			user.set(null);
+			window.location.href = '/login';
+			}}>Logout</button>
+		{/if}
 	</div>
 
 	<nav>
@@ -19,8 +65,11 @@
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Home</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/test' ? 'page' : undefined}>
-				<a href="/test">Test</a>
+			<li aria-current={$page.url.pathname === '/register' ? 'page' : undefined}>
+				<a href="/register">Register</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
+				<a href="/login">Login</a>
 			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">

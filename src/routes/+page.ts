@@ -10,10 +10,8 @@ export const load: PageLoad =  ( async ({ fetch }) => {
 
     const response = await fetchAPI('articles', fetch);
 
-    console.log("respone", response)
     return {
       articles: response.data || [],
       cars: ["a","b"]
     };
   });
-
