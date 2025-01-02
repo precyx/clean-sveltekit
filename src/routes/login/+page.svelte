@@ -20,8 +20,6 @@
     const validate = () => {
       if(!submitted) return;
 
-      console.log("revalidate...")
-
       let newErrors:any = {};  // Create a new object
 
       if (!email) {
@@ -51,9 +49,8 @@
         localStorage.setItem('token', res.jwt);
         user.set(res.user);  // Update user store with logged-in user data
 
-        goto('/dashboard');
+        goto('/courses');
       } catch (err:any) {
-        console.log("err", err.message);
         error = err;
       } finally {
         loading = false;
@@ -79,6 +76,7 @@
     <TextInput
       id="email"
       label="Email Address"
+      placeholder="Email"
       type="email"
       bind:value={email}
       required={true}
@@ -90,6 +88,7 @@
     <TextInput
       id="password"
       label="Password"
+      placeholder="Password"
       type="password"
       bind:value={password}
       required={true}

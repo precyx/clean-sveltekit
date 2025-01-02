@@ -16,7 +16,6 @@
 
 
 	onMount(async () => {
-
 		if (browser) {
 			const token = localStorage.getItem('token');
 			if (token) {
@@ -36,14 +35,12 @@
 	// Automatically update currentUser whenever the user store changes
 	$effect(() => {
 		user.subscribe((value) => {
-			console.log("user", value)
 			currentUser = value;
 		});
 	});
 
 	function toggleTheme() {
 		const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-		console.log("theme", newTheme)
 		theme.set(newTheme);
 	}
 
@@ -52,7 +49,6 @@
 	$effect(() => {
 		theme.subscribe((value) => {
 			currentTheme = value;
-			console.log("cc", value)
 		});
 	});
 
@@ -82,8 +78,8 @@
 		</NavLink>
 		{#if currentUser}
 
-			<NavLink href={"/dashboard"}>
-				Dashboard
+			<NavLink href={"/courses"}>
+				Courses
 			</NavLink>
 		{/if}
 		<NavLink href={"/register"}>
@@ -119,7 +115,7 @@
     <nav class="flex flex-col space-y-3">
       <a href="/" class="hover:underline">Home</a>
       {#if currentUser}
-        <a href="/dashboard" class="hover:underline">Dashboard</a>
+        <a href="/courses" class="hover:underline">Courses</a>
       {/if}
       <a href="/register" class="hover:underline">Register</a>
       <a href="/login" class="hover:underline">Login</a>

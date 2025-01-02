@@ -3,6 +3,30 @@ import type { AxiosRequestConfig, AxiosError } from 'axios';
 
 
 const API_URL = import.meta.env.VITE_STRAPI_API_URL;
+const API_TOKEN = import.meta.env.VITE_STRAPI_API_TOKEN;
+
+// For list responses
+export type ListResponse<T> = {
+  data: T[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+};
+
+export type BaseEntity<T> = {
+  id: number;
+  documentId?: string;  // Optional field for external or unique references
+  attributes: T & {
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string | null;
+  };
+};
 
 // Base API instance
 const api = axios.create({
@@ -21,10 +45,18 @@ export const apiRequest = async <T>(
   config?: AxiosRequestConfig
 ): Promise<T> => {
   try {
+    // Prepare headers
+    const headers: AxiosRequestConfig['headers'] = {
+      Authorization: `Bearer ${API_TOKEN}`,
+      ...config?.headers
+    };
+
+    // Execute the request with token
     const response = await api({
       method,
       url,
       data,
+      headers,
       ...config
     });
 
@@ -130,6 +162,8 @@ const handleApiError = (error: unknown) => {
 
   export interface Course {
     id: number;
+    documentId: number;
+    slug: string;
     title: string;
     description: string;
     publicContent: string;
@@ -141,11 +175,18 @@ const handleApiError = (error: unknown) => {
     return apiRequest<{data: Course[]}>("GET", `${API_URL}/api/courses`);
   };
 
+  export const getCourse = async (id:string): Promise<{data: Course[]}> => {
+    return apiRequest<{data: Course[]}>("GET", `${API_URL}/api/courses/${id}`);
+  };
+
+
 
   /* Article */
 
   export interface Article {
     id: number;
+    documentId: string;
+    slug: string;
     title: string;
     content: string;
     category: string;

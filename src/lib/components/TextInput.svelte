@@ -20,7 +20,7 @@
       type={type}
       id={id}
       bind:value
-      placeholder={placeholder || label}
+      placeholder={placeholder}
       required={required}
       class="mt-1 block w-full px-4 py-3 rounded-md border
       {error 

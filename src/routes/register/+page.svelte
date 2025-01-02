@@ -77,6 +77,7 @@ class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
       <TextInput
         id="username"
         label="Username"
+        placeholder="Username"
         type="text"
         bind:value={username}
         required={true}
@@ -88,6 +89,7 @@ class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
       <TextInput
         id="email"
         label="Email"
+        placeholder="Email"
         type="email"
         bind:value={email}
         required={true}
@@ -99,6 +101,7 @@ class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
       <TextInput
         id="password"
         label="Password"
+        placeholder="Password"
         type="password"
         bind:value={password}
         required={true}
