@@ -6,7 +6,7 @@
 
 </script>
   
-  <h1>Welcome to the Dashboard x</h1>
+  <h1>Welcome to the Dashboard</h1>
 
 
   <main>

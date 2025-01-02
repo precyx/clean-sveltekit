@@ -10,6 +10,10 @@ const api = axios.create({
   timeout: 10000
 });
 
+export const sleep = (ms:number) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const apiRequest = async <T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   url: string,
@@ -39,7 +43,9 @@ const handleApiError = (error: unknown) => {
     if (axiosError.response) {
       console.error('API Error:', axiosError.response.data);
       throw new Error(
-        axiosError.response.data?.message || 'Something went wrong.'
+        axiosError.response.data?.message ||
+        axiosError.response.data?.error?.message ||
+        'Something went wrong.'
       );
     } else if (axiosError.request) {
       console.error('Network Error: No response from server.');
