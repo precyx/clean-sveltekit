@@ -14,7 +14,7 @@
         await register(username, email, password);
         goto('/login');
       } catch (err) {
-        error = 'Registration failed';
+        error = err.message;
       }
     };
   </script>
@@ -33,7 +33,6 @@ class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
         type="text"
         bind:value={username}
         required={true}
-        error={error}
       />
     </div>
   
@@ -44,7 +43,6 @@ class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
         type="email"
         bind:value={email}
         required={true}
-        error={error}
       />
     </div>
   
@@ -55,15 +53,17 @@ class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
         type="password"
         bind:value={password}
         required={true}
-        error={error}
       />
     </div>
+
+    {#if error}
+      <p class="text-red-500 text-sm mb-4">{error}</p>
+    {/if}
   
     <button type="submit"
     class="w-full bg-primary-light hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-offset-gray-800">
-    Register</button>
-    {#if error}
-      <p>{error}</p>
-    {/if}
+      Register
+    </button>
+
   </form>
   

@@ -1,10 +1,8 @@
 <script lang="ts">
-
-  import type {Course} from "$lib/api/api";
   import CourseCard from "$lib/components/CourseCard.svelte";
-  export let data:{ data: Course[]  };
 
-  console.log("ddddd", data.data);
+  export let data;
+  const { courses, error } = data;
 
 </script>
   
@@ -14,13 +12,19 @@
   <main>
     <h1>Available Courses</h1>
   
-    {#each data.data as course (course.id)}
-      <div class="mb-4">
-        <CourseCard {course}  />
-      </div>
+    {#if error}
+      <div class="text-red-500">{error}</div>
+    {:else if courses?.data?.length}
+      {#each courses.data as course (course.id)}
+        <div class="mb-4">
+          <CourseCard {course} />
+        </div>
+      {/each}
     {:else}
       <p>No courses available at the moment.</p>
-    {/each}
+    {/if}
+
+
   </main>
   
   <style>

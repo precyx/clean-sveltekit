@@ -1,17 +1,20 @@
 import type { PageLoad } from './$types';
-import { fetchAPI } from '$lib/api/api';
-
-//export const ssr = false;
-//export const ssr = true;  // Ensure SSR is enabled
-
+import { getArticles } from '$lib/api/api';
 
 
 export const load: PageLoad =  ( async ({ fetch }) => {
 
-    const response = await fetchAPI('articles', fetch);
+  let articles;
+  let error;
 
-    return {
-      articles: response.data || [],
-      cars: ["a","b"]
-    };
-  });
+  try {
+      articles = await getArticles();
+  }
+  catch(err:any) {
+      error = err.message;
+  }
+  return {
+      articles: articles,
+      error: error
+  }
+});

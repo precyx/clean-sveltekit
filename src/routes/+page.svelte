@@ -1,25 +1,7 @@
 <script lang="ts">
 
 	export let data;
-
-
-
-	/*
-	
-	import { onMount } from 'svelte';
-	import { fetchAPI } from '$lib/api/api';
-
-	onMount(async () => {
-		try {
-		const response = await fetchAPI('articles');
-		articles = response.data || [];
-		console.log('Fetched articles:', articles);  // Debugging
-		} catch (err) {
-		error = 'Failed to fetch articles';
-		console.error('Error fetching articles:', err);
-		}
-
-	});*/
+	const {articles, error} = data;
 
 </script>
 
@@ -33,22 +15,23 @@
 <section>
 
 	<h1>Articles</h1>
-
-
-  
-	{#if data.articles && data.articles.length > 0}
-	  {#each data.articles as article}
+	{#if error}
+		<div class="text-red-500">{error}</div>
+	{:else if articles?.data?.length}
+		{#each articles.data as article}
 		<article>
-		  <h2>{article.title}</h2>
-		  <p>{article.content}</p>
-		  <small>
-			Category: {article.category?.data?.name || 'Uncategorized'}
-		  </small>
+			<h2>{article.title}</h2>
+			<p>{article.content}</p>
+			<small>
+			Category: {article.category || 'Uncategorized'}
+			</small>
 		</article>
-	  {/each}
+		{/each}
 	{:else}
-	  <p>No articles found.</p>
+		<p>No articles available.</p>
 	{/if}
+  
+
 
 </section>
 

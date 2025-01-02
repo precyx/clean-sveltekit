@@ -1,19 +1,60 @@
 import axios from 'axios';
+import type { AxiosRequestConfig, AxiosError } from 'axios';
+
 
 const API_URL = import.meta.env.VITE_STRAPI_API_URL;
 
+// Base API instance
+const api = axios.create({
+  baseURL: `${API_URL}/api`,
+  timeout: 10000
+});
 
-export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
+export const apiRequest = async <T>(
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  url: string,
+  data?: object,
+  config?: AxiosRequestConfig
+): Promise<T> => {
+  try {
+    const response = await api({
+      method,
+      url,
+      data,
+      ...config
+    });
 
-    const fetchFn = fetchOverride || fetch;  // Use custom fetch if provided
-    const response = await fetchFn(`${API_URL}/api/${endpoint}`);
-  
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data from ${endpoint}`);
-    }
-    
-    return response.json();
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error; // Re-throw for UI-level handling if necessary
   }
+};
+
+// Error handling function
+const handleApiError = (error: unknown) => {
+  if (axios.isAxiosError(error)) {
+    const axiosError = error as AxiosError;
+
+    if (axiosError.response) {
+      console.error('API Error:', axiosError.response.data);
+      throw new Error(
+        axiosError.response.data?.message || 'Something went wrong.'
+      );
+    } else if (axiosError.request) {
+      console.error('Network Error: No response from server.');
+      throw new Error('Unable to connect to the server.');
+    } else {
+      console.error('Unexpected Error:', axiosError.message);
+      throw new Error('An unexpected error occurred.');
+    }
+  } else {
+    console.error('Non-Axios Error:', error);
+    throw new Error('An unknown error occurred.');
+  }
+};
+
+
 
   /* Auth */
   
@@ -25,13 +66,12 @@ export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
       email: string;
     };
   }
-  
-  export const login = async (identifier: string, password: string): Promise<AuthResponse> => {
-    const res = await axios.post<AuthResponse>(`${API_URL}/api/auth/local`, {
+
+  export const login = (identifier: string, password: string):Promise<AuthResponse> => {
+    return apiRequest<AuthResponse>('POST', `${API_URL}/api/auth/local`, {
       identifier,
       password
     });
-    return res.data;
   };
 
 
@@ -48,12 +88,12 @@ export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
     email: string,
     password: string
   ): Promise<RegisterResponse> => {
-    const res = await axios.post<RegisterResponse>(`${API_URL}/api/auth/local/register`, {
+    return apiRequest<RegisterResponse>("POST", `${API_URL}/api/auth/local/register`, {
       username,
       email,
       password
     });
-    return res.data;
+
   };
 
 
@@ -64,12 +104,13 @@ export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
   }
   
   export const getUser = async (token: string): Promise<User> => {
-    const res = await axios.get<User>(`${API_URL}/api/users/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`
+    return apiRequest<User>("GET", `${API_URL}/api/users/me`, undefined, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
-    });
-    return res.data;
+    );
   };
 
 
@@ -91,6 +132,19 @@ export async function fetchAPI(endpoint: string, fetchOverride?: typeof fetch) {
   }
 
   export const getCourses = async (): Promise<{data: Course[]}> => {
-    const res = await axios.get<{data: Course[]}>(`${API_URL}/api/courses`, {});
-    return res.data;
+    return apiRequest<{data: Course[]}>("GET", `${API_URL}/api/courses`);
+  };
+
+
+  /* Article */
+
+  export interface Article {
+    id: number;
+    title: string;
+    content: string;
+    category: string;
+  }
+
+  export const getArticles = async (): Promise<{data: Article[]}> => {
+    return apiRequest<{data: Article[]}>("GET", `${API_URL}/api/articles`);
   };

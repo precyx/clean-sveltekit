@@ -111,10 +111,6 @@
           Logout
         </button>
       {/if}
-
-      <a href="https://github.com/sveltejs/kit">
-        <img src={github} alt="GitHub" class="h-8 w-auto" />
-      </a>
     </div>
   </div>
 

@@ -17,8 +17,9 @@
         user.set(res.user);  // Update user store with logged-in user data
 
         goto('/dashboard');
-      } catch (err) {
-        error = 'Invalid login credentials';
+      } catch (err:any) {
+        console.log("err", err.message);
+        error = err;
       }
     };
   </script>
@@ -36,7 +37,6 @@
       type="email"
       bind:value={identifier}
       required={true}
-      error={error}
     />
   </div>
 
@@ -47,7 +47,6 @@
       type="password"
       bind:value={password}
       required={true}
-      error={error}
     />
   </div>
 

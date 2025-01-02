@@ -11,9 +11,17 @@ export const load = async () => {
         }
     }
 
+    let courses;
+    let error;
 
-    let courses = await getCourses();
-    console.log("courses", courses);
-
-    return courses;
+    try {
+        courses = await getCourses();
+    }
+    catch(err:any) {
+        error = err.message;
+    }
+    return {
+        courses: courses,
+        error: error
+    }
 };
