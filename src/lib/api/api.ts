@@ -179,6 +179,27 @@ const handleApiError = (error: unknown) => {
     return apiRequest<{data: Course[]}>("GET", `${API_URL}/api/courses/${id}`);
   };
 
+    /* Product */
+
+    export interface Product {
+      id: number;
+      documentId: number;
+      title: string;
+      image: string;
+      category: string;
+      description: string;
+      courses: [];
+      formulas: [];
+    }
+  
+    export const getProducts = async (): Promise<{data: Product[]}> => {
+      return apiRequest<{data: Product[]}>("GET", `${API_URL}/api/products?populate=*`);
+    };
+  
+    export const getProduct = async (id:string): Promise<{data: Product[]}> => {
+      return apiRequest<{data: Product[]}>("GET", `${API_URL}/api/products/${id}`);
+    };
+
 
 
   /* Article */

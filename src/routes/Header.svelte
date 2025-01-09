@@ -77,11 +77,13 @@
 			Home
 		</NavLink>
 		{#if currentUser}
-
 			<NavLink href={"/courses"}>
 				Courses
 			</NavLink>
 		{/if}
+		<NavLink href={"/products"}>
+			Products
+		</NavLink>
 		<NavLink href={"/register"}>
 			Register
 		</NavLink>
