@@ -3,9 +3,7 @@
 	import '../app.postcss';
 </script>
 
-<div
-	class="app bg-background-light font-raleway text-title-light dark:bg-background-dark dark:text-title-dark"
->
+<div class="app font-raleway dark:bg-background-dark">
 	<Header />
 
 	<main class="mx-auto w-full max-w-5xl flex-1 p-6">
@@ -26,7 +24,7 @@
 	<style>
 		html,
 		body {
-			@apply bg-background-light text-title-light dark:bg-background-dark dark:text-title-dark;
+			@apply bg-white dark:bg-background-dark;
 		}
 		body {
 			min-height: 100vh;

@@ -30,9 +30,3 @@
 		<p>No courses available at the moment.</p>
 	{/if}
 </main>
-
-<style>
-	main {
-		padding: 40px;
-	}
-</style>

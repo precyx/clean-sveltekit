@@ -67,12 +67,8 @@
 	}
 </script>
 
-<form
-	on:submit|preventDefault={handleRegister}
-	novalidate
-	class="w-full max-w-md rounded-lg bg-white p-8 shadow-md dark:bg-gray-800"
->
-	<h2 class="mb-2 mb-4 text-title-1 font-extrabold text-title-light dark:text-title-dark">
+<form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
+	<h2 class="text-primary-light dark:text-primary-dark mb-2 mb-4 text-xl font-extrabold">
 		Register
 	</h2>
 

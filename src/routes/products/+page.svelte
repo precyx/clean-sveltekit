@@ -8,21 +8,21 @@
 
 	let IMAGE_BASE = 'http://localhost:1337';
 
-	const handleProductClick = (course: Product) => {
-		goto(`/products/${course.documentId}`, {
+	const handleProductClick = (product: Product) => {
+		goto(`/products/${product.documentId}`, {
 			state: {
-				documentId: course.documentId
+				documentId: product.documentId
 			}
 		});
 	};
 </script>
 
 <main>
-	<div class="mx-auto max-w-screen-xl p-6">
-		<h1 class="mb-2 text-title-1 font-extrabold text-title-light dark:text-title-dark">
+	<div class="mx-auto max-w-screen-xl">
+		<h1 class="text-primary-light dark:text-primary-dark mb-2 text-xl font-extrabold">
 			Nuestros Productos
 		</h1>
-		<p class="mb-8 text-title-2 font-bold italic text-subtitle-light dark:text-subtitle-dark">
+		<p class="text-secondary-light dark:text-secondary-dark mb-8 text-lg font-bold italic">
 			Limpieza de Mano, Cocina, Baño
 		</p>
 
@@ -31,7 +31,7 @@
 		{:else if products?.data?.length}
 			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				{#each products.data as product}
-					<div class="rounded-lg">
+					<div class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
 						<!-- Full Image -->
 						<div class="w-full overflow-hidden rounded-lg shadow-md">
 							<img
@@ -42,20 +42,14 @@
 						</div>
 
 						<!-- Product Details -->
-						<h2
-							class="mb-1 mt-4 text-product-title-1 font-semibold text-productTitle-light dark:text-productTitle-dark"
-						>
+						<h2 class="text-primary-light dark:text-primary-dark mb-1 mt-4 font-semibold">
 							{product.title}
 						</h2>
-						<p
-							class="mb-1 text-product-title-2 font-semibold text-productTitle2-light dark:text-productTitle2-dark"
-						>
+						<p class="text-tertiary-light dark:text-tertiary-dark mb-1 font-semibold">
 							{product.category}
 						</p>
-						<p
-							class="text-product-title-3 font-semibold text-productTitle3-light dark:text-productTitle3-dark"
-						>
-							{product.description}
+						<p class="text-quartiary-light dark:text-qurtiary-dark font-semibold">
+							{product.subcategory}
 						</p>
 					</div>
 				{/each}
@@ -65,9 +59,3 @@
 		{/if}
 	</div>
 </main>
-
-<style>
-	main {
-		padding: 40px;
-	}
-</style>

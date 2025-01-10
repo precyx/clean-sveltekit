@@ -187,7 +187,7 @@ export const getProducts = async (): Promise<{ data: Product[] }> => {
 };
 
 export const getProduct = async (id: string): Promise<{ data: Product[] }> => {
-	return apiRequest<{ data: Product[] }>('GET', `${API_URL}/api/products/${id}`);
+	return apiRequest<{ data: Product[] }>('GET', `${API_URL}/api/products/${id}?populate=*`);
 };
 
 /* Article */

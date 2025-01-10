@@ -9,7 +9,9 @@
 </svelte:head>
 
 <section>
-	<h1>Articles</h1>
+	<h1 class="text-xxl text-primary-light dark:text-primary-dark font-black">
+		Limpiadores Potentes y Eficaces
+	</h1>
 	{#if error}
 		<div class="text-red-500">{error}</div>
 	{:else if articles?.data?.length}
