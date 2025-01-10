@@ -104,6 +104,9 @@ export default {
 					light: '#708590',
 					soft: '#CECECE',
 					dark: '#CECECE'
+				},
+				landing: {
+					blue: '#6EC2E3'
 				}
 			},
 			fontSize: {

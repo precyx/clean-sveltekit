@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-	import '../app.postcss';
+	import Header from '$lib/components/Header.svelte';
+	import '../../app.postcss';
 </script>
 
 <div class="app font-raleway dark:bg-background-dark">
 	<Header />
 
-	<main class="mx-auto w-full max-w-5xl flex-1 p-6">
+	<main class="mx-auto w-full flex-1">
 		<slot />
 	</main>
 </div>

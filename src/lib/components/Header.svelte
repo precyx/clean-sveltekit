@@ -14,6 +14,9 @@
 
 	import NavLink from '$lib/components/NavLink.svelte';
 
+	/* custom classes */
+	let { customClasses } = $props();
+
 	onMount(async () => {
 		if (browser) {
 			const token = localStorage.getItem('token');
@@ -52,7 +55,7 @@
 	});
 </script>
 
-<header class="relative z-10 w-full text-text-light dark:text-text-dark">
+<header class={`relative z-10 w-full text-text-light dark:text-text-dark ${customClasses}`}>
 	<div class="container mx-auto flex items-center justify-between p-4">
 		<!-- Logo Section -->
 		<div class="flex items-center space-x-4">
@@ -68,13 +71,13 @@
 
 		<!-- Navigation -->
 		<nav class="hidden items-center space-x-6 md:flex">
-			<NavLink href={'/'}>Home</NavLink>
+			<NavLink href={'/landing'}>Home</NavLink>
 			{#if currentUser}
-				<NavLink href={'/courses'}>Courses</NavLink>
+				<NavLink href={'/app/courses'}>Courses</NavLink>
 			{/if}
-			<NavLink href={'/products'}>Products</NavLink>
-			<NavLink href={'/register'}>Register</NavLink>
-			<NavLink href={'/login'}>Login</NavLink>
+			<NavLink href={'/app/products'}>Products</NavLink>
+			<NavLink href={'/app/register'}>Register</NavLink>
+			<NavLink href={'/app/login'}>Login</NavLink>
 		</nav>
 
 		<!-- Action Buttons -->
