@@ -50,7 +50,7 @@
 			loading = true;
 			error = '';
 			await register(username, email, password);
-			goto('/login');
+			goto('/app/login');
 		} catch (err: any) {
 			error = err.message;
 		} finally {

@@ -9,7 +9,7 @@
 	let IMAGE_BASE = 'http://localhost:1337';
 
 	const handleProductClick = (product: Product) => {
-		goto(`/products/${product.documentId}`, {
+		goto(`/app/products/${product.documentId}`, {
 			state: {
 				documentId: product.documentId
 			}

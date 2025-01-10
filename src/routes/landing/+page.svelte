@@ -51,6 +51,13 @@
 </section>
 
 <!-- Additional Content Below -->
+
+<section class="bg-white px-4 py-16 dark:bg-gray-900">
+	<h2 class="text-primary-light dark:text-primary-dark px-20 text-xl font-extrabold">
+		Lo que dice nuestra clientes
+	</h2>
+</section>
+
 <section class="bg-white px-4 py-16 dark:bg-gray-900">
 	<div class="mx-auto max-w-4xl text-center">
 		<h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Explore More</h2>

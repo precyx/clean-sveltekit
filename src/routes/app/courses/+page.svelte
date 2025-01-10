@@ -7,7 +7,7 @@
 	const { courses, error } = data;
 
 	const handleCourseClick = (course: Course) => {
-		goto(`/courses/${course.documentId}`, {
+		goto(`/app/courses/${course.documentId}`, {
 			state: {
 				documentId: course.documentId
 			}

@@ -5,7 +5,7 @@
 	let { course, error, slug } = data;
 
 	const goBack = () => {
-		goto('/courses'); // Navigate back to course list
+		goto('/app/courses'); // Navigate back to course list
 	};
 </script>
 

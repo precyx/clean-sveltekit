@@ -48,7 +48,7 @@
 			localStorage.setItem('token', res.jwt);
 			user.set(res.user); // Update user store with logged-in user data
 
-			goto('/courses');
+			goto('/app/courses');
 		} catch (err: any) {
 			error = err;
 		} finally {
