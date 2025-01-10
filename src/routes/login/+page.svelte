@@ -6,6 +6,7 @@
 
     import TextInput from '$lib/components/TextInput.svelte';
     import Spinner from "$lib/components/Spinner.svelte";
+    import Button from "$lib/components/Button.svelte";
   
     let email = '';
     let password = '';
@@ -70,7 +71,7 @@
   on:submit|preventDefault={handleLogin} novalidate
   class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full"
 >
-  <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Login</h2>
+<h2 class="text-title-1 mb-4 font-extrabold mb-2 text-title-light dark:text-title-dark">Login</h2>
 
   <div class="mb-4">
     <TextInput
@@ -100,17 +101,14 @@
     <p class="text-red-500 text-sm mb-4">{error}</p>
   {/if}
 
-  <button
-    type="submit"
-    disabled={loading}
-    class="w-full bg-primary-light hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-offset-gray-800
-    flex items-center justify-center"
-  >
+  
+<Button type="submit" disabled={loading}>
   {#if loading}
-    <Spinner /> Logging in...
+    <Spinner /> Loggin in...
   {:else}
-    Login
+  Login
   {/if}
-  </button>
+</Button>
+
 </form>
   

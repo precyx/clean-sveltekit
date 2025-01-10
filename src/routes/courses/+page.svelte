@@ -18,9 +18,6 @@
 
 </script>
   
-  <h1>Welcome to the Dashboard</h1>
-
-
   <main>
     <h1>Available Courses</h1>
   
@@ -42,9 +39,5 @@
   <style>
     main {
       padding: 40px;
-    }
-    h1 {
-      margin-bottom: 20px;
-      text-align: center;
     }
   </style>

@@ -6,9 +6,9 @@
   
   <a
     href={href}
-    class="hover:text-primary-light dark:hover:text-primary-dark
-    aria-[current='page']:text-primary-light
-    aria-[current='page']:dark:text-primary-dark"
+    class="hover:text-link-active font-medium text-link-light dark:hover:text-link-dark
+    aria-[current='page']:text-link-active
+    aria-[current='page']:dark:text-link-dark"
     aria-current={$page.url.pathname === href ? 'page' : undefined}
   >
     <slot />

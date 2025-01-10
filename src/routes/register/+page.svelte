@@ -1,130 +1,130 @@
 <script lang="ts">
-    import { register } from '$lib/api/api';
-    import { goto } from '$app/navigation';
+	import { register } from '$lib/api/api';
+	import { goto } from '$app/navigation';
 
-    import TextInput from '$lib/components/TextInput.svelte';
-    import Spinner from "$lib/components/Spinner.svelte";
-  
-    let username = '';
-    let email = '';
-    let password = '';
-    let error = '';
+	import TextInput from '$lib/components/TextInput.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import Button from '$lib/components/Button.svelte';
 
-    let errors: { [key: string]: string } = {};
-    let loading = false;
-    let submitted = false;
+	let username = '';
+	let email = '';
+	let password = '';
+	let error = '';
 
-    const validate = () => {
-      if(!submitted) return;
+	let errors: { [key: string]: string } = {};
+	let loading = false;
+	let submitted = false;
 
-      let newErrors:any = {};  // Create a new object
+	const validate = () => {
+		if (!submitted) return;
 
-      if (!username) {
-        newErrors.username = 'Username is required.';
-      } else if (username.length < 2) {
-        newErrors.username = 'Username must be at least 2 characters.';
-      }
+		let newErrors: any = {}; // Create a new object
 
-      if (!email) {
-        newErrors.email = 'Email is required.';
-      } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-        newErrors.email = 'Invalid email format.';
-      }
+		if (!username) {
+			newErrors.username = 'Username is required.';
+		} else if (username.length < 2) {
+			newErrors.username = 'Username must be at least 2 characters.';
+		}
 
-      if (!password) {
-        newErrors.password = 'Password is required.';
-      } else if (password.length < 2) {
-        newErrors.password = 'Password must be at least 2 characters.';
-      }
+		if (!email) {
+			newErrors.email = 'Email is required.';
+		} else if (!/^\S+@\S+\.\S+$/.test(email)) {
+			newErrors.email = 'Invalid email format.';
+		}
 
-      errors = { ...newErrors };
+		if (!password) {
+			newErrors.password = 'Password is required.';
+		} else if (password.length < 2) {
+			newErrors.password = 'Password must be at least 2 characters.';
+		}
 
-      return Object.keys(errors).length === 0;
-    };
-  
-    const handleRegister = async () => {
-      submitted = true;
-      if (!validate()) return;
-      try {
-        loading = true;
-        error = "";
-        await register(username, email, password);
-        goto('/login');
-      } catch (err:any) {
-        error = err.message;
-      } finally {
-        loading = false;
-      }
-    };
+		errors = { ...newErrors };
 
-    // revalidate on field change
-    $: {
-      username;
-      email;
-      password;
-      validate();
-    } 
-  </script>
+		return Object.keys(errors).length === 0;
+	};
 
+	const handleRegister = async () => {
+		submitted = true;
+		if (!validate()) return;
+		try {
+			loading = true;
+			error = '';
+			await register(username, email, password);
+			goto('/login');
+		} catch (err: any) {
+			error = err.message;
+		} finally {
+			loading = false;
+		}
+	};
 
-<form on:submit|preventDefault={handleRegister} novalidate
-class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-md w-full">
+	// revalidate on field change
+	$: {
+		username;
+		email;
+		password;
+		validate();
+	}
+</script>
 
-<h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Register</h2>
+<form
+	on:submit|preventDefault={handleRegister}
+	novalidate
+	class="w-full max-w-md rounded-lg bg-white p-8 shadow-md dark:bg-gray-800"
+>
+	<h2 class="mb-2 mb-4 text-title-1 font-extrabold text-title-light dark:text-title-dark">
+		Register
+	</h2>
 
+	<div class="mb-4">
+		<TextInput
+			id="username"
+			label="Username"
+			placeholder="Username"
+			type="text"
+			bind:value={username}
+			required={true}
+			error={errors.username}
+		/>
+	</div>
 
-    <div class="mb-4">
-      <TextInput
-        id="username"
-        label="Username"
-        placeholder="Username"
-        type="text"
-        bind:value={username}
-        required={true}
-        error={errors.username}
-      />
-    </div>
-  
-    <div class="mb-4">
-      <TextInput
-        id="email"
-        label="Email"
-        placeholder="Email"
-        type="email"
-        bind:value={email}
-        required={true}
-        error={errors.email}
-      />
-    </div>
-  
-    <div class="mb-6">
-      <TextInput
-        id="password"
-        label="Password"
-        placeholder="Password"
-        type="password"
-        bind:value={password}
-        required={true}
-        error={errors.password}
-      />
-    </div>
+	<div class="mb-4">
+		<TextInput
+			id="email"
+			label="Email"
+			placeholder="Email"
+			type="email"
+			bind:value={email}
+			required={true}
+			error={errors.email}
+		/>
+	</div>
 
-    {#if loading}
-      <p class="text-red-500 text-sm mb-4">{error}</p>
-    {/if}
+	<div class="mb-6">
+		<TextInput
+			id="password"
+			label="Password"
+			placeholder="Password"
+			type="password"
+			bind:value={password}
+			required={true}
+			error={errors.password}
+		/>
+	</div>
 
-    {#if error}
-      <p class="text-red-500 text-sm mb-4">{error}</p>
-    {/if}
-  
-    <button type="submit" disabled={loading}
-    class="w-full bg-primary-light hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-offset-gray-800
-    flex items-center justify-center">
-    {#if loading}
-      <Spinner /> Registering...
-    {:else}
-      Register
-    {/if}
-    </button>
+	{#if loading}
+		<p class="mb-4 text-sm text-red-500">{error}</p>
+	{/if}
 
-  </form>
+	{#if error}
+		<p class="mb-4 text-sm text-red-500">{error}</p>
+	{/if}
+
+	<Button type="submit" disabled={loading}>
+		{#if loading}
+			<Spinner /> Registering...
+		{:else}
+			Register
+		{/if}
+	</Button>
+</form>

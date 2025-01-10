@@ -8,21 +8,73 @@ export default {
 
 	theme: {
 		extend: {
-		  colors: {
-			primary: {
-			  light: '#4f46e5',
-			  dark: '#818cf8'
+			fontFamily: {
+				raleway: ['Raleway', 'sans-serif'], // Add Raleway font
+			  },
+			colors: {
+			  background: {
+				light: '#f3f4f6',
+				dark: '#111827'
+			  },
+			  link: {
+				light: "#2793CE",
+				active: "#215B88",
+				dark: "#FFFFFF",
+			  },
+			  title: {
+				light: '#2793CE',
+				dark: '#FFFFFF',
+			  },
+			  subtitle: {
+				light: '#75B8DC',
+				dark: '#C8DEE9',
+			  },
+			  productTitle: {
+				light: '#2793CE',
+				dark: '#FFFFFF',
+			  },
+			  productTitle2: {
+				light: '#B8CFEC',
+				dark: '#5C6A7D',
+			  },
+			  productTitle3: {
+				light: '#B2C1CA',
+				dark: '#9BDAFF',
+			  },
+			  text: {
+				light: '#CECECE',
+				dark: '#CECECE',
+			  },
+			  formula: {
+				title: '#3D5A20',
+				subtitle: '#7B965F',
+			  },
+			  form :{
+				bg: "#F6F6F6",
+				border: "#C7D2D7",
+				text: "#8FA1AB",
+				bgDark: "#2D3434",
+				borderDark: "#50595F",
+				textDark: "8FA1AB",
+			  }
 			},
-			background: {
-			  light: '#f3f4f6',
-			  dark: '#111827'
+			fontSize: {
+				'landing': '55px',
+				'title-1': '45px',
+				'title-2': '24px',
+				'product-title-1': '18px',
+				'product-title-2': '14px',
+				'product-title-3': '14px',
+				'product-detail-1': '36px',
+				'product-detail-2': '20px',
+				'product-detail-3': '20px',
+				'product-price': '42px',
+				'course-title-1': '28px',
+				'course-title-2': '20px',
+				'course-title-3': '20px',
+				'form-title': '16px',
 			},
-			text: {
-			  light: '#1f2937',
-			  dark: '#e5e7eb'
-			}
-		  }
-		}
+		  },
 	  },
 
 	plugins: [forms]
