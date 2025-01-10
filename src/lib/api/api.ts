@@ -162,11 +162,11 @@ export interface Course {
 }
 
 export const getCourses = async (): Promise<{ data: Course[] }> => {
-	return apiRequest<{ data: Course[] }>('GET', `${API_URL}/api/courses`);
+	return apiRequest<{ data: Course[] }>('GET', `${API_URL}/api/courses?populate=*`);
 };
 
 export const getCourse = async (id: string): Promise<{ data: Course[] }> => {
-	return apiRequest<{ data: Course[] }>('GET', `${API_URL}/api/courses/${id}`);
+	return apiRequest<{ data: Course[] }>('GET', `${API_URL}/api/courses/${id}?populate=*`);
 };
 
 /* Product */

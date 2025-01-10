@@ -106,7 +106,7 @@ export default {
 					dark: '#CECECE'
 				},
 				landing: {
-					blue: '#6EC2E3'
+					blue: '#0a4760'
 				}
 			},
 			fontSize: {

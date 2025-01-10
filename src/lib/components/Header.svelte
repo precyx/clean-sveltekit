@@ -73,11 +73,11 @@
 		<nav class="hidden items-center space-x-6 md:flex">
 			<NavLink href={'/landing'}>Home</NavLink>
 			{#if currentUser}
-				<NavLink href={'/app/courses'}>Courses</NavLink>
+				<NavLink href={'/courses'}>Courses</NavLink>
 			{/if}
-			<NavLink href={'/app/products'}>Products</NavLink>
-			<NavLink href={'/app/register'}>Register</NavLink>
-			<NavLink href={'/app/login'}>Login</NavLink>
+			<NavLink href={'/products'}>Products</NavLink>
+			<NavLink href={'/register'}>Register</NavLink>
+			<NavLink href={'/login'}>Login</NavLink>
 		</nav>
 
 		<!-- Action Buttons -->

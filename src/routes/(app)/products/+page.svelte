@@ -9,7 +9,7 @@
 	let IMAGE_BASE = 'http://localhost:1337';
 
 	const handleProductClick = (product: Product) => {
-		goto(`/app/products/${product.documentId}`, {
+		goto(`/products/${product.documentId}`, {
 			state: {
 				documentId: product.documentId
 			}
@@ -48,7 +48,7 @@
 						<p class="text-tertiary-light dark:text-tertiary-dark mb-1 font-semibold">
 							{product.category}
 						</p>
-						<p class="text-quartiary-light dark:text-qurtiary-dark font-semibold">
+						<p class="text-quartiary-light dark:text-quartiary-dark font-semibold">
 							{product.subcategory}
 						</p>
 					</div>

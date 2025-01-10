@@ -35,7 +35,7 @@
 
 		<!-- Dark Mode Gradient -->
 		<div
-			class="hidden h-full w-full bg-gradient-to-b from-[rgba(110,194,227,1)] via-[rgba(110,194,227,0.2)] to-[rgba(110,194,227,0)] dark:block"
+			class="hidden h-full w-full bg-gradient-to-b from-[rgba(10,71,96,1)] via-[rgba(10,71,96,0.2)] to-[rgba(10,71,96,0)] dark:block"
 		></div>
 	</div>
 

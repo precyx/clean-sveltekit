@@ -7,7 +7,7 @@
 	let IMAGE_BASE = 'http://localhost:1337';
 
 	const goBack = () => {
-		goto('/app/products');
+		goto('/products');
 	};
 </script>
 

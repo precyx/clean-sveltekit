@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { register } from '$lib/api/api';
+	import { login } from '$lib/api/api';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import { user } from '$lib/stores/user';
 
 	import TextInput from '$lib/components/TextInput.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import Button from '$lib/components/Button.svelte';
 
-	let username = '';
 	let email = '';
 	let password = '';
 	let error = '';
@@ -19,12 +20,6 @@
 		if (!submitted) return;
 
 		let newErrors: any = {}; // Create a new object
-
-		if (!username) {
-			newErrors.username = 'Username is required.';
-		} else if (username.length < 2) {
-			newErrors.username = 'Username must be at least 2 characters.';
-		}
 
 		if (!email) {
 			newErrors.email = 'Email is required.';
@@ -43,16 +38,19 @@
 		return Object.keys(errors).length === 0;
 	};
 
-	const handleRegister = async () => {
+	const handleLogin = async () => {
 		submitted = true;
 		if (!validate()) return;
 		try {
 			loading = true;
 			error = '';
-			await register(username, email, password);
-			goto('/app/login');
+			const res = await login(email, password);
+			localStorage.setItem('token', res.jwt);
+			user.set(res.user); // Update user store with logged-in user data
+
+			goto('/courses');
 		} catch (err: any) {
-			error = err.message;
+			error = err;
 		} finally {
 			loading = false;
 		}
@@ -60,34 +58,19 @@
 
 	// revalidate on field change
 	$: {
-		username;
 		email;
 		password;
 		validate();
 	}
 </script>
 
-<form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
-	<h2 class="text-primary-light dark:text-primary-dark mb-2 mb-4 text-xl font-extrabold">
-		Register
-	</h2>
-
-	<div class="mb-4">
-		<TextInput
-			id="username"
-			label="Username"
-			placeholder="Username"
-			type="text"
-			bind:value={username}
-			required={true}
-			error={errors.username}
-		/>
-	</div>
+<form on:submit|preventDefault={handleLogin} novalidate class="w-full max-w-md rounded-lg">
+	<h2 class="text-primary-light dark:text-primary-dark mb-2 mb-4 text-xl font-extrabold">Login</h2>
 
 	<div class="mb-4">
 		<TextInput
 			id="email"
-			label="Email"
+			label="Email Address"
 			placeholder="Email"
 			type="email"
 			bind:value={email}
@@ -108,19 +91,15 @@
 		/>
 	</div>
 
-	{#if loading}
-		<p class="mb-4 text-sm text-red-500">{error}</p>
-	{/if}
-
 	{#if error}
 		<p class="mb-4 text-sm text-red-500">{error}</p>
 	{/if}
 
 	<Button type="submit" disabled={loading}>
 		{#if loading}
-			<Spinner /> Registering...
+			<Spinner /> Loggin in...
 		{:else}
-			Register
+			Login
 		{/if}
 	</Button>
 </form>
