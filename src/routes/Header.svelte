@@ -52,9 +52,7 @@
 	});
 </script>
 
-<header
-	class="w-full bg-background-light text-text-light shadow-md dark:bg-background-dark dark:text-text-dark"
->
+<header class="relative z-10 w-full text-text-light dark:text-text-dark">
 	<div class="container mx-auto flex items-center justify-between p-4">
 		<!-- Logo Section -->
 		<div class="flex items-center space-x-4">
