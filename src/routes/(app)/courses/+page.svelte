@@ -37,13 +37,13 @@
 						</div>
 
 						<!-- Product Details -->
-						<h2 class="text-primary-light dark:text-primary-dark mb-1 mt-4 font-semibold">
+						<h2 class="dark:text-grey-0 mb-1 mt-4 font-semibold text-blue-500">
 							{course.title}
 						</h2>
-						<p class="text-tertiary-light dark:text-tertiary-dark mb-1 font-semibold">
+						<p class="mb-1 font-semibold text-blue-200 dark:text-blue-300">
 							{course.category}
 						</p>
-						<p class="text-quartiary-light dark:text-quartiary-dark font-semibold">
+						<p class="text-grey-300 dark:text-grey-200 font-semibold">
 							{course.subcategory}
 						</p>
 					</div>

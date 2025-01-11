@@ -3,8 +3,8 @@
 	import '../../app.postcss';
 </script>
 
-<div class="app font-raleway dark:bg-background-dark">
-	<Header />
+<div class="app dark:bg-grey-1000 font-raleway">
+	<Header customClasses="" />
 
 	<main class="mx-auto w-full max-w-5xl flex-1 px-5">
 		<slot />
@@ -24,7 +24,7 @@
 	<style>
 		html,
 		body {
-			@apply bg-white dark:bg-background-dark;
+			@apply dark:bg-grey-1000 bg-white;
 		}
 		body {
 			min-height: 100vh;

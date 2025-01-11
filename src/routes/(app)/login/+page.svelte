@@ -65,7 +65,7 @@
 </script>
 
 <form on:submit|preventDefault={handleLogin} novalidate class="w-full max-w-md rounded-lg">
-	<h2 class="text-primary-light dark:text-primary-dark mb-2 mb-4 text-xl font-extrabold">Login</h2>
+	<h2 class="dark:text-grey-0 mb-2 mb-4 text-xl font-extrabold text-blue-500">Login</h2>
 
 	<div class="mb-4">
 		<TextInput

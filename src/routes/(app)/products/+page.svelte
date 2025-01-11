@@ -19,10 +19,8 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="text-primary-light dark:text-primary-dark mb-2 text-xl font-extrabold">
-			Nuestros Productos
-		</h1>
-		<p class="text-secondary-light dark:text-secondary-dark mb-8 text-lg font-bold italic">
+		<h1 class="dark:text-grey-0 mb-2 text-xl font-extrabold text-blue-500">Nuestros Productos</h1>
+		<p class="mb-8 text-lg font-bold italic text-blue-400 dark:text-blue-100">
 			Limpieza de Mano, Cocina, Baño
 		</p>
 
@@ -42,13 +40,13 @@
 						</div>
 
 						<!-- Product Details -->
-						<h2 class="text-primary-light dark:text-primary-dark mb-1 mt-4 font-semibold">
+						<h2 class="dark:text-grey-0 mb-1 mt-4 font-semibold text-blue-500">
 							{product.title}
 						</h2>
-						<p class="text-tertiary-light dark:text-tertiary-dark mb-1 font-semibold">
+						<p class="mb-1 font-semibold text-blue-200 dark:text-blue-300">
 							{product.category}
 						</p>
-						<p class="text-quartiary-light dark:text-quartiary-dark font-semibold">
+						<p class="text-grey-300 dark:text-grey-200 font-semibold">
 							{product.subcategory}
 						</p>
 					</div>

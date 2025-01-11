@@ -166,7 +166,10 @@ export const getCourses = async (): Promise<{ data: Course[] }> => {
 };
 
 export const getCourse = async (id: string): Promise<{ data: Course[] }> => {
-	return apiRequest<{ data: Course[] }>('GET', `${API_URL}/api/courses/${id}?populate=*`);
+	return apiRequest<{ data: Course[] }>(
+		'GET',
+		`${API_URL}/api/courses/${id}?populate[products][populate]=image&populate=videos`
+	);
 };
 
 /* Product */

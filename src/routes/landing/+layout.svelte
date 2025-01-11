@@ -4,7 +4,7 @@
 </script>
 
 <div class="app font-raleway dark:bg-black">
-	<Header customClasses="bg-white dark:bg-landing-blue" />
+	<Header customClasses="bg-white dark:bg-blue-600" />
 
 	<main class="mx-auto w-full flex-1">
 		<slot />

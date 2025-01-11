@@ -37,7 +37,7 @@
 				</p>
 				<button
 					on:click={() => enroll(course.id)}
-					class="bg-primary-light hover:bg-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark mt-4 rounded-lg px-6 py-3 font-medium text-white transition-all focus:outline-none focus:ring-2"
+					class="hover:bg-grey-0 dark:focus:ring-grey-0 mt-4 rounded-lg bg-blue-500 px-6 py-3 font-medium text-white transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
 				>
 					Enroll Now
 				</button>

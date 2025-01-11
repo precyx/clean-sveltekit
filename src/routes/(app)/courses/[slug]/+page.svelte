@@ -1,16 +1,22 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { getCourses } from '$lib/api/api.js';
+	import Button from '$lib/components/Button.svelte';
 
 	export let data;
 	let { course, error, slug } = data;
 
+	let IMAGE_BASE = 'http://localhost:1337';
+
 	const goBack = () => {
 		goto('/courses'); // Navigate back to course list
 	};
+
+	const handleProductClick = () => {};
 </script>
 
 <div class="mb-6">
-	<button on:click={goBack} class="flex items-center text-blue-500 hover:underline">
+	<button onclick={goBack} class="dark:text-grey-0 flex items-center text-blue-500 hover:underline">
 		<!-- Back Arrow Icon -->
 		<svg
 			class="mr-2 h-5 w-5"
@@ -29,10 +35,82 @@
 {#if error}
 	<div class="text-red-500">{error}</div>
 {:else if course?.data}
-	<div>
-		<h1 class="text-3xl font-bold">{course?.data.title}</h1>
-		<p class="text-3xl font-bold">{course?.data.Price}.-</p>
-		<p class="mt-4">...</p>
+	<div class="">
+		<!-- Product Detail Layout -->
+		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
+			<!-- Product Image -->
+			<div>
+				<img
+					src={IMAGE_BASE + course.data.videos[0]?.url}
+					alt={course.data.title}
+					class="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
+				/>
+
+				<div class="text-mid dark:text-grey-0 mb-4 mb-4 font-bold italic text-blue-500">
+					Productos en ese curso
+				</div>
+
+				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+					{#each course.data?.products as product}
+						<div class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
+							<!-- Full Image -->
+							<div class="w-full overflow-hidden rounded-lg shadow-md">
+								<img
+									src={IMAGE_BASE + product.image[0]?.url}
+									alt={product.title}
+									class="h-auto w-full object-contain"
+								/>
+							</div>
+
+							<!-- Product Details -->
+							<h2 class="dark:text-grey-0 mb-1 mt-4 font-semibold text-blue-500">
+								{product.title}
+							</h2>
+							<p class="mb-1 font-semibold text-blue-200 dark:text-blue-300">
+								{product.category}
+							</p>
+							<p class="text-grey-300 dark:text-grey-200 font-semibold">
+								{product.subcategory}
+							</p>
+						</div>
+					{/each}
+				</div>
+			</div>
+
+			<!-- Product Info -->
+			<div class="">
+				<!-- Product Title -->
+				<p class="dark:text-grey-0 text-xl font-bold text-blue-500">
+					{course.data.title}
+				</p>
+
+				<p class="font-regular text-xl text-green-300 dark:text-green-100">
+					$ {course.data.Price}
+				</p>
+
+				<div class="mt-8">
+					<Button>Comprar</Button>
+				</div>
+
+				<!-- Product Category -->
+				<p class="text-productlg mt-2 font-semibold text-blue-200 dark:text-blue-300">
+					{course.data.category}
+				</p>
+
+				<!-- Time to Fabricate -->
+				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-2 font-semibold">
+					{course.data.subcategory}
+				</p>
+
+				<!-- Product Description -->
+				<p class="dark:color-grey-100 text-grey-100 mt-6 text-base font-medium">
+					{course.data.description}
+				</p>
+
+				<!-- Cursos Section -->
+				<h3 class="dark:text-grey-0 mt-4 text-lg font-extrabold italic text-blue-500">Cursos</h3>
+			</div>
+		</div>
 	</div>
 {:else}
 	<p>no content...</p>

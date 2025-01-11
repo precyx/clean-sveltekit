@@ -14,7 +14,7 @@
 <div class="mb-6">
 	<button
 		on:click={goBack}
-		class="text-primary-light dark:text-primary-dark flex items-center hover:underline"
+		class="dark:text-grey-0 flex items-center text-blue-500 hover:underline"
 	>
 		<!-- Back Arrow Icon -->
 		<svg
@@ -49,29 +49,27 @@
 			<!-- Product Info -->
 			<div class="">
 				<!-- Product Title -->
-				<p class="text-productxl text-primary-light dark:text-primary-dark font-semibold">
+				<p class="text-productxl dark:text-grey-0 font-semibold text-blue-500">
 					{product.data.title}
 				</p>
 
 				<!-- Product Category -->
-				<p class="text-productlg text-tertiary-light dark:text-tertiary-dark mt-2 font-semibold">
+				<p class="text-productlg mt-2 font-semibold text-blue-200 dark:text-blue-300">
 					{product.data.category}
 				</p>
 
 				<!-- Time to Fabricate -->
-				<p class="text-productlg text-quartiary-light dark:text-quartiary-dark mt-2 font-semibold">
+				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-2 font-semibold">
 					{product.data.subcategory}
 				</p>
 
 				<!-- Product Description -->
-				<p class="dark:color-text-dark text-text-soft mt-6 text-base font-medium">
+				<p class="dark:color-grey-100 text-grey-100 mt-6 text-base font-medium">
 					{product.data.description}
 				</p>
 
 				<!-- Cursos Section -->
-				<h3 class="text-primary-light dark:text-primary-dark mt-4 text-lg font-extrabold italic">
-					Cursos
-				</h3>
+				<h3 class="dark:text-grey-0 mt-4 text-lg font-extrabold italic text-blue-500">Cursos</h3>
 			</div>
 		</div>
 	</div>

@@ -42,7 +42,7 @@
 
 	<!-- Content -->
 	<div class="relative z-10 px-40 py-10">
-		<h1 class="text-xxl text-primary-light dark:text-primary-dark font-black">
+		<h1 class="text-xxl dark:text-grey-0 font-black text-blue-500">
 			Limpiadores <br /> Potentes y Eficaces
 		</h1>
 		<div class="relative z-10 mb-6 mt-3">

@@ -55,7 +55,7 @@
 	});
 </script>
 
-<header class={`relative z-10 w-full text-text-light dark:text-text-dark ${customClasses}`}>
+<header class={`text-grey-300 dark:text-grey-100 relative z-10 w-full ${customClasses}`}>
 	<div class="container mx-auto flex items-center justify-between p-4">
 		<!-- Logo Section -->
 		<div class="flex items-center space-x-4">
@@ -92,7 +92,7 @@
 			{#if currentUser}
 				<button
 					on:click={logout}
-					class="bg-primary-light dark:bg-primary-dark transform rounded p-2 text-white transition hover:scale-110"
+					class="dark:bg-grey-0 transform rounded bg-blue-500 p-2 text-white transition hover:scale-110"
 				>
 					Logout
 				</button>

@@ -41,7 +41,7 @@
 
 	<!-- Content -->
 	<div class="relative z-10 px-40 py-10">
-		<h1 class="text-xxl text-primary-light dark:text-primary-dark font-black">
+		<h1 class="text-xxl font-black text-blue-500 dark:text-white">
 			Limpiadores <br /> Potentes y Eficaces
 		</h1>
 		<div class="relative z-10 mb-6 mt-3">
@@ -53,7 +53,7 @@
 <!-- Additional Content Below -->
 
 <section class="bg-white px-4 py-16 dark:bg-gray-900">
-	<h2 class="text-primary-light dark:text-primary-dark px-20 text-xl font-extrabold">
+	<h2 class="dark:text-grey-0 px-20 text-xl font-extrabold text-blue-500">
 		Lo que dice nuestra clientes
 	</h2>
 </section>

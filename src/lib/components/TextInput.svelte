@@ -9,7 +9,7 @@
 </script>
 
 <div class="relative w-full">
-	<label for={id} class="text-primary-light dark:text-primary-dark mb-1 block text-sm font-medium">
+	<label for={id} class="dark:text-grey-0 mb-1 block text-sm font-medium text-blue-500">
 		{label}
 	</label>
 
@@ -19,10 +19,10 @@
 		bind:value
 		{placeholder}
 		{required}
-		class="focus:border-primary-light dark:focus:border-primary-dark mt-1 block w-full rounded-md border-2 px-4 py-3 focus:ring-0
+		class="dark:focus:border-grey-0 mt-1 block w-full rounded-md border-2 px-4 py-3 focus:border-blue-500 focus:ring-0
       {error
 			? 'border-red-400 bg-red-50 text-red-400  placeholder-red-400 focus:border-red-400 dark:bg-red-900 dark:bg-opacity-20 dark:placeholder-white dark:placeholder-opacity-40'
-			: ' border-quartiary-light dark:border-tertiary-dark dark:text-quartiary-dark placeholder-text-soft bg-background-light text-text-light   dark:bg-background-dark'}"
+			: ' border-grey-300 dark:text-grey-200 placeholder-grey-100 bg-grey-50 dark:bg-grey-900 text-grey-500   dark:border-grey-700'}"
 	/>
 
 	{#if error}
