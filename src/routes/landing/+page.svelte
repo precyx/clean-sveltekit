@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import Testimonial from '$lib/components/Testimonial.svelte';
 	export let data;
 
 	let i1 =
@@ -12,6 +13,24 @@
 		'http://localhost:1337/uploads/u1599917863_A_clean_small_indoor_workspace_for_creating_homemad_231869ce_b4e5_40da_a728_0383565c77ee_a1338292df.png';
 	let i5 =
 		'http://localhost:1337/uploads/u1599917863_A_clean_small_indoor_workspace_for_creating_homemad_2e9e585f_2e62_4904_80f8_7ec0d704e838_6aaeb5bdcb.png';
+
+	let testimonials = [
+		{
+			img: 'http://localhost:1337/uploads/image_7_e6b0644492.png',
+			title: 'Carlo H.',
+			text: 'Me sorprendió lo fácil que fue hacer mis propios limpiadores en casa. Los resultados han sido muy buenos.'
+		},
+		{
+			img: 'http://localhost:1337/uploads/image_2_0b4e64792e.png',
+			title: 'Sarah P.',
+			text: 'El curso me enseñó trucos sencillos y efectivos. Los productos que hice son fáciles de usar y realmente cumplen su función.'
+		},
+		{
+			img: 'http://localhost:1337/uploads/image_2_0b4e64792e.png',
+			title: 'Sarah P.',
+			text: 'El curso me enseñó trucos sencillos y efectivos. Los productos que hice son fáciles de usar y realmente cumplen su función.'
+		}
+	];
 </script>
 
 <svelte:head>
@@ -52,10 +71,17 @@
 
 <!-- Additional Content Below -->
 
-<section class="bg-white px-4 py-16 dark:bg-gray-900">
-	<h2 class="dark:text-grey-0 px-20 text-xl font-extrabold text-blue-500">
+<section class="bg-white px-20 py-16 dark:bg-gray-900">
+	<h2 class="dark:text-grey-0 mb-8 text-xl font-extrabold text-blue-500">
 		Lo que dice nuestra clientes
 	</h2>
+
+	<div class="grid grid-cols-1 gap-6 sm:grid-cols-[minmax(300px,_1fr)_1fr]">
+		{#each testimonials as testimonial}
+			<Testimonial img={testimonial.img} title={testimonial.title} text={testimonial.text}
+			></Testimonial>
+		{/each}
+	</div>
 </section>
 
 <section class="bg-white px-4 py-16 dark:bg-gray-900">
