@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { getCourses } from '$lib/api/api.js';
 	import Button from '$lib/components/Button.svelte';
+	import RichText from '$lib/components/RichText.svelte';
 
 	export let data;
 	let { course, error, slug } = data;
@@ -63,15 +64,9 @@
 							</div>
 
 							<!-- Product Details -->
-							<h2 class="dark:text-grey-0 mb-1 mt-4 font-semibold text-blue-500">
+							<h2 class="dark:text-grey-0 text-productsm mb-1 mt-2 font-medium text-blue-500">
 								{product.title}
 							</h2>
-							<p class="mb-1 font-semibold text-blue-200 dark:text-blue-300">
-								{product.category}
-							</p>
-							<p class="text-grey-300 dark:text-grey-200 font-semibold">
-								{product.subcategory}
-							</p>
 						</div>
 					{/each}
 				</div>
@@ -80,8 +75,12 @@
 			<!-- Product Info -->
 			<div class="">
 				<!-- Product Title -->
-				<p class="dark:text-grey-0 text-xl font-bold text-blue-500">
+				<p class="dark:text-grey-0 text-productxl font-bold text-blue-500">
 					{course.data.title}
+				</p>
+				<!-- Product Category -->
+				<p class="text-productlg mt-2 font-semibold text-blue-200 dark:text-blue-300">
+					{course.data.Category}
 				</p>
 
 				<p class="font-regular text-xl text-green-300 dark:text-green-100">
@@ -92,23 +91,15 @@
 					<Button>Comprar</Button>
 				</div>
 
-				<!-- Product Category -->
-				<p class="text-productlg mt-2 font-semibold text-blue-200 dark:text-blue-300">
-					{course.data.category}
-				</p>
-
 				<!-- Time to Fabricate -->
 				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-2 font-semibold">
 					{course.data.subcategory}
 				</p>
 
 				<!-- Product Description -->
-				<p class="dark:color-grey-100 text-grey-100 mt-6 text-base font-medium">
-					{course.data.description}
+				<p class="dark:text-grey-100 text-grey-500 mt-6 text-base font-medium">
+					<RichText content={course.data.Description}></RichText>
 				</p>
-
-				<!-- Cursos Section -->
-				<h3 class="dark:text-grey-0 mt-4 text-lg font-extrabold italic text-blue-500">Cursos</h3>
 			</div>
 		</div>
 	</div>

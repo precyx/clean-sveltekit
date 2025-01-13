@@ -38,112 +38,65 @@ export default {
 					200: '#8FC04B',
 					100: '#CDEB9F'
 				}
-
-				/**
-				 * primary-light
-				 * blue-500
-				 *
-				 * primary-dark
-				 * grey-50
-				 *
-				 * secondary-light
-				 * blue-400
-				 *
-				 * secondary-dark
-				 * blue-100
-				 *
-				 * tertiary-light
-				 * blue-200
-				 *
-				 * tertiary-dark
-				 * blue-300
-				 *
-				 * quartiary-light
-				 * grey-300
-				 *
-				 * quartiary-dark
-				 * grey-200
-				 *
-				 * background-light
-				 * grey-200
-				 *
-				 * background-dark
-				 * grey-1000
-				 *
-				 * text-light
-				 * grey-300
-				 *
-				 * text-dark
-				 * grey-100
-				 *
-				 * landing-blue
-				 * blue-600
-				 *
-				 * price-light
-				 * green-300
-				 *
-				 * price-dark
-				 * green-100
-				 */
-
-				/*primary: {
-					light: '#2793CE',
-					dark: '#FFFFFF', // Adapted for dark mode
-					active: '#215B88'
-				},
-				secondary: {
-					light: '#75B8DC',
-					dark: '#C8DEE9' // Adapted for dark mode
-				},
-				tertiary: {
-					light: '#B8CFEC',
-					dark: '#5C6A7D' // Adapted for dark mode
-				},
-				quartiary: {
-					light: '#C7D2D7',
-					dark: '#9BDAFF' // Adapted for dark mode
-				},
-				background: {
-					light: '#F6F6F6',
-					dark: '#26282B'
-				},
-				form: {
-					dark: '#2D3434'
-				},
-				text: {
-					light: '#708590',
-					soft: '#CECECE',
-					dark: '#CECECE'
-				},
-				landing: {
-					blue: '#0a4760'
-				},
-				price: {
-					light: '#7CA340',
-					dark: '#CDEB9F'
-				}*/
 			},
 			fontSize: {
 				xxl: '55px',
 				xl: '45px',
 				lg: '26px',
-				base: '18px',
-				productxl: '36px',
+				base: '16px',
+				productxl: '30px',
 				productlg: '22px',
 				productbase: '18px',
-				productsm: '14px'
+				productsm: '14px',
+				productxs: '12px'
 			}
-			/*fontSize: {
-				base: '16px',
-				mid: '18px',
-				lg: '24px',
-				xl: '45px',
-				xxl: '55px',
-				productxl: '36px',
-				productlg: '22px',
-				producttext: '18px',
-				productsm: '14px'
-			}*/
+
+			/**
+			 * primary-light
+			 * blue-500
+			 *
+			 * primary-dark
+			 * grey-50
+			 *
+			 * secondary-light
+			 * blue-400
+			 *
+			 * secondary-dark
+			 * blue-100
+			 *
+			 * tertiary-light
+			 * blue-200
+			 *
+			 * tertiary-dark
+			 * blue-300
+			 *
+			 * quartiary-light
+			 * grey-300
+			 *
+			 * quartiary-dark
+			 * grey-200
+			 *
+			 * background-light
+			 * grey-200
+			 *
+			 * background-dark
+			 * grey-1000
+			 *
+			 * text-light
+			 * grey-300
+			 *
+			 * text-dark
+			 * grey-100
+			 *
+			 * landing-blue
+			 * blue-600
+			 *
+			 * price-light
+			 * green-300
+			 *
+			 * price-dark
+			 * green-100
+			 */
 		}
 	},
 

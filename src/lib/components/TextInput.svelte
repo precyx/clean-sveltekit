@@ -19,10 +19,10 @@
 		bind:value
 		{placeholder}
 		{required}
-		class="dark:focus:border-grey-0 mt-1 block w-full rounded-md border-2 px-4 py-3 focus:border-blue-500 focus:ring-0
+		class=" mt-1 block w-full rounded-md border-2 px-4 py-3 focus:ring-0
       {error
 			? 'border-red-400 bg-red-50 text-red-400  placeholder-red-400 focus:border-red-400 dark:bg-red-900 dark:bg-opacity-20 dark:placeholder-white dark:placeholder-opacity-40'
-			: ' border-grey-300 dark:text-grey-200 placeholder-grey-100 bg-grey-50 dark:bg-grey-900 text-grey-500   dark:border-grey-700'}"
+			: ' dark:focus:border-grey-0 border-grey-300 dark:text-grey-200 placeholder-grey-300 bg-grey-50 dark:bg-grey-900 text-grey-500 dark:border-grey-700 focus:border-blue-500'}"
 	/>
 
 	{#if error}

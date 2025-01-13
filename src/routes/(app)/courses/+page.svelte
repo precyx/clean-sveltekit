@@ -21,6 +21,8 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
+		<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">Nuestros Cursos</h1>
+
 		{#if error}
 			<div class="text-red-500">{error}</div>
 		{:else if courses?.data?.length}
@@ -37,14 +39,14 @@
 						</div>
 
 						<!-- Product Details -->
-						<h2 class="dark:text-grey-0 mb-1 mt-4 font-semibold text-blue-500">
+						<h2 class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500">
 							{course.title}
 						</h2>
-						<p class="mb-1 font-semibold text-blue-200 dark:text-blue-300">
-							{course.category}
+						<p class="text-grey-300 mb-1 font-normal dark:text-blue-300">
+							{course.Category}
 						</p>
-						<p class="text-grey-300 dark:text-grey-200 font-semibold">
-							{course.subcategory}
+						<p class="mb-1 font-medium text-green-300 dark:text-green-100">
+							$ {course.Price}
 						</p>
 					</div>
 				{/each}

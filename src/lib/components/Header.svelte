@@ -17,6 +17,9 @@
 	/* custom classes */
 	let { customClasses } = $props();
 
+	let logoImg =
+		'http://localhost:1337/uploads/464160045_521706020573047_6761713450314237728_n_removebg_preview_d8777845b4.png';
+
 	onMount(async () => {
 		if (browser) {
 			const token = localStorage.getItem('token');
@@ -56,12 +59,9 @@
 </script>
 
 <header class={`text-grey-300 dark:text-grey-100 relative z-10 w-full ${customClasses}`}>
-	<div class="container mx-auto flex items-center justify-between p-4">
+	<div class="container mx-auto flex items-center justify-between">
 		<!-- Logo Section -->
 		<div class="flex items-center space-x-4">
-			<a href="https://svelte.dev/docs/kit">
-				<img src={logo} alt="SvelteKit" class="h-10 w-auto" />
-			</a>
 			{#if currentUser}
 				<div class="hidden text-sm font-semibold sm:block">
 					Welcome, {currentUser.username}
@@ -71,11 +71,15 @@
 
 		<!-- Navigation -->
 		<nav class="hidden items-center space-x-6 md:flex">
-			<NavLink href={'/landing'}>Home</NavLink>
 			{#if currentUser}
 				<NavLink href={'/courses'}>Courses</NavLink>
 			{/if}
 			<NavLink href={'/products'}>Products</NavLink>
+
+			<NavLink href={'/landing'}>
+				<img src={`${logoImg}`} class="w-28 dark:brightness-200" />
+			</NavLink>
+
 			<NavLink href={'/register'}>Register</NavLink>
 			<NavLink href={'/login'}>Login</NavLink>
 		</nav>
