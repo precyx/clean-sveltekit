@@ -6,7 +6,7 @@
 <div class="app dark:bg-grey-1000 font-raleway">
 	<Header customClasses="" />
 
-	<main class="mx-auto w-full max-w-5xl flex-1 px-5">
+	<main class="mx-auto mt-12 w-full max-w-5xl flex-1 px-5">
 		<slot />
 	</main>
 </div>

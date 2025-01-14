@@ -19,7 +19,9 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">Nuestros Cursos</h1>
+		<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">
+			Mis cursos ({courses?.data?.length})
+		</h1>
 
 		{#if error}
 			<div class="text-red-500">{error}</div>

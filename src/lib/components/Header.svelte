@@ -1,27 +1,28 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
-
-	import { logout } from '$lib/api/api';
-
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 
 	import { browser } from '$app/environment';
+	import { logout } from '$lib/api/api';
 	import { getUser } from '$lib/api/api';
 	import { user } from '$lib/stores/user';
 	import { theme } from '$lib/stores/theme';
 
 	import NavLink from '$lib/components/NavLink.svelte';
+	import IconSun from '$lib/icons/IconSun.svelte';
+	import IconMoon from '$lib/icons/IconMoon.svelte';
+	import IconUser from '$lib/icons/IconUser.svelte';
 
 	/* custom classes */
 	let { customClasses } = $props();
 
-	let logoImg =
+	let LOGO =
 		'http://localhost:1337/uploads/464160045_521706020573047_6761713450314237728_n_removebg_preview_d8777845b4.png';
+	let LOGO_WHITE = 'http://localhost:1337/uploads/logo_white_snaiderclean_788d70db2a.png';
 
 	onMount(async () => {
 		if (browser) {
+			// Check if the user is already logged in
 			const token = localStorage.getItem('token');
 			if (token) {
 				try {
@@ -53,15 +54,33 @@
 
 	$effect(() => {
 		theme.subscribe((value) => {
+			console.log('theme', value);
 			currentTheme = value;
 		});
 	});
+
+	// Change header background depending on the page
+	let headerClasses = $state('');
+	let isMyCourses = $state(false);
+
+	$effect(() => {
+		if (page.url.pathname === '/my-courses') {
+			isMyCourses = true;
+			headerClasses =
+				'bg-gradient-to-r from-[#8FC04B] to-[#2695C7] dark:from-[#384520] dark:to-[#0C3B56]';
+		} else {
+			isMyCourses = false;
+			headerClasses = '';
+		}
+	});
 </script>
 
-<header class={`text-grey-300 dark:text-grey-100 relative z-10 w-full ${customClasses}`}>
-	<div class="container mx-auto flex items-center justify-between">
+<header
+	class={`text-grey-300 dark:text-grey-100 relative z-10 w-full ${headerClasses} ${customClasses}`}
+>
+	<div class="container mx-auto flex items-center">
 		<!-- Logo Section -->
-		<div class="flex items-center space-x-4">
+		<div class="mr-auto flex items-center space-x-4">
 			{#if currentUser}
 				<div class="hidden text-sm font-semibold sm:block">
 					Welcome, {currentUser.username}
@@ -70,35 +89,49 @@
 		</div>
 
 		<!-- Navigation -->
-		<nav class="hidden items-center space-x-6 md:flex">
-			{#if currentUser}
-				<NavLink href={'/courses'}>Courses</NavLink>
-			{/if}
+		<nav class="mx-auto hidden translate-x-[100px] items-center space-x-3 md:flex">
+			<NavLink href={'/courses'}>Courses</NavLink>
 			<NavLink href={'/products'}>Products</NavLink>
 
 			<NavLink href={'/landing'}>
-				<img src={`${logoImg}`} class="w-28 dark:brightness-200" />
+				<div class="relative top-[-15px] h-[60px]">
+					{#if isMyCourses || $theme === 'dark'}
+						<img src={LOGO_WHITE} class="w-[90px]" />
+					{:else}
+						<img src={LOGO} class="w-[90px]" />
+					{/if}
+				</div>
 			</NavLink>
 
-			<NavLink href={'/register'}>Register</NavLink>
-			<NavLink href={'/login'}>Login</NavLink>
+			<NavLink href={'/contact'}>Contacto</NavLink>
+			<NavLink href={'/about-us'}>Sobre Nosotros</NavLink>
 		</nav>
 
 		<!-- Action Buttons -->
-		<div class="flex items-center space-x-4">
-			<button
-				on:click={toggleTheme}
-				class="transform rounded bg-gray-200 p-2 transition hover:scale-110 dark:bg-gray-700 dark:text-white"
-			>
-				{$theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+		<div class="ml-auto flex items-center space-x-4">
+			<button on:click={toggleTheme} class="transform rounded p-2">
+				{#if $theme === 'dark'}
+					<IconSun
+						classes={`h-6 w-6 dark:text-gray-50 ${isMyCourses ? ' text-grey-0' : ' text-blue-500'}`}
+					></IconSun>
+				{:else}
+					<IconMoon
+						classes={`h-6 w-6 dark:text-gray-50 ${isMyCourses ? ' text-grey-0' : ' text-blue-500'}`}
+					></IconMoon>
+				{/if}
 			</button>
 
-			{#if currentUser}
-				<button
-					on:click={logout}
-					class="dark:bg-grey-0 transform rounded bg-blue-500 p-2 text-white transition hover:scale-110"
-				>
-					Logout
+			{#if !currentUser}
+				<NavLink href={'/login'}>Login</NavLink>
+			{:else}
+				<NavLink href={'/my-courses'}>Mis Cursos</NavLink>
+				<div>
+					<IconUser
+						classes={`h-6 w-6 dark:text-gray-50 ${isMyCourses ? ' text-grey-0' : ' text-blue-500'} `}
+					></IconUser>
+				</div>
+				<button on:click={logout}>
+					<NavLink href="">Logout</NavLink>
 				</button>
 			{/if}
 		</div>

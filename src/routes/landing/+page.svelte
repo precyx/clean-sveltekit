@@ -27,7 +27,7 @@
 		},
 		{
 			img: 'http://localhost:1337/uploads/image_2_0b4e64792e.png',
-			title: 'Sarah P.',
+			title: 'Eduardo M.',
 			text: 'El curso me enseñó trucos sencillos y efectivos. Los productos que hice son fáciles de usar y realmente cumplen su función.'
 		}
 	];
@@ -59,8 +59,8 @@
 	</div>
 
 	<!-- Content -->
-	<div class="relative z-10 px-40 py-10">
-		<h1 class="text-xxl font-black text-blue-500 dark:text-white">
+	<div class="relative z-10 px-5 py-10 md:px-20 lg:px-40">
+		<h1 class="lg:text-xxl text-xl font-black text-blue-500 dark:text-white">
 			Limpiadores <br /> Potentes y Eficaces
 		</h1>
 		<div class="relative z-10 mb-6 mt-3">
@@ -71,12 +71,12 @@
 
 <!-- Additional Content Below -->
 
-<section class="bg-white px-20 py-16 dark:bg-gray-900">
+<section class="dark:bg-grey-1000 bg-white px-5 py-16 md:px-10 lg:px-20">
 	<h2 class="dark:text-grey-0 mb-8 text-xl font-extrabold text-blue-500">
 		Lo que dice nuestra clientes
 	</h2>
 
-	<div class="grid grid-cols-1 gap-6 sm:grid-cols-[minmax(300px,_1fr)_1fr]">
+	<div class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
 		{#each testimonials as testimonial}
 			<Testimonial img={testimonial.img} title={testimonial.title} text={testimonial.text}
 			></Testimonial>
@@ -84,7 +84,7 @@
 	</div>
 </section>
 
-<section class="bg-white px-4 py-16 dark:bg-gray-900">
+<section class="dark:bg-grey-1000 bg-white px-4 py-16">
 	<div class="mx-auto max-w-4xl text-center">
 		<h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Explore More</h2>
 		<p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
