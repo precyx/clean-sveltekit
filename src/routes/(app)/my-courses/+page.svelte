@@ -19,16 +19,19 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">
+		<h1 class="dark:text-grey-0 mb-4 mt-4 text-xl font-extrabold text-blue-500">
 			Mis cursos ({courses?.data?.length})
 		</h1>
 
 		{#if error}
 			<div class="text-red-500">{error}</div>
 		{:else if courses?.data?.length}
-			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+			<div class="flex flex-wrap">
 				{#each courses.data as course}
-					<button class="rounded-lg text-left" onclick={() => handleCourseClick(course)}>
+					<button
+						class="mb-8 grid grid-cols-2 gap-4 rounded-lg text-left"
+						onclick={() => handleCourseClick(course)}
+					>
 						<!-- Full Image -->
 						<div class="w-full overflow-hidden rounded-lg shadow-md">
 							<img
@@ -39,15 +42,18 @@
 						</div>
 
 						<!-- Product Details -->
-						<h2 class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500">
-							{course.title}
-						</h2>
-						<p class="text-grey-300 mb-1 font-normal dark:text-blue-300">
-							{course.Category}
-						</p>
-						<p class="mb-1 font-medium text-green-300 dark:text-green-100">
-							$ {course.Price}
-						</p>
+						<div class="">
+							<h2
+								class="dark:text-grey-0 text-productbase mb-1 font-medium text-blue-500 lg:text-lg"
+							>
+								{course.title}
+							</h2>
+							<p
+								class="text-grey-300 lg:text-productlg text-productbase mb-1 font-normal dark:text-blue-300"
+							>
+								{course.Category}
+							</p>
+						</div>
 					</button>
 				{/each}
 			</div>

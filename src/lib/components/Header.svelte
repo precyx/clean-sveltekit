@@ -9,9 +9,12 @@
 	import { theme } from '$lib/stores/theme';
 
 	import NavLink from '$lib/components/NavLink.svelte';
+	import PopupItem from '$lib/components/PopupItem.svelte';
 	import IconSun from '$lib/icons/IconSun.svelte';
 	import IconMoon from '$lib/icons/IconMoon.svelte';
 	import IconUser from '$lib/icons/IconUser.svelte';
+
+	import { isPersonalPage } from '$lib/utils/Utils';
 
 	/* custom classes */
 	let { customClasses } = $props();
@@ -61,15 +64,15 @@
 
 	// Change header background depending on the page
 	let headerClasses = $state('');
-	let isMyCourses = $state(false);
+	let IS_PERSONAL_PAGE = $state(false);
 
 	$effect(() => {
-		if (page.url.pathname === '/my-courses') {
-			isMyCourses = true;
+		if (isPersonalPage(page.url.pathname)) {
+			IS_PERSONAL_PAGE = true;
 			headerClasses =
 				'bg-gradient-to-r from-[#8FC04B] to-[#2695C7] dark:from-[#384520] dark:to-[#0C3B56]';
 		} else {
-			isMyCourses = false;
+			IS_PERSONAL_PAGE = false;
 			headerClasses = '';
 		}
 	});
@@ -95,7 +98,7 @@
 
 			<NavLink href={'/landing'}>
 				<div class="relative top-[-15px] h-[60px]">
-					{#if isMyCourses || $theme === 'dark'}
+					{#if IS_PERSONAL_PAGE || $theme === 'dark'}
 						<img src={LOGO_WHITE} class="w-[90px]" />
 					{:else}
 						<img src={LOGO} class="w-[90px]" />
@@ -112,11 +115,11 @@
 			<button on:click={toggleTheme} class="transform rounded p-2">
 				{#if $theme === 'dark'}
 					<IconSun
-						classes={`h-6 w-6 dark:text-gray-50 ${isMyCourses ? ' text-grey-0' : ' text-blue-500'}`}
+						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
 					></IconSun>
 				{:else}
 					<IconMoon
-						classes={`h-6 w-6 dark:text-gray-50 ${isMyCourses ? ' text-grey-0' : ' text-blue-500'}`}
+						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
 					></IconMoon>
 				{/if}
 			</button>
@@ -125,14 +128,23 @@
 				<NavLink href={'/login'}>Login</NavLink>
 			{:else}
 				<NavLink href={'/my-courses'}>Mis Cursos</NavLink>
-				<div>
-					<IconUser
-						classes={`h-6 w-6 dark:text-gray-50 ${isMyCourses ? ' text-grey-0' : ' text-blue-500'} `}
-					></IconUser>
+				<div class="group relative flex items-center">
+					<button class=" p-2">
+						<IconUser
+							classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'} `}
+						></IconUser>
+					</button>
+
+					<!-- Popover -->
+					<div class="absolute right-0 top-[40px] z-10 hidden group-hover:block">
+						<div
+							class="dark:bg-grey-900 dark:border-grey-700 w-32 rounded-lg border border-gray-300 bg-white p-1 shadow-lg"
+						>
+							<PopupItem href={'/profile'}>Profile</PopupItem>
+							<PopupItem onclick={logout}>Logout</PopupItem>
+						</div>
+					</div>
 				</div>
-				<button on:click={logout}>
-					<NavLink href="">Logout</NavLink>
-				</button>
 			{/if}
 		</div>
 	</div>

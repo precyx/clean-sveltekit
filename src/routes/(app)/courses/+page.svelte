@@ -24,7 +24,7 @@
 		{#if error}
 			<div class="text-red-500">{error}</div>
 		{:else if courses?.data?.length}
-			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
 				{#each courses.data as course}
 					<button class="rounded-lg text-left" onclick={() => handleCourseClick(course)}>
 						<!-- Full Image -->
