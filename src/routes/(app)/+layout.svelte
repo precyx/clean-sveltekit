@@ -1,15 +1,14 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 	import '../../app.postcss';
 </script>
 
-<div class="app dark:bg-grey-1000 font-raleway">
-	<Header customClasses="" />
-
-	<main class="mx-auto mt-12 w-full max-w-5xl flex-1 px-5">
-		<slot />
-	</main>
-</div>
+<Header customClasses="" />
+<main class="mx-auto mt-12 w-full max-w-5xl flex-1 flex-grow px-5">
+	<slot />
+</main>
+<Footer></Footer>
 
 <svelte:head>
 	<link
@@ -24,10 +23,7 @@
 	<style>
 		html,
 		body {
-			@apply dark:bg-grey-1000 bg-white;
-		}
-		body {
-			min-height: 100vh;
+			@apply dark:bg-grey-1000 flex min-h-screen flex-col bg-white font-raleway;
 		}
 	</style>
 </svelte:head>

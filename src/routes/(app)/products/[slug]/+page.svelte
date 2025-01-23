@@ -38,13 +38,16 @@
 		<!-- Product Detail Layout -->
 		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
-			<div>
-				<img
-					src={IMAGE_BASE + product.data.image[0]?.url}
-					alt={product.data.title}
-					class="aspect-square w-full rounded-lg object-cover"
-				/>
-			</div>
+
+			{#if product?.data.images && product.data.images.length}
+				<div>
+					<img
+						src={IMAGE_BASE + product.data.images[0]?.url}
+						alt={product.data.title}
+						class="aspect-square w-full rounded-lg object-cover"
+					/>
+				</div>
+			{/if}
 
 			<!-- Product Info -->
 			<div class="">

@@ -30,7 +30,7 @@
 						<!-- Full Image -->
 						<div class="w-full overflow-hidden rounded-lg shadow-md">
 							<img
-								src={IMAGE_BASE + course.videos[0]?.url}
+								src={IMAGE_BASE + course.videoPreview?.url}
 								alt={course.title}
 								class="h-auto w-full object-contain"
 							/>
@@ -41,10 +41,10 @@
 							{course.title}
 						</h2>
 						<p class="text-grey-300 mb-1 font-normal dark:text-blue-300">
-							{course.Category}
+							{course.category}
 						</p>
 						<p class="mb-1 font-medium text-green-300 dark:text-green-100">
-							$ {course.Price}
+							$ {course.price}
 						</p>
 					</button>
 				{/each}

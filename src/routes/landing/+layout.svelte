@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import '../../app.postcss';
 </script>
@@ -6,9 +7,11 @@
 <div class="app font-raleway dark:bg-black">
 	<Header customClasses="bg-white dark:bg-blue-600" />
 
-	<main class="mx-auto w-full flex-1">
+	<main class="mx-auto w-full flex-1 flex-grow">
 		<slot />
 	</main>
+
+	<Footer></Footer>
 </div>
 
 <svelte:head>
@@ -24,7 +27,7 @@
 	<style>
 		html,
 		body {
-			@apply bg-white dark:bg-black;
+			@apply flex min-h-screen flex-col bg-white dark:bg-black;
 		}
 		body {
 			min-height: 100vh;

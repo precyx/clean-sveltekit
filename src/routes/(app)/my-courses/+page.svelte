@@ -9,7 +9,7 @@
 	let IMAGE_BASE = 'http://localhost:1337';
 
 	const handleCourseClick = (course: Course) => {
-		goto(`/courses/${course.documentId}`, {
+		goto(`/my-courses/${course.documentId}`, {
 			state: {
 				documentId: course.documentId
 			}
@@ -35,7 +35,7 @@
 						<!-- Full Image -->
 						<div class="w-full overflow-hidden rounded-lg shadow-md">
 							<img
-								src={IMAGE_BASE + course.videos[0]?.url}
+								src={IMAGE_BASE + course.videoPreview?.url}
 								alt={course.title}
 								class="h-auto w-full object-contain"
 							/>
@@ -51,7 +51,7 @@
 							<p
 								class="text-grey-300 lg:text-productlg text-productbase mb-1 font-normal dark:text-blue-300"
 							>
-								{course.Category}
+								{course.category}
 							</p>
 						</div>
 					</button>

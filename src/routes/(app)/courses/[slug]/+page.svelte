@@ -42,7 +42,7 @@
 			<!-- Product Image -->
 			<div>
 				<img
-					src={IMAGE_BASE + course.data.videos[0]?.url}
+					src={IMAGE_BASE + course.data.videoPreview?.url}
 					alt={course.data.title}
 					class="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
 				/>
@@ -53,21 +53,23 @@
 
 				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{#each course.data?.products as product}
-						<div class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
+						<button class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
 							<!-- Full Image -->
-							<div class="w-full overflow-hidden rounded-lg shadow-md">
-								<img
-									src={IMAGE_BASE + product.image[0]?.url}
-									alt={product.title}
-									class="h-auto w-full object-contain"
-								/>
-							</div>
+							{#if product?.images && product.images.length}
+								<div class="w-full overflow-hidden rounded-lg shadow-md">
+									<img
+										src={IMAGE_BASE + product.images[0]?.url}
+										alt={product.title}
+										class="h-auto w-full object-contain"
+									/>
+								</div>
+							{/if}
 
 							<!-- Product Details -->
 							<h2 class="dark:text-grey-0 text-productsm mb-1 mt-2 font-medium text-blue-500">
 								{product.title}
 							</h2>
-						</div>
+						</button>
 					{/each}
 				</div>
 			</div>
@@ -84,7 +86,7 @@
 				</p>
 
 				<p class="font-regular text-xl text-green-300 dark:text-green-100">
-					$ {course.data.Price}
+					$ {course.data.price}
 				</p>
 
 				<div class="mt-8">
@@ -93,12 +95,12 @@
 
 				<!-- Time to Fabricate -->
 				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-2 font-semibold">
-					{course.data.subcategory}
+					timeToFabricate
 				</p>
 
 				<!-- Product Description -->
 				<p class="dark:text-grey-100 text-grey-500 mt-6 text-base font-medium">
-					<RichText content={course.data.Description}></RichText>
+					<RichText content={course.data.description}></RichText>
 				</p>
 			</div>
 		</div>

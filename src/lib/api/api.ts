@@ -1,12 +1,14 @@
 import axios from 'axios';
 import type { AxiosRequestConfig, AxiosError } from 'axios';
 
+import qs from 'qs';
+
 const API_URL = import.meta.env.VITE_STRAPI_API_URL;
 const API_TOKEN = import.meta.env.VITE_STRAPI_API_TOKEN;
 
 // For list responses
-export type ListResponse<T> = {
-	data: T[];
+export type ApiResponse<T> = {
+	data: T;
 	meta: {
 		pagination: {
 			page: number;
@@ -17,14 +19,126 @@ export type ListResponse<T> = {
 	};
 };
 
-export type BaseEntity<T> = {
+export type BaseEntity = {
 	id: number;
-	documentId?: string; // Optional field for external or unique references
-	attributes: T & {
-		createdAt: string;
-		updatedAt: string;
-		publishedAt: string | null;
+	documentId?: string; // Optional external/unique reference
+	createdAt: string;
+	updatedAt: string;
+	publishedAt: string | null;
+};
+
+/**
+ * Course
+ */
+export interface Course extends BaseEntity {
+	slug: string;
+	title: string;
+	description: RichText[];
+	category: string;
+	publicContent: string;
+	fullContent?: string | null;
+	price: number;
+	videoPreview: Image;
+	videos: Video[];
+	products: Product[];
+}
+
+/**
+ * Product
+ */
+export interface Product extends BaseEntity {
+	title: string;
+	images: Image[];
+	category: string;
+	subcategory: string;
+	description: string;
+	courses: Course[];
+	formulas: Formula[];
+}
+
+/**
+ * FormulaItem
+ */
+export interface FormulaItem extends BaseEntity {
+	title: string;
+	percentage: string; // Represented as a string since percentages include "%"
+	value: string; // Represented as a string to accommodate units like "g", "ml", etc.
+}
+
+/**
+ * Formula
+ */
+export interface Formula extends BaseEntity {
+	title: string;
+	description: string | null;
+	locale: string; // Language locale
+	FormulaItem: FormulaItem[]; // Array of FormulaItem
+}
+
+/**
+ * Video
+ */
+export interface Video extends BaseEntity {
+	title: string;
+	courses: Course[];
+	description: string | null;
+	lessonNumber: string;
+	video: Image;
+}
+
+/**
+ * ImageFormat
+ */
+export type ImageFormat = {
+	ext: string;
+	url: string;
+	hash: string;
+	mime: string;
+	name: string;
+	path: string | null;
+	size: number;
+	width: number;
+	height: number;
+	sizeInBytes: number;
+};
+
+/**
+ * Image
+ */
+export type Image = {
+	id: number;
+	documentId: string;
+	name: string;
+	alternativeText: string | null;
+	caption: string | null;
+	width: number;
+	height: number;
+	formats: {
+		large?: ImageFormat;
+		small?: ImageFormat;
+		medium?: ImageFormat;
+		thumbnail?: ImageFormat;
 	};
+	hash: string;
+	ext: string;
+	mime: string;
+	size: number;
+	url: string;
+	previewUrl: string | null;
+	provider: string;
+	provider_metadata: any | null;
+	createdAt: string;
+	updatedAt: string;
+	publishedAt: string;
+};
+
+/**
+ * TextNode
+ */
+export type RichText = {
+	type: 'paragraph' | 'text';
+	text?: string; // For "text" type
+	children?: RichText[]; // For "paragraph" type
 };
 
 // Base API instance
@@ -148,62 +262,43 @@ export const logout = () => {
 	window.location.href = '/login';
 };
 
-/* Course */
-
-export interface Course {
-	id: number;
-	documentId: number;
-	slug: string;
-	title: string;
-	description: string;
-	publicContent: string;
-	fullContent?: string | null;
-	price: number;
-}
-
-export const getCourses = async (): Promise<{ data: Course[] }> => {
-	return apiRequest<{ data: Course[] }>('GET', `${API_URL}/api/courses?populate=*`);
+export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
+	return apiRequest<ApiResponse<Course[]>>('GET', `${API_URL}/api/courses?populate=*`);
 };
 
-export const getCourse = async (id: string): Promise<{ data: Course[] }> => {
-	return apiRequest<{ data: Course[] }>(
+export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
+	const queryObject = {
+		populate: {
+			videos: {
+				populate: 'video'
+			},
+			videoPreview: true,
+			products: {
+				populate: {
+					formulas: {
+						populate: 'FormulaItem'
+					},
+					images: true
+				}
+			}
+		}
+	};
+	const queryString = qs.stringify(queryObject, { encode: false });
+
+	console.log('queryString', queryString);
+
+	return apiRequest<ApiResponse<Course>>(
 		'GET',
-		`${API_URL}/api/courses/${id}?populate[products][populate]=image&populate=videos`
+		`${API_URL}/api/courses/${id}
+		?${queryString}
+		`
 	);
 };
 
-/* Product */
-
-export interface Product {
-	id: number;
-	documentId: number;
-	title: string;
-	image: string;
-	category: string;
-	description: string;
-	courses: [];
-	formulas: [];
-}
-
-export const getProducts = async (): Promise<{ data: Product[] }> => {
-	return apiRequest<{ data: Product[] }>('GET', `${API_URL}/api/products?populate=*`);
+export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
+	return apiRequest<ApiResponse<Product[]>>('GET', `${API_URL}/api/products?populate=*`);
 };
 
-export const getProduct = async (id: string): Promise<{ data: Product[] }> => {
-	return apiRequest<{ data: Product[] }>('GET', `${API_URL}/api/products/${id}?populate=*`);
-};
-
-/* Article */
-
-export interface Article {
-	id: number;
-	documentId: string;
-	slug: string;
-	title: string;
-	content: string;
-	category: string;
-}
-
-export const getArticles = async (): Promise<{ data: Article[] }> => {
-	return apiRequest<{ data: Article[] }>('GET', `${API_URL}/api/articles`);
+export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
+	return apiRequest<ApiResponse<Product>>('GET', `${API_URL}/api/products/${id}?populate=*`);
 };

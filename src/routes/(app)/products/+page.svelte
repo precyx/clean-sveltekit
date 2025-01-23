@@ -31,15 +31,17 @@
 		{:else if products?.data?.length}
 			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				{#each products.data as product}
-					<div class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
+					<button class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
 						<!-- Full Image -->
-						<div class="w-full overflow-hidden rounded-lg shadow-md">
-							<img
-								src={IMAGE_BASE + product.image[0]?.url}
-								alt={product.title}
-								class="h-auto w-full object-contain"
-							/>
-						</div>
+						{#if product?.images && product.images.length}
+							<div class="w-full overflow-hidden rounded-lg shadow-md">
+								<img
+									src={IMAGE_BASE + product.images[0]?.url}
+									alt={product.title}
+									class="h-auto w-full object-contain"
+								/>
+							</div>
+						{/if}
 
 						<!-- Product Details -->
 						<h2 class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500">
@@ -51,7 +53,7 @@
 						<p class="text-grey-300 dark:text-grey-500 font-medium">
 							{product.subcategory}
 						</p>
-					</div>
+					</button>
 				{/each}
 			</div>
 		{:else}

@@ -9,5 +9,5 @@ export function sleep(ms: number): Promise<void> {
 
 /* check if the current page is a personal page */
 export const isPersonalPage = (path: string) => {
-	return path === '/my-courses' || path === '/profile';
+	return path.includes('/my-courses') || path.includes('/profile');
 };

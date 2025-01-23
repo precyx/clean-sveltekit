@@ -79,20 +79,11 @@
 </script>
 
 <header
-	class={`text-grey-300 dark:text-grey-100 relative z-10 w-full ${headerClasses} ${customClasses}`}
+	class={`text-grey-300 dark:text-grey-100 relative z-50 w-full ${headerClasses} ${customClasses} h-[70px]`}
 >
-	<div class="container mx-auto flex items-center">
-		<!-- Logo Section -->
-		<div class="mr-auto flex items-center space-x-4">
-			{#if currentUser}
-				<div class="hidden text-sm font-semibold sm:block">
-					Welcome, {currentUser.username}
-				</div>
-			{/if}
-		</div>
-
+	<div class="container mx-auto flex h-full items-center">
 		<!-- Navigation -->
-		<nav class="mx-auto hidden translate-x-[100px] items-center space-x-3 md:flex">
+		<nav class="absolute inset-x-0 mx-auto flex h-full items-center justify-center space-x-3">
 			<NavLink href={'/courses'}>Courses</NavLink>
 			<NavLink href={'/products'}>Products</NavLink>
 
@@ -111,7 +102,7 @@
 		</nav>
 
 		<!-- Action Buttons -->
-		<div class="ml-auto flex items-center space-x-4">
+		<div class="relative z-20 ml-auto flex h-full items-center space-x-4">
 			<button on:click={toggleTheme} class="transform rounded p-2">
 				{#if $theme === 'dark'}
 					<IconSun
@@ -128,15 +119,15 @@
 				<NavLink href={'/login'}>Login</NavLink>
 			{:else}
 				<NavLink href={'/my-courses'}>Mis Cursos</NavLink>
-				<div class="group relative flex items-center">
-					<button class=" p-2">
+				<div class="group relative z-30 flex items-center">
+					<button class="  p-2">
 						<IconUser
 							classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'} `}
 						></IconUser>
 					</button>
 
 					<!-- Popover -->
-					<div class="absolute right-0 top-[40px] z-10 hidden group-hover:block">
+					<div class="absolute right-0 top-[40px] hidden group-hover:block">
 						<div
 							class="dark:bg-grey-900 dark:border-grey-700 w-32 rounded-lg border border-gray-300 bg-white p-1 shadow-lg"
 						>
