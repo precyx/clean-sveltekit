@@ -57,15 +57,6 @@ export interface Product extends BaseEntity {
 }
 
 /**
- * FormulaItem
- */
-export interface FormulaItem extends BaseEntity {
-	title: string;
-	percentage: string; // Represented as a string since percentages include "%"
-	value: string; // Represented as a string to accommodate units like "g", "ml", etc.
-}
-
-/**
  * Formula
  */
 export interface Formula extends BaseEntity {
@@ -73,6 +64,16 @@ export interface Formula extends BaseEntity {
 	description: string | null;
 	locale: string; // Language locale
 	FormulaItem: FormulaItem[]; // Array of FormulaItem
+}
+
+/**
+ * FormulaItem
+ */
+export interface FormulaItem extends BaseEntity {
+	title: string;
+	percentage: string; // Represented as a string since percentages include "%"
+	value: string; // Represented as a string to accommodate units like "g", "ml", etc.
+	image: Image;
 }
 
 /**
@@ -89,7 +90,7 @@ export interface Video extends BaseEntity {
 /**
  * ImageFormat
  */
-export type ImageFormat = {
+export interface ImageFormat {
 	ext: string;
 	url: string;
 	hash: string;
@@ -100,14 +101,12 @@ export type ImageFormat = {
 	width: number;
 	height: number;
 	sizeInBytes: number;
-};
+}
 
 /**
  * Image
  */
-export type Image = {
-	id: number;
-	documentId: string;
+export interface Image extends BaseEntity {
 	name: string;
 	alternativeText: string | null;
 	caption: string | null;
@@ -130,7 +129,7 @@ export type Image = {
 	createdAt: string;
 	updatedAt: string;
 	publishedAt: string;
-};
+}
 
 /**
  * TextNode
@@ -263,7 +262,29 @@ export const logout = () => {
 };
 
 export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
-	return apiRequest<ApiResponse<Course[]>>('GET', `${API_URL}/api/courses?populate=*`);
+	const queryObject = {
+		populate: {
+			videos: {
+				populate: 'video'
+			},
+			videoPreview: true,
+			products: {
+				populate: {
+					formulas: {
+						populate: {
+							FormulaItem: {
+								populate: 'image'
+							}
+						}
+					},
+					images: true
+				}
+			}
+		}
+	};
+	const queryString = qs.stringify(queryObject, { encode: false });
+
+	return apiRequest<ApiResponse<Course[]>>('GET', `${API_URL}/api/courses?${queryString}`);
 };
 
 export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
@@ -276,7 +297,11 @@ export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
 			products: {
 				populate: {
 					formulas: {
-						populate: 'FormulaItem'
+						populate: {
+							FormulaItem: {
+								populate: 'image'
+							}
+						}
 					},
 					images: true
 				}
@@ -284,8 +309,6 @@ export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
 		}
 	};
 	const queryString = qs.stringify(queryObject, { encode: false });
-
-	console.log('queryString', queryString);
 
 	return apiRequest<ApiResponse<Course>>(
 		'GET',
@@ -301,4 +324,8 @@ export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
 
 export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
 	return apiRequest<ApiResponse<Product>>('GET', `${API_URL}/api/products/${id}?populate=*`);
+};
+
+export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
+	return apiRequest<ApiResponse<Video>>('GET', `${API_URL}/api/videos/${id}?populate=*`);
 };

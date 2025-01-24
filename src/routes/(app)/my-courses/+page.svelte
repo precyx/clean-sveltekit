@@ -43,16 +43,32 @@
 
 						<!-- Product Details -->
 						<div class="">
-							<h2
-								class="dark:text-grey-0 text-productbase mb-1 font-medium text-blue-500 lg:text-lg"
-							>
+							<h2 class="dark:text-grey-0 mb-1 text-lg font-medium text-blue-500">
 								{course.title}
 							</h2>
-							<p
-								class="text-grey-300 lg:text-productlg text-productbase mb-1 font-normal dark:text-blue-300"
-							>
-								{course.category}
+
+							<p class="text-grey-300 text-productbase mb-1 font-medium dark:text-blue-300">
+								{course.category} •
+								{course.videos.length} videos
 							</p>
+
+							<div class="mt-4 flex">
+								{#each course.products as product (product.id)}
+									<p class="text-grey-300 text-productbase mb-1 font-medium dark:text-blue-300">
+										{#if product.images.length}
+											{#each product.images as image}
+												<div class="mr-2">
+													<img
+														src={IMAGE_BASE + image.url}
+														alt={image.alternativeText}
+														class="h-16 w-16 rounded-lg object-cover shadow-lg"
+													/>
+												</div>
+											{/each}
+										{/if}
+									</p>
+								{/each}
+							</div>
 						</div>
 					</button>
 				{/each}

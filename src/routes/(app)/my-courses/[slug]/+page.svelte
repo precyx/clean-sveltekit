@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Formula from '$lib/components/Formula.svelte';
-	import type { Formula as FormulaType } from '$lib/api/api.js';
+	import type { Course, Formula as FormulaType } from '$lib/api/api.js';
 	import type { Product } from '$lib/api/api.js';
+	import { onMount } from 'svelte';
+
+	import type { Video } from '$lib/api/api.js';
 
 	export let data;
 	let { course, error, slug } = data;
@@ -19,6 +22,16 @@
 	};
 
 	const handleProductClick = () => {};
+
+	let expanded = false;
+
+	const handleExpand = () => {
+		expanded = !expanded;
+	};
+
+	const handleVideoClick = (video: Video) => {
+		goto(`/video/${video.documentId}`);
+	};
 </script>
 
 {#if error}
@@ -58,30 +71,104 @@
 				<div class="dark:text-grey-0 mb-4 mb-4 text-lg font-bold italic text-blue-500">
 					Videos ({course.data.videos.length})
 				</div>
-				<!-- {#each course.data.videos}-->
-				{#each course.data.videos as video}
-					<!-- 2 columns -->
-					<div class="mb-4 grid grid-cols-2 gap-4">
-						<div>
-							<img
-								src={IMAGE_BASE + video.video?.url}
-								alt={video.title}
-								class=" w-full rounded-lg object-cover"
-							/>
-						</div>
-						<div class="dark:text-grey-0 flex font-medium text-blue-500">
-							<p>
-								{video.lessonNumber}. {video.title}
-							</p>
+
+				{#if course.data.videos.length}
+					<div
+						class={'relative overflow-y-hidden transition-all duration-300 ease-in-out '}
+						style="height: {expanded ? `600px` : '400px'};"
+						id="expandable-content"
+					>
+						<!-- {#each course.data.videos}-->
+						{#each course.data.videos as video}
+							<!-- 2 columns -->
+							<button
+								class="mb-4 grid grid-cols-2 gap-4"
+								onclick={() => {
+									handleVideoClick(video);
+								}}
+							>
+								<div>
+									<img
+										src={IMAGE_BASE + video.video?.url}
+										alt={video.title}
+										class=" w-full rounded-lg object-cover"
+									/>
+								</div>
+								<div class="dark:text-grey-0 flex text-left font-medium text-blue-500">
+									<p>
+										{video.lessonNumber}. {video.title}
+									</p>
+								</div>
+							</button>
+						{/each}
+
+						<button
+							class="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 transform rounded-full bg-blue-500 px-8 py-1 text-white"
+							onclick={handleExpand}
+						>
+							{#if expanded}
+								Ver menos
+							{:else}
+								Ver mas
+							{/if}
+						</button>
+
+						<!-- Adaptive Gradient Overlay -->
+						<div class="absolute absolute bottom-0 left-0 right-0 h-[200px]">
+							<!-- Light Mode Gradient -->
+							<div
+								class="h-full w-full bg-gradient-to-b from-[rgba(240,252,255,0)] via-[rgba(255,255,255,0.5)] to-[rgba(255,255,255,1)] dark:hidden"
+							></div>
+
+							<!-- Dark Mode Gradient -->
+							<!-- Dark Mode Gradient -->
+							<div
+								class="hidden h-full w-full bg-gradient-to-t from-[rgba(38,40,43,1)] via-[rgba(38,40,43,0.2)] to-[rgba(38,40,43,0)] dark:block"
+							></div>
 						</div>
 					</div>
-				{/each}
+				{/if}
 			</div>
 
 			<!-- Product Info -->
 			{#if firstFormula}
-				<div class="">
-					<Formula formula={firstFormula} product={firstProduct}></Formula>
+				<div>
+					<div class="">
+						<Formula formula={firstFormula} product={firstProduct}></Formula>
+					</div>
+
+					<div class="mt-8">
+						<div class="dark:text-grey-0 mb-4 mb-4 text-lg font-bold italic text-blue-500">
+							Ingredientes ({firstFormula.FormulaItem.length})
+						</div>
+						{#each firstFormula.FormulaItem as item (item.id)}
+							<div class="dark:text-grey-0 flex font-medium text-blue-500">
+								<div class="mt-4 flex">
+									{#if item.image}
+										<img
+											src={IMAGE_BASE + item.image.url}
+											alt={item.title}
+											class="h-24 w-24 rounded-lg object-cover shadow-lg"
+										/>
+									{:else}
+										<div
+											class="flex h-24 w-24 items-center justify-center rounded-lg bg-gray-200 text-gray-500 shadow-lg"
+										>
+											No Image
+										</div>
+									{/if}
+									<div class="ml-6">
+										<div>
+											{item.title}
+										</div>
+										<div class="dark:text-grey-300 text-blue-400">
+											{item.category}
+										</div>
+									</div>
+								</div>
+							</div>
+						{/each}
+					</div>
 				</div>
 			{/if}
 		</div>
