@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 
 	let IMAGE_BASE = 'http://localhost:1337';
 
@@ -24,34 +25,33 @@
 	};
 </script>
 
-<div class="mb-6">
+<div class="mb-1">
 	<div class="flex items-center">
 		<button
 			onclick={goToMyCourses}
-			class="dark:text-grey-0 mr-3 flex items-center text-blue-500 hover:underline"
+			class="mr-3 flex items-center text-blue-500 hover:underline dark:text-blue-300"
 		>
 			Mis Cursos
 		</button>
-		<div></div>
 
+		<div class="mr-2">
+			<ArrowIcon direction="right" classes="text-blue-200 dark:text-grey-500" />
+		</div>
 		<button
 			onclick={goBack}
-			class="dark:text-grey-0 flex items-center text-blue-500 hover:underline"
+			class="mr-2 flex items-center text-blue-500 hover:underline dark:text-blue-300"
 		>
-			<!-- Back Arrow Icon -->
-			<svg
-				class="mr-2 h-5 w-5"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
-				></path>
-			</svg>
-
 			{course?.data.title}
 		</button>
+		<div class="mr-2">
+			<ArrowIcon direction="right" classes="text-blue-200 dark:text-grey-500" />
+		</div>
+
+		<div class="dark:text-grey-500 text-blue-200">
+			{#if video?.data}
+				{video.data.lessonNumber}. {video.data.title}
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -59,8 +59,10 @@
 	<div class="text-red-500">{error}</div>
 {:else if video?.data}
 	<div class="">
-		<div>
-			<h1 class="dark:text-grey-0 text-xl font-bold text-blue-500">{video.data.title}</h1>
+		<div class="mb-4">
+			<h1 class="dark:text-grey-0 text-xl font-bold text-blue-500">
+				{video.data.lessonNumber}. {video.data.title}
+			</h1>
 		</div>
 		<img
 			src={`${IMAGE_BASE}${video.data.video.url}`}

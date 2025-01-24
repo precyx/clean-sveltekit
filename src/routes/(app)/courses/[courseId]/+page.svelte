@@ -3,6 +3,7 @@
 	import { getCourses } from '$lib/api/api.js';
 	import Button from '$lib/components/Button.svelte';
 	import RichText from '$lib/components/RichText.svelte';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -41,27 +42,38 @@
 		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
 			<div>
-				<img
-					src={IMAGE_BASE + course.data.videoPreview?.url}
-					alt={course.data.title}
-					class="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
-				/>
+				{#if course.data.videoPreview?.url}
+					<img
+						src={IMAGE_BASE + course.data.videoPreview?.url}
+						alt={course.data.title}
+						class="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
+					/>
+				{:else}
+					<div
+						class="mb-8 flex aspect-square h-[260px] w-full items-center justify-center rounded-lg bg-gray-300"
+					>
+						<p class="text-gray-500">No Image Available</p>
+					</div>
+				{/if}
 
 				<div class="text-mid dark:text-grey-0 mb-4 mb-4 font-bold italic text-blue-500">
 					Productos en ese curso
 				</div>
 
-				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+				<div class="flex">
 					{#each course.data?.products as product}
-						<button class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
+						<button
+							class="mr-4 h-[100px] w-[100px] rounded-lg text-left"
+							onclick={() => handleProductClick(product)}
+						>
 							<!-- Full Image -->
 							{#if product?.images && product.images.length}
-								<div class="w-full overflow-hidden rounded-lg shadow-md">
-									<img
+								<div class="">
+									<ImageDisplay
 										src={IMAGE_BASE + product.images[0]?.url}
 										alt={product.title}
-										class="h-auto w-full object-contain"
-									/>
+										classes={'h-[100px] w-[100px] shadow-lg rounded'}
+									></ImageDisplay>
 								</div>
 							{/if}
 

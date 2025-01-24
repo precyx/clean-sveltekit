@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CourseCard from '$lib/components/CourseCard.svelte';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import { goto } from '$app/navigation';
 	import type { Course } from '$lib/api/api.js';
 
@@ -24,16 +24,24 @@
 		{#if error}
 			<div class="text-red-500">{error}</div>
 		{:else if courses?.data?.length}
-			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+			<div class="grid grid-cols-1 items-start gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
 				{#each courses.data as course}
 					<button class="rounded-lg text-left" onclick={() => handleCourseClick(course)}>
 						<!-- Full Image -->
-						<div class="w-full overflow-hidden rounded-lg shadow-md">
-							<img
-								src={IMAGE_BASE + course.videoPreview?.url}
-								alt={course.title}
-								class="h-auto w-full object-contain"
-							/>
+						<div
+							class="dark:bg-grey-900 flex w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 shadow-md"
+						>
+							{#if course.videoPreview?.url}
+								<ImageDisplay
+									src={IMAGE_BASE + course.videoPreview?.url}
+									alt={course.title}
+									classes={'h-[200px] '}
+								></ImageDisplay>
+							{:else}
+								<div class="flex h-40 w-full items-center justify-center bg-gray-300">
+									<p class="text-gray-500">No Image Available</p>
+								</div>
+							{/if}
 						</div>
 
 						<!-- Product Details -->

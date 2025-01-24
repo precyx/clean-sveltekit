@@ -2,11 +2,13 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Formula from '$lib/components/Formula.svelte';
+	import Placeholder from '$lib/components/Placeholder.svelte';
 	import type { Course, Formula as FormulaType } from '$lib/api/api.js';
 	import type { Product } from '$lib/api/api.js';
 	import { onMount } from 'svelte';
 
 	import type { Video } from '$lib/api/api.js';
+	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -40,13 +42,21 @@
 	<div class="text-red-500">{error}</div>
 {:else if course?.data}
 	<div class="">
-		<div class="mb-1">
+		<div class="mb-1 flex items-center">
 			<button
 				onclick={goBack}
-				class="dark:text-grey-0 flex items-center text-blue-500 hover:underline"
+				class="mr-3 flex items-center text-blue-500 hover:underline dark:text-blue-300"
 			>
 				Mis Cursos
 			</button>
+
+			<div class="mr-2">
+				<ArrowIcon direction="right" classes="text-blue-200 dark:text-grey-500" />
+			</div>
+
+			<div class="dark:text-grey-500 text-blue-500">
+				{course.data.title}
+			</div>
 		</div>
 
 		<div class="mb-4">
@@ -66,7 +76,7 @@
 				{#if course.data.videos.length}
 					<div
 						class={'relative overflow-y-hidden transition-all duration-300 ease-in-out '}
-						style="height: {expanded ? `600px` : '400px'};"
+						style="height: {expanded ? `2000px` : '400px'};"
 						id="expandable-content"
 					>
 						<!-- {#each course.data.videos}-->
@@ -78,12 +88,16 @@
 									handleVideoClick(video);
 								}}
 							>
-								<div>
-									<img
-										src={IMAGE_BASE + video.video?.url}
-										alt={video.title}
-										class=" w-full rounded-lg object-cover"
-									/>
+								<div class="w-full overflow-hidden rounded-lg">
+									{#if video.video?.url}
+										<img
+											src={IMAGE_BASE + video.video?.url}
+											alt={video.title}
+											class="w-full rounded-lg object-cover"
+										/>
+									{:else}
+										<Placeholder width="250px" height="auto">No Image Available x</Placeholder>
+									{/if}
 								</div>
 								<div class="dark:text-grey-0 flex text-left font-medium text-blue-500">
 									<p>

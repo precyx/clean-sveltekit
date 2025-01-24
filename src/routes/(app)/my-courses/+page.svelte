@@ -1,7 +1,9 @@
 <script lang="ts">
 	import CourseCard from '$lib/components/CourseCard.svelte';
+	import Placeholder from '$lib/components/Placeholder.svelte';
 	import { goto } from '$app/navigation';
 	import type { Course } from '$lib/api/api.js';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	const { courses, error } = data;
@@ -32,17 +34,18 @@
 						class="mb-8 grid grid-cols-2 gap-4 rounded-lg text-left"
 						onclick={() => handleCourseClick(course)}
 					>
-						<!-- Full Image -->
-						<div class="w-full overflow-hidden rounded-lg shadow-md">
-							<img
+						{#if course.videoPreview?.url}
+							<ImageDisplay
 								src={IMAGE_BASE + course.videoPreview?.url}
 								alt={course.title}
-								class="h-auto w-full object-contain"
-							/>
-						</div>
+								classes={'h-[350px] w-[500px]'}
+							></ImageDisplay>
+						{:else}
+							<Placeholder height="auto" width="500px">No Image Available</Placeholder>
+						{/if}
 
 						<!-- Product Details -->
-						<div class="">
+						<div class="ml-6">
 							<h2 class="dark:text-grey-0 mb-1 text-lg font-medium text-blue-500">
 								{course.title}
 							</h2>
