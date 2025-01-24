@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 
 	export let data;
-	let { product, error, slug } = data;
+	let { product, error, productId } = data;
 
 	let IMAGE_BASE = 'http://localhost:1337';
 

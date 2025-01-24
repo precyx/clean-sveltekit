@@ -2,19 +2,19 @@ import type { PageLoad } from './$types';
 import { getCourse } from '$lib/api/api';
 
 export const load: PageLoad = async ({ params, fetch }) => {
-	const { slug } = params;
+	const { courseId } = params;
 
 	let course;
 	let error;
 
 	try {
-		course = await getCourse(slug);
+		course = await getCourse(courseId);
 	} catch (err: any) {
 		error = err.message;
 	}
 	return {
 		course: course,
 		error: error,
-		slug: slug
+		courseId: courseId
 	};
 };

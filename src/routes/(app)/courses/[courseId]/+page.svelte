@@ -5,7 +5,7 @@
 	import RichText from '$lib/components/RichText.svelte';
 
 	export let data;
-	let { course, error, slug } = data;
+	let { course, error, courseId } = data;
 
 	let IMAGE_BASE = 'http://localhost:1337';
 

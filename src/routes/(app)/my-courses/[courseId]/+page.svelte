@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Formula from '$lib/components/Formula.svelte';
 	import type { Course, Formula as FormulaType } from '$lib/api/api.js';
@@ -8,7 +9,7 @@
 	import type { Video } from '$lib/api/api.js';
 
 	export let data;
-	let { course, error, slug } = data;
+	let { course, error, courseId } = data;
 
 	let firstProduct: Product | undefined = course?.data?.products?.[0];
 	let firstFormula: FormulaType | undefined = firstProduct?.formulas?.[0];
@@ -30,7 +31,8 @@
 	};
 
 	const handleVideoClick = (video: Video) => {
-		goto(`/video/${video.documentId}`);
+		const currentUrl = page.url.pathname;
+		goto(`${currentUrl}/video/${video.documentId}`, { replaceState: false });
 	};
 </script>
 
@@ -43,18 +45,7 @@
 				onclick={goBack}
 				class="dark:text-grey-0 flex items-center text-blue-500 hover:underline"
 			>
-				<!-- Back Arrow Icon -->
-				<svg
-					class="mr-2 h-5 w-5"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
-					></path>
-				</svg>
-				Back to My Courses
+				Mis Cursos
 			</button>
 		</div>
 
