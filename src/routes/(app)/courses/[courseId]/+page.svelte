@@ -46,7 +46,7 @@
 		<!-- Product Detail Layout -->
 		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
-			<div>
+			<div class="mb-8">
 				{#if course.data.videoPreview?.url}
 					<img
 						src={IMAGE_BASE + course.data.videoPreview?.url}
@@ -61,7 +61,7 @@
 					</div>
 				{/if}
 
-				<div class="text-mid dark:text-grey-0 mb-4 mb-4 font-bold italic text-blue-500">
+				<div class="text-mid dark:text-grey-0 mb-4 font-bold italic text-blue-500">
 					Productos en ese curso
 				</div>
 

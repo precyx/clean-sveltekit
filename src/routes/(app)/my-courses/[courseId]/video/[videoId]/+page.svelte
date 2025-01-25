@@ -24,7 +24,7 @@
 </script>
 
 <div class="mb-1">
-	<div class="flex items-center">
+	<div class="text-productsm mt-4 flex flex-wrap items-center lg:text-base">
 		<button
 			onclick={goToMyCourses}
 			class="mr-3 flex items-center text-blue-500 hover:underline dark:text-blue-300"
@@ -58,7 +58,7 @@
 {:else if video?.data}
 	<div class="">
 		<div class="mb-4">
-			<h1 class="dark:text-grey-0 text-xl font-bold text-blue-500">
+			<h1 class="dark:text-grey-0 mt-2 text-lg font-bold text-blue-500 lg:text-xl">
 				{video.data.lessonNumber}. {video.data.title}
 			</h1>
 		</div>

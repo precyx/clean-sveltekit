@@ -19,7 +19,7 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-2 mb-4 mt-4 text-xl font-extrabold text-blue-500">
+		<h1 class="dark:text-grey-0 mb-2 mb-4 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
 			Nuestros Cursos
 		</h1>
 

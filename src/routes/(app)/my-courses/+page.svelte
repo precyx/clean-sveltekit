@@ -21,7 +21,7 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-4 mt-4 text-xl font-extrabold text-blue-500">
+		<h1 class="dark:text-grey-0 mb-4 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
 			Mis cursos ({courses?.data?.length})
 		</h1>
 
@@ -39,7 +39,7 @@
 								<ImageDisplay
 									src={IMAGE_BASE + course.videoPreview?.url}
 									alt={course.title}
-									classes={'h-[350px] w-[500px] rounded-lg shadow-lg'}
+									classes={' w-[500px] rounded-lg shadow-lg'}
 								></ImageDisplay>
 							{:else}
 								<Placeholder height="auto" width="500px">No Image Available</Placeholder>
@@ -47,14 +47,16 @@
 						</div>
 
 						<!-- Product Details -->
-						<div class="ml-6">
+						<div class="ml-2 lg:ml-6">
 							<h2
-								class="dark:text-grey-0 mb-1 text-lg font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+								class="dark:text-grey-0 text-productbase mb-1 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300 lg:text-lg"
 							>
 								{course.title}
 							</h2>
 
-							<p class="text-grey-300 text-productbase mb-1 font-medium dark:text-blue-300">
+							<p
+								class="text-grey-300 lg:text-productbase mb-1 text-base font-medium dark:text-blue-300"
+							>
 								{course.category} •
 								{course.videos.length} videos
 							</p>

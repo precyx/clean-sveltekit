@@ -19,26 +19,26 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">
+		<h1 class="dark:text-grey-0 mb-2 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
 			Nuestros Productos
 		</h1>
-		<p class="mb-8 text-lg font-bold italic text-blue-400 dark:text-blue-100">
+		<p class="text-productbase mb-8 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
 			Limpieza de Mano, Cocina, Baño
 		</p>
 
 		{#if error}
 			<div class="text-red-500">{error}</div>
 		{:else if products?.data?.length}
-			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+			<div class="grid grid-cols-1 items-start gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				{#each products.data as product}
 					<button class="group rounded-lg text-left" onclick={() => handleProductClick(product)}>
 						<!-- Full Image -->
 						{#if product?.images && product.images.length}
-							<div class="w-full overflow-hidden rounded-lg shadow-md group-hover:opacity-80">
+							<div class="w-full overflow-hidden group-hover:opacity-80">
 								<img
 									src={IMAGE_BASE + product.images[0]?.url}
 									alt={product.title}
-									class="h-auto w-full object-contain"
+									class="h-auto w-full max-w-[250px] rounded-lg object-contain shadow-md"
 								/>
 							</div>
 						{/if}

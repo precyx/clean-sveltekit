@@ -55,7 +55,7 @@
 	<div class="text-red-500">{error}</div>
 {:else if course?.data}
 	<div class="">
-		<div class="mb-1 flex items-center">
+		<div class="text-productsm mb-1 mt-4 flex items-center lg:text-base">
 			<button
 				onclick={goBack}
 				class="mr-3 flex items-center text-blue-500 hover:underline dark:text-blue-300"
@@ -73,7 +73,7 @@
 		</div>
 
 		<div class="mb-4">
-			<p class="dark:text-grey-0 text-xl font-bold tracking-tight text-blue-500">
+			<p class="dark:text-grey-0 mt-2 text-lg font-bold tracking-tight text-blue-500 lg:text-xl">
 				{course.data.title}
 			</p>
 		</div>
@@ -82,7 +82,7 @@
 		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
 			<div>
-				<div class="dark:text-grey-0 mb-4 mb-4 text-lg font-bold italic text-blue-500">
+				<div class="dark:text-grey-0 mb-4 mb-4 text-sm font-bold italic text-blue-500 lg:text-lg">
 					Videos ({course.data.videos.length})
 				</div>
 
@@ -169,7 +169,7 @@
 					</div>
 
 					<div class="mt-8">
-						<div class="dark:text-grey-0 mb-4 mb-4 text-lg font-bold italic text-blue-500">
+						<div class="dark:text-grey-0 mb-2 text-sm font-bold italic text-blue-500 lg:text-lg">
 							Ingredientes ({firstFormula.FormulaItem.length})
 						</div>
 						{#each firstFormula.FormulaItem as item (item.id)}

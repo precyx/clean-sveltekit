@@ -19,7 +19,7 @@
 </script>
 
 <svg
-	class={`h-5 w-5 ${classes}`}
+	class={`h-4 w-4 ${classes}`}
 	fill="none"
 	stroke="currentColor"
 	viewBox="0 0 24 24"

@@ -59,7 +59,7 @@
 	</div>
 
 	<!-- Content -->
-	<div class="relative z-10 px-5 py-10 md:px-20 lg:px-40">
+	<div class="relative z-10 px-5 py-10 lg:px-40">
 		<h1 class="lg:text-xxl text-xl font-black text-blue-500 dark:text-white">
 			Limpiadores <br /> Potentes y Eficaces
 		</h1>

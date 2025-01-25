@@ -5,7 +5,7 @@
 </script>
 
 <Header customClasses="" />
-<main class="mx-auto mt-12 w-full max-w-5xl flex-1 flex-grow px-5">
+<main class="mx-auto mt-0 w-full max-w-5xl flex-1 flex-grow px-5 lg:mt-12">
 	<slot />
 </main>
 <Footer></Footer>

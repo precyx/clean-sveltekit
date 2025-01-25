@@ -10,7 +10,7 @@
 	});
 </script>
 
-<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">Profile</h1>
+<h1 class="dark:text-grey-0 mb-2 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">Profile</h1>
 
 <div class="dark:text-grey-0 text-base text-blue-500">
 	<div>
