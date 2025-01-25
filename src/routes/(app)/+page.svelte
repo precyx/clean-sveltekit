@@ -51,28 +51,5 @@
 	</div>
 </section>
 
-<!-- Additional Content Below -->
-<section class="bg-white px-4 py-16 dark:bg-gray-900">
-	<div class="mx-auto max-w-4xl text-center">
-		<h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Explore More</h2>
-		<p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
-			Scroll down to find more information and content about our services, products, and resources.
-			This section demonstrates a scrollable layout with responsive design.
-		</p>
-		<p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
-			Scroll down to find more information and content about our services, products, and resources.
-			This section demonstrates a scrollable layout with responsive design.
-		</p>
-		<p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
-			Scroll down to find more information and content about our services, products, and resources.
-			This section demonstrates a scrollable layout with responsive design.
-		</p>
-		<p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
-			Scroll down to find more information and content about our services, products, and resources.
-			This section demonstrates a scrollable layout with responsive design.
-		</p>
-	</div>
-</section>
-
 <style>
 </style>

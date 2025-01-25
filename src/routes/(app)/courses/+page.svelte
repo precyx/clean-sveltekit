@@ -19,17 +19,19 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-2 mt-4 text-xl font-extrabold text-blue-500">Nuestros Cursos</h1>
+		<h1 class="dark:text-grey-0 mb-2 mb-4 mt-4 text-xl font-extrabold text-blue-500">
+			Nuestros Cursos
+		</h1>
 
 		{#if error}
 			<div class="text-red-500">{error}</div>
 		{:else if courses?.data?.length}
 			<div class="grid grid-cols-1 items-start gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
 				{#each courses.data as course}
-					<button class="rounded-lg text-left" onclick={() => handleCourseClick(course)}>
+					<button class="group rounded-lg text-left" onclick={() => handleCourseClick(course)}>
 						<!-- Full Image -->
 						<div
-							class="dark:bg-grey-900 flex w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 shadow-md"
+							class="dark:bg-grey-900 flex w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 shadow-md group-hover:opacity-80"
 						>
 							{#if course.videoPreview?.url}
 								<ImageDisplay
@@ -45,7 +47,9 @@
 						</div>
 
 						<!-- Product Details -->
-						<h2 class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500">
+						<h2
+							class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+						>
 							{course.title}
 						</h2>
 						<p class="text-grey-300 mb-1 font-normal dark:text-blue-300">

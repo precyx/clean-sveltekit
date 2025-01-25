@@ -31,22 +31,26 @@
 			<div class="flex flex-wrap">
 				{#each courses.data as course}
 					<button
-						class="mb-8 grid grid-cols-2 gap-4 rounded-lg text-left"
+						class="group mb-8 grid grid-cols-2 gap-4 rounded-lg text-left"
 						onclick={() => handleCourseClick(course)}
 					>
-						{#if course.videoPreview?.url}
-							<ImageDisplay
-								src={IMAGE_BASE + course.videoPreview?.url}
-								alt={course.title}
-								classes={'h-[350px] w-[500px]'}
-							></ImageDisplay>
-						{:else}
-							<Placeholder height="auto" width="500px">No Image Available</Placeholder>
-						{/if}
+						<div class="group-hover:opacity-80">
+							{#if course.videoPreview?.url}
+								<ImageDisplay
+									src={IMAGE_BASE + course.videoPreview?.url}
+									alt={course.title}
+									classes={'h-[350px] w-[500px] rounded-lg shadow-lg'}
+								></ImageDisplay>
+							{:else}
+								<Placeholder height="auto" width="500px">No Image Available</Placeholder>
+							{/if}
+						</div>
 
 						<!-- Product Details -->
 						<div class="ml-6">
-							<h2 class="dark:text-grey-0 mb-1 text-lg font-medium text-blue-500">
+							<h2
+								class="dark:text-grey-0 mb-1 text-lg font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+							>
 								{course.title}
 							</h2>
 

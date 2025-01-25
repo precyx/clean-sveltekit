@@ -323,7 +323,19 @@ export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
 };
 
 export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
-	return apiRequest<ApiResponse<Product>>('GET', `${API_URL}/api/products/${id}?populate=*`);
+	const queryObject = {
+		populate: {
+			images: true,
+			courses: {
+				populate: {
+					videoPreview: true
+				}
+			}
+		}
+	};
+	const queryString = qs.stringify(queryObject, { encode: false });
+
+	return apiRequest<ApiResponse<Product>>('GET', `${API_URL}/api/products/${id}?${queryString}`);
 };
 
 export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {

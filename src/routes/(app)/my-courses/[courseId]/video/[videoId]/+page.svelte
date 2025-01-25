@@ -12,8 +12,6 @@
 		const currentPath = page.url.pathname; // Get the current URL path
 		const pathSegments = currentPath.split('/'); // Split the path into segments
 
-		console.log('pathSegments', pathSegments);
-
 		// Construct the backlink to the course detail page
 		const backLink = `/my-courses/${pathSegments[2]}`;
 

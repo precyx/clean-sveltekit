@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Formula from '$lib/components/Formula.svelte';
 	import Placeholder from '$lib/components/Placeholder.svelte';
+	import RichText from '$lib/components/RichText.svelte';
 	import type { Course, Formula as FormulaType } from '$lib/api/api.js';
 	import type { Product } from '$lib/api/api.js';
-	import { onMount } from 'svelte';
+	import { sleep } from '$lib/utils/Utils.js';
 
 	import type { Video } from '$lib/api/api.js';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
@@ -27,6 +29,17 @@
 	const handleProductClick = () => {};
 
 	let expanded = false;
+	let element: HTMLElement | null = null; // Reference to the HTML element
+	let baseHeight = 0;
+	let mounted = false;
+
+	onMount(async () => {
+		if (element) {
+			await sleep(100);
+			baseHeight = element.offsetHeight + 80;
+			mounted = true;
+		}
+	});
 
 	const handleExpand = () => {
 		expanded = !expanded;
@@ -54,7 +67,7 @@
 				<ArrowIcon direction="right" classes="text-blue-200 dark:text-grey-500" />
 			</div>
 
-			<div class="dark:text-grey-500 text-blue-500">
+			<div class="dark:text-grey-500 text-blue-200">
 				{course.data.title}
 			</div>
 		</div>
@@ -76,19 +89,22 @@
 				{#if course.data.videos.length}
 					<div
 						class={'relative overflow-y-hidden transition-all duration-300 ease-in-out '}
-						style="height: {expanded ? `2000px` : '400px'};"
 						id="expandable-content"
+						bind:this={element}
+						style={!mounted
+							? 'opacity:0;'
+							: `height: ${expanded ? baseHeight : '350'}px; opacity: 1;`}
 					>
 						<!-- {#each course.data.videos}-->
 						{#each course.data.videos as video}
 							<!-- 2 columns -->
 							<button
-								class="mb-4 grid grid-cols-2 gap-4"
+								class=" group mb-4 grid grid-cols-2 gap-4"
 								onclick={() => {
 									handleVideoClick(video);
 								}}
 							>
-								<div class="w-full overflow-hidden rounded-lg">
+								<div class="w-full overflow-hidden rounded-lg group-hover:opacity-80">
 									{#if video.video?.url}
 										<img
 											src={IMAGE_BASE + video.video?.url}
@@ -99,7 +115,9 @@
 										<Placeholder width="250px" height="auto">No Image Available x</Placeholder>
 									{/if}
 								</div>
-								<div class="dark:text-grey-0 flex text-left font-medium text-blue-500">
+								<div
+									class="dark:text-grey-0 flex text-left font-medium text-blue-500 group-hover:text-blue-400"
+								>
 									<p>
 										{video.lessonNumber}. {video.title}
 									</p>
@@ -107,19 +125,21 @@
 							</button>
 						{/each}
 
-						<button
-							class="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 transform rounded-full bg-blue-500 px-8 py-1 text-white"
-							onclick={handleExpand}
-						>
-							{#if expanded}
-								Ver menos
-							{:else}
-								Ver mas
-							{/if}
-						</button>
+						{#if baseHeight > 350}
+							<button
+								class="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 transform rounded-full bg-blue-500 px-8 py-1 text-white shadow-md hover:bg-blue-400"
+								onclick={handleExpand}
+							>
+								{#if expanded}
+									Ver menos
+								{:else}
+									Ver mas
+								{/if}
+							</button>
+						{/if}
 
 						<!-- Adaptive Gradient Overlay -->
-						<div class="absolute absolute bottom-0 left-0 right-0 h-[200px]">
+						<div class="absolute absolute bottom-0 left-0 right-0 h-[100px]">
 							<!-- Light Mode Gradient -->
 							<div
 								class="h-full w-full bg-gradient-to-b from-[rgba(240,252,255,0)] via-[rgba(255,255,255,0.5)] to-[rgba(255,255,255,1)] dark:hidden"
@@ -133,6 +153,12 @@
 						</div>
 					</div>
 				{/if}
+				<div class="mt-8">
+					<!-- Product Description -->
+					<p class="dark:text-grey-100 text-grey-500 mt-6 text-base font-medium">
+						<RichText content={course.data.description}></RichText>
+					</p>
+				</div>
 			</div>
 
 			<!-- Product Info -->

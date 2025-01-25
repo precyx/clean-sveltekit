@@ -15,6 +15,7 @@
 	import IconUser from '$lib/icons/IconUser.svelte';
 
 	import { isPersonalPage } from '$lib/utils/Utils';
+	import IconMenu from '$lib/icons/IconMenu.svelte';
 
 	/* custom classes */
 	let { customClasses } = $props();
@@ -39,15 +40,20 @@
 		}
 	});
 
+	/**
+	 * User
+	 */
 	let currentUser = $state($user);
 
-	// Automatically update currentUser whenever the user store changes
 	$effect(() => {
 		user.subscribe((value) => {
 			currentUser = value;
 		});
 	});
 
+	/**
+	 * Theme
+	 */
 	function toggleTheme() {
 		const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 		theme.set(newTheme);
@@ -62,7 +68,9 @@
 		});
 	});
 
-	// Change header background depending on the page
+	/**
+	 * Header
+	 */
 	let headerClasses = $state('');
 	let IS_PERSONAL_PAGE = $state(false);
 
@@ -76,12 +84,90 @@
 			headerClasses = '';
 		}
 	});
+
+	/**
+	 * Navigation
+	 */
+
+	let showMobileNav = $state(false);
+	let showMobileProfile = $state(false);
 </script>
 
 <header
 	class={`text-grey-300 dark:text-grey-100 relative z-50 w-full ${headerClasses} ${customClasses} h-[70px]`}
 >
-	<div class="container mx-auto flex h-full items-center">
+	<div class="lg:hidden">
+		<!-- Mobile Nav -->
+		<div class="absolute left-2 top-2 z-10">
+			<button class="z-10 p-4" on:click={() => (showMobileNav = !showMobileNav)}>
+				<IconMenu
+					classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+				></IconMenu>
+			</button>
+
+			{#if showMobileNav}
+				<div class="absolute left-0 top-[60px] z-10 flex w-[250px] bg-black p-4">
+					<nav class="flex flex-col space-y-3">
+						<a href={'/landing'}>Home</a>
+						<a href={'/courses'}>Courses</a>
+						<a href={'/products'}>Products</a>
+						<a href={'/contact'}>Contacto</a>
+						<a href={'/about-us'}>Sobre Nosotros</a>
+					</nav>
+				</div>
+			{/if}
+		</div>
+
+		<div class="absolute inset-x-0 mx-auto flex h-full items-center justify-center space-x-3">
+			<NavLink href={'/landing'}>
+				<div class="relative top-[-15px] h-[60px]">
+					{#if IS_PERSONAL_PAGE || $theme === 'dark'}
+						<img src={LOGO_WHITE} class="w-[90px]" />
+					{:else}
+						<img src={LOGO} class="w-[90px]" />
+					{/if}
+				</div>
+			</NavLink>
+		</div>
+
+		<div class="absolute right-2 top-2 flex flex-row">
+			<button on:click={toggleTheme} class="transform p-2 p-4">
+				{#if $theme === 'dark'}
+					<IconSun
+						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+					></IconSun>
+				{:else}
+					<IconMoon
+						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+					></IconMoon>
+				{/if}
+			</button>
+
+			<button class=" p-4" on:click={() => (showMobileProfile = !showMobileProfile)}>
+				<IconUser
+					classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+				></IconUser>
+			</button>
+
+			{#if showMobileProfile}
+				<div class="absolute right-0 top-[60px] flex w-[250px] bg-black p-4">
+					<div class=" flex justify-center bg-black">
+						<nav class="flex flex-col space-y-3">
+							{#if !currentUser}
+								<NavLink href={'/login'}>Login</NavLink>
+							{:else}
+								<a href={'/my-courses'}>Mis Cursos</a>
+								<a href={'/profile'}>Profile</a>
+								<button on:click={logout}>Logout</button>
+							{/if}
+						</nav>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+
+	<div class="container mx-auto flex hidden h-full items-center lg:flex">
 		<!-- Navigation -->
 		<nav class="absolute inset-x-0 mx-auto flex h-full items-center justify-center space-x-3">
 			<NavLink href={'/courses'}>Courses</NavLink>
@@ -138,18 +224,6 @@
 				</div>
 			{/if}
 		</div>
-	</div>
-
-	<!-- Mobile Nav -->
-	<div class="flex justify-center py-4 md:hidden">
-		<nav class="flex flex-col space-y-3">
-			<a href="/" class="hover:underline">Home</a>
-			{#if currentUser}
-				<a href="/courses" class="hover:underline">Courses</a>
-			{/if}
-			<a href="/register" class="hover:underline">Register</a>
-			<a href="/login" class="hover:underline">Login</a>
-		</nav>
 	</div>
 </header>
 

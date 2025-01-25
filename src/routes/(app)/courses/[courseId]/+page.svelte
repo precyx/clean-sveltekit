@@ -4,6 +4,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import RichText from '$lib/components/RichText.svelte';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
+	import type { Product } from '$lib/api/api.js';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -14,7 +15,11 @@
 		goto('/courses'); // Navigate back to course list
 	};
 
-	const handleProductClick = () => {};
+	const handleProductClick = (product: Product) => {
+		console.log('product', product);
+		// Navigate to the product detail page
+		goto(`/products/${product.documentId}`);
+	};
 </script>
 
 <div class="mb-6">
@@ -63,12 +68,12 @@
 				<div class="flex">
 					{#each course.data?.products as product}
 						<button
-							class="mr-4 h-[100px] w-[100px] rounded-lg text-left"
+							class="group mr-4 h-[100px] w-[100px] rounded-lg text-left"
 							onclick={() => handleProductClick(product)}
 						>
 							<!-- Full Image -->
 							{#if product?.images && product.images.length}
-								<div class="">
+								<div class="group-hover:opacity-80">
 									<ImageDisplay
 										src={IMAGE_BASE + product.images[0]?.url}
 										alt={product.title}
@@ -78,7 +83,9 @@
 							{/if}
 
 							<!-- Product Details -->
-							<h2 class="dark:text-grey-0 text-productsm mb-1 mt-2 font-medium text-blue-500">
+							<h2
+								class="dark:text-grey-0 text-productsm mb-1 mt-2 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+							>
 								{product.title}
 							</h2>
 						</button>
@@ -106,8 +113,8 @@
 				</div>
 
 				<!-- Time to Fabricate -->
-				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-2 font-semibold">
-					timeToFabricate
+				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-6 font-semibold">
+					{course.data.videos.length} videos
 				</p>
 
 				<!-- Product Description -->

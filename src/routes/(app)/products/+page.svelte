@@ -31,10 +31,10 @@
 		{:else if products?.data?.length}
 			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				{#each products.data as product}
-					<button class="rounded-lg text-left" onclick={() => handleProductClick(product)}>
+					<button class="group rounded-lg text-left" onclick={() => handleProductClick(product)}>
 						<!-- Full Image -->
 						{#if product?.images && product.images.length}
-							<div class="w-full overflow-hidden rounded-lg shadow-md">
+							<div class="w-full overflow-hidden rounded-lg shadow-md group-hover:opacity-80">
 								<img
 									src={IMAGE_BASE + product.images[0]?.url}
 									alt={product.title}
@@ -44,7 +44,9 @@
 						{/if}
 
 						<!-- Product Details -->
-						<h2 class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500">
+						<h2
+							class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+						>
 							{product.title}
 						</h2>
 						<p class="mb-1 font-medium text-blue-200 dark:text-blue-300">
