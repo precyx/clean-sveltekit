@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	export let data;
-	const { articles, error } = data;
 
 	let landingPageImg =
 		'http://localhost:1337/uploads/u1599917863_A_clean_bright_scene_showing_homemade_cleaning_pr_d9a767b4_e857_4476_9061_9d85cc14c7f0_3_c746e968d0.png';

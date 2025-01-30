@@ -55,7 +55,7 @@
 	<div class="text-red-500">{error}</div>
 {:else if course?.data}
 	<div class="">
-		<div class="text-productsm mb-1 mt-4 flex items-center lg:text-base">
+		<div class="text-productsm mb-1 mt-4 flex flex-wrap items-center lg:text-base">
 			<button
 				onclick={goBack}
 				class="mr-3 flex items-center text-blue-500 hover:underline dark:text-blue-300"

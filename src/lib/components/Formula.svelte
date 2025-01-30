@@ -22,10 +22,14 @@
 		{/if}
 
 		<div class="ml-4">
-			<div class="text-productlg font-bold italic text-green-600 dark:text-green-50">
+			<div
+				class="text-productbase lg:text-productlg font-bold italic text-green-600 dark:text-green-50"
+			>
 				Formula 1 Litro
 			</div>
-			<div class="text-productlg font-medium italic text-green-600 dark:text-green-50">
+			<div
+				class="text-productbase lg:text-productlg font-medium italic text-green-600 dark:text-green-50"
+			>
 				{product?.title}
 			</div>
 		</div>

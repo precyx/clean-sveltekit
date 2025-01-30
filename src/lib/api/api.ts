@@ -132,7 +132,7 @@ export interface Image extends BaseEntity {
 }
 
 /**
- * TextNode
+ * RichText
  */
 export type RichText = {
 	type: 'paragraph' | 'text';
@@ -204,7 +204,9 @@ const handleApiError = (error: unknown) => {
 	}
 };
 
-/* Auth */
+/**
+ * Auth
+ */
 
 export interface AuthResponse {
 	jwt: string;
@@ -230,6 +232,24 @@ export interface RegisterResponse {
 	};
 }
 
+export interface User {
+	id: number;
+	username: string;
+	email: string;
+}
+
+/**
+ * User
+ */
+
+export const getUser = async (token: string): Promise<User> => {
+	return apiRequest<User>('GET', `${API_URL}/api/users/me`, undefined, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	});
+};
+
 export const register = async (
 	username: string,
 	email: string,
@@ -242,24 +262,14 @@ export const register = async (
 	});
 };
 
-export interface User {
-	id: number;
-	username: string;
-	email: string;
-}
-
-export const getUser = async (token: string): Promise<User> => {
-	return apiRequest<User>('GET', `${API_URL}/api/users/me`, undefined, {
-		headers: {
-			Authorization: `Bearer ${token}`
-		}
-	});
-};
-
 export const logout = () => {
 	localStorage.removeItem('token');
 	window.location.href = '/login';
 };
+
+/**
+ * Course
+ */
 
 export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 	const queryObject = {
@@ -318,6 +328,10 @@ export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
 	);
 };
 
+/**
+ * Product
+ */
+
 export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
 	return apiRequest<ApiResponse<Product[]>>('GET', `${API_URL}/api/products?populate=*`);
 };
@@ -340,4 +354,28 @@ export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
 
 export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
 	return apiRequest<ApiResponse<Video>>('GET', `${API_URL}/api/videos/${id}?populate=*`);
+};
+
+type PayPalOrder = {
+	id: string;
+	status: string;
+	links: {
+		href: string;
+		rel: string;
+		method: string;
+	}[];
+};
+
+/**
+ * Payment
+ */
+
+export const createOrder = async (amount: string): Promise<PayPalOrder> => {
+	return await apiRequest('POST', '/payment/create-order', {
+		amount: amount
+	});
+};
+
+export const captureOrder = async (orderId: string): Promise<any> => {
+	return await apiRequest('POST', '/payment/capture-order', { orderId });
 };

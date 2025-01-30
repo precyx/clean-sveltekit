@@ -4,6 +4,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import RichText from '$lib/components/RichText.svelte';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
+	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import type { Product } from '$lib/api/api.js';
 
 	export let data;
@@ -110,6 +111,10 @@
 
 				<div class="mt-8">
 					<Button>Comprar</Button>
+
+					<div class="mt-4">
+						<PayPalButton></PayPalButton>
+					</div>
 				</div>
 
 				<!-- Time to Fabricate -->
