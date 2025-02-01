@@ -11,7 +11,6 @@
 
 	$effect(() => {
 		theme.subscribe((value) => {
-			console.log('theme', value);
 			currentTheme = value;
 		});
 	});
@@ -41,7 +40,7 @@
 
 		<!-- Center Column (Logo) -->
 		<div class="flex justify-center">
-			<img src={LOGO_WHITE} class="w-[90px]" />
+			<img src={LOGO_WHITE} class="w-[90px]" alt="logo" />
 		</div>
 
 		<!-- Right Column -->

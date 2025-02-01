@@ -17,7 +17,7 @@
 	<div class="mb-6 flex px-6">
 		{#if product?.images && product.images.length}
 			<div>
-				<img class="w-[100px] rounded" src={IMAGE_BASE + product?.images[0]?.url} />
+				<img class="w-[100px] rounded" src={IMAGE_BASE + product?.images[0]?.url} alt="product" />
 			</div>
 		{/if}
 

@@ -36,7 +36,7 @@
 					<strong>Price:</strong> ${course.price}
 				</p>
 				<button
-					on:click={() => enroll(course.id)}
+					onclick={() => enroll(course.id)}
 					class="hover:bg-grey-0 dark:focus:ring-grey-0 mt-4 rounded-lg bg-blue-500 px-6 py-3 font-medium text-white transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
 				>
 					Enroll Now

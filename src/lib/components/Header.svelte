@@ -63,7 +63,6 @@
 
 	$effect(() => {
 		theme.subscribe((value) => {
-			console.log('theme', value);
 			currentTheme = value;
 		});
 	});
@@ -99,7 +98,7 @@
 	<div class="lg:hidden">
 		<!-- Mobile Nav -->
 		<div class="absolute left-2 top-2 z-10">
-			<button class="z-10 p-4" on:click={() => (showMobileNav = !showMobileNav)}>
+			<button class="z-10 p-4" onclick={() => (showMobileNav = !showMobileNav)}>
 				<IconMenu
 					classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
 				></IconMenu>
@@ -122,16 +121,16 @@
 			<NavLink href={'/landing'}>
 				<div class="relative top-[-15px] h-[60px]">
 					{#if IS_PERSONAL_PAGE || $theme === 'dark'}
-						<img src={LOGO_WHITE} class="w-[90px]" />
+						<img src={LOGO_WHITE} class="w-[90px]" alt="logo" />
 					{:else}
-						<img src={LOGO} class="w-[90px]" />
+						<img src={LOGO} class="w-[90px]" alt="logo" />
 					{/if}
 				</div>
 			</NavLink>
 		</div>
 
 		<div class="absolute right-2 top-2 flex flex-row">
-			<button on:click={toggleTheme} class="transform p-2 p-4">
+			<button onclick={toggleTheme} class="transform p-2 p-4">
 				{#if $theme === 'dark'}
 					<IconSun
 						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
@@ -143,7 +142,7 @@
 				{/if}
 			</button>
 
-			<button class=" p-4" on:click={() => (showMobileProfile = !showMobileProfile)}>
+			<button class=" p-4" onclick={() => (showMobileProfile = !showMobileProfile)}>
 				<IconUser
 					classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
 				></IconUser>
@@ -158,7 +157,7 @@
 							{:else}
 								<a href={'/my-courses'}>Mis Cursos</a>
 								<a href={'/profile'}>Profile</a>
-								<button on:click={logout}>Logout</button>
+								<button onclick={logout}>Logout</button>
 							{/if}
 						</nav>
 					</div>
@@ -176,9 +175,9 @@
 			<NavLink href={'/landing'}>
 				<div class="relative top-[-15px] h-[60px]">
 					{#if IS_PERSONAL_PAGE || $theme === 'dark'}
-						<img src={LOGO_WHITE} class="w-[90px]" />
+						<img src={LOGO_WHITE} class="w-[90px]" alt="logo" />
 					{:else}
-						<img src={LOGO} class="w-[90px]" />
+						<img src={LOGO} class="w-[90px]" alt="logo" />
 					{/if}
 				</div>
 			</NavLink>
@@ -189,7 +188,7 @@
 
 		<!-- Action Buttons -->
 		<div class="relative z-20 ml-auto flex h-full items-center space-x-4">
-			<button on:click={toggleTheme} class="transform rounded p-2">
+			<button onclick={toggleTheme} class="transform rounded p-2">
 				{#if $theme === 'dark'}
 					<IconSun
 						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}

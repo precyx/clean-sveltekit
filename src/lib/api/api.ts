@@ -1,10 +1,13 @@
 import axios from 'axios';
 import type { AxiosRequestConfig, AxiosError } from 'axios';
-
 import qs from 'qs';
 
-const API_URL = import.meta.env.VITE_STRAPI_API_URL;
-const API_TOKEN = import.meta.env.VITE_STRAPI_API_TOKEN;
+import { PUBLIC_FRONTEND_URL } from '$env/static/public';
+
+/**
+ * API Proxy
+ */
+const API_PROXY = 'api/proxy';
 
 // For list responses
 export type ApiResponse<T> = {
@@ -142,7 +145,7 @@ export type RichText = {
 
 // Base API instance
 const api = axios.create({
-	baseURL: `${API_URL}/api`,
+	baseURL: `${PUBLIC_FRONTEND_URL}${API_PROXY}`,
 	timeout: 10000
 });
 
@@ -157,23 +160,17 @@ export const apiRequest = async <T>(
 	config?: AxiosRequestConfig
 ): Promise<T> => {
 	try {
-		// Prepare headers
-		const headers: AxiosRequestConfig['headers'] = {
-			Authorization: `Bearer ${API_TOKEN}`,
-			...config?.headers
-		};
-
-		// Execute the request with token
+		// Execute request (token is handled in the proxy)
 		const response = await api({
 			method,
 			url,
 			data,
-			headers,
 			...config
 		});
 
 		return response.data;
 	} catch (error) {
+		console.log('XXXX');
 		handleApiError(error);
 		throw error; // Re-throw for UI-level handling if necessary
 	}
@@ -187,7 +184,8 @@ const handleApiError = (error: unknown) => {
 		if (axiosError.response) {
 			console.error('API Error:', axiosError.response.data);
 			throw new Error(
-				axiosError.response.data?.message ||
+				axiosError.response.data?.details?.error?.message ||
+					axiosError.response.data?.message ||
 					axiosError.response.data?.error?.message ||
 					'Something went wrong.'
 			);
@@ -218,7 +216,7 @@ export interface AuthResponse {
 }
 
 export const login = (identifier: string, password: string): Promise<AuthResponse> => {
-	return apiRequest<AuthResponse>('POST', `${API_URL}/api/auth/local`, {
+	return apiRequest<AuthResponse>('POST', `/auth/local`, {
 		identifier,
 		password
 	});
@@ -243,7 +241,7 @@ export interface User {
  */
 
 export const getUser = async (token: string): Promise<User> => {
-	return apiRequest<User>('GET', `${API_URL}/api/users/me`, undefined, {
+	return apiRequest<User>('GET', `/users/me`, undefined, {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}
@@ -255,7 +253,7 @@ export const register = async (
 	email: string,
 	password: string
 ): Promise<RegisterResponse> => {
-	return apiRequest<RegisterResponse>('POST', `${API_URL}/api/auth/local/register`, {
+	return apiRequest<RegisterResponse>('POST', `/auth/local/register`, {
 		username,
 		email,
 		password
@@ -294,7 +292,7 @@ export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 	};
 	const queryString = qs.stringify(queryObject, { encode: false });
 
-	return apiRequest<ApiResponse<Course[]>>('GET', `${API_URL}/api/courses?${queryString}`);
+	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
 };
 
 export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
@@ -322,7 +320,7 @@ export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
 
 	return apiRequest<ApiResponse<Course>>(
 		'GET',
-		`${API_URL}/api/courses/${id}
+		`/courses/${id}
 		?${queryString}
 		`
 	);
@@ -333,7 +331,7 @@ export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
  */
 
 export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
-	return apiRequest<ApiResponse<Product[]>>('GET', `${API_URL}/api/products?populate=*`);
+	return apiRequest<ApiResponse<Product[]>>('GET', `/products?populate=*`);
 };
 
 export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
@@ -349,11 +347,11 @@ export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
 	};
 	const queryString = qs.stringify(queryObject, { encode: false });
 
-	return apiRequest<ApiResponse<Product>>('GET', `${API_URL}/api/products/${id}?${queryString}`);
+	return apiRequest<ApiResponse<Product>>('GET', `/products/${id}?${queryString}`);
 };
 
 export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
-	return apiRequest<ApiResponse<Video>>('GET', `${API_URL}/api/videos/${id}?populate=*`);
+	return apiRequest<ApiResponse<Video>>('GET', `/videos/${id}?populate=*`);
 };
 
 type PayPalOrder = {

@@ -6,7 +6,9 @@
 	let paypalLoaded = false;
 
 	onMount(() => {
-		renderPayPalButton();
+		setTimeout(() => {
+			renderPayPalButton();
+		}, 200); // use timeout for waiting for the paypal script to load
 	});
 
 	function renderPayPalButton() {
