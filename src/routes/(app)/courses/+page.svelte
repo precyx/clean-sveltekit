@@ -2,11 +2,12 @@
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import { goto } from '$app/navigation';
 	import type { Course } from '$lib/api/types.ts';
+	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	export let data;
 	const { courses, error } = data;
 
-	let IMAGE_BASE = 'http://localhost:1337';
+	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const handleCourseClick = (course: Course) => {
 		goto(`/courses/${course.documentId}`, {

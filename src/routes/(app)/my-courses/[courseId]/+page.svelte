@@ -8,6 +8,7 @@
 	import type { Product, Video, Course, Formula as FormulaType } from '$lib/api/types.ts';
 	import { sleep } from '$lib/utils/Utils.js';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
+	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -17,7 +18,7 @@
 
 	console.log('x course', course);
 
-	let IMAGE_BASE = 'http://localhost:1337';
+	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const goBack = () => {
 		goto('/my-courses'); // Navigate back to course list

@@ -6,11 +6,12 @@
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import type { Product } from '$lib/api/types.ts';
+	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	export let data;
 	let { course, error, courseId } = data;
 
-	let IMAGE_BASE = 'http://localhost:1337';
+	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const goBack = () => {
 		goto('/courses'); // Navigate back to course list

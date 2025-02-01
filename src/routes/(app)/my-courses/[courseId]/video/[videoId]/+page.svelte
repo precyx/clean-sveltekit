@@ -2,8 +2,9 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
+	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
-	let IMAGE_BASE = 'http://localhost:1337';
+	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	export let data;
 	let { video, course, error, courseId } = data;

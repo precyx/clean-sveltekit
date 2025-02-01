@@ -2,11 +2,12 @@
 	import { goto } from '$app/navigation';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import type { Course } from '$lib/api/types.ts';
+	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	export let data;
 	let { product, error, productId } = data;
 
-	let IMAGE_BASE = 'http://localhost:1337';
+	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const goBack = () => {
 		goto('/products');
