@@ -2,6 +2,17 @@ import axios from 'axios';
 import type { AxiosRequestConfig, AxiosError } from 'axios';
 import qs from 'qs';
 
+import type {
+	AuthResponse,
+	RegisterResponse,
+	User,
+	ApiResponse,
+	Course,
+	Product,
+	Video,
+	PayPalOrder
+} from '$lib/api/types.ts';
+
 import { PUBLIC_FRONTEND_URL } from '$env/static/public';
 
 /**
@@ -9,141 +20,9 @@ import { PUBLIC_FRONTEND_URL } from '$env/static/public';
  */
 const API_PROXY = 'api/proxy';
 
-// For list responses
-export type ApiResponse<T> = {
-	data: T;
-	meta: {
-		pagination: {
-			page: number;
-			pageSize: number;
-			pageCount: number;
-			total: number;
-		};
-	};
-};
-
-export type BaseEntity = {
-	id: number;
-	documentId?: string; // Optional external/unique reference
-	createdAt: string;
-	updatedAt: string;
-	publishedAt: string | null;
-};
-
 /**
- * Course
+ * Axios Base
  */
-export interface Course extends BaseEntity {
-	slug: string;
-	title: string;
-	description: RichText[];
-	category: string;
-	publicContent: string;
-	fullContent?: string | null;
-	price: number;
-	videoPreview: Image;
-	videos: Video[];
-	products: Product[];
-}
-
-/**
- * Product
- */
-export interface Product extends BaseEntity {
-	title: string;
-	images: Image[];
-	category: string;
-	subcategory: string;
-	description: string;
-	courses: Course[];
-	formulas: Formula[];
-}
-
-/**
- * Formula
- */
-export interface Formula extends BaseEntity {
-	title: string;
-	description: string | null;
-	locale: string; // Language locale
-	FormulaItem: FormulaItem[]; // Array of FormulaItem
-}
-
-/**
- * FormulaItem
- */
-export interface FormulaItem extends BaseEntity {
-	title: string;
-	percentage: string; // Represented as a string since percentages include "%"
-	value: string; // Represented as a string to accommodate units like "g", "ml", etc.
-	image: Image;
-}
-
-/**
- * Video
- */
-export interface Video extends BaseEntity {
-	title: string;
-	courses: Course[];
-	description: string | null;
-	lessonNumber: string;
-	video: Image;
-}
-
-/**
- * ImageFormat
- */
-export interface ImageFormat {
-	ext: string;
-	url: string;
-	hash: string;
-	mime: string;
-	name: string;
-	path: string | null;
-	size: number;
-	width: number;
-	height: number;
-	sizeInBytes: number;
-}
-
-/**
- * Image
- */
-export interface Image extends BaseEntity {
-	name: string;
-	alternativeText: string | null;
-	caption: string | null;
-	width: number;
-	height: number;
-	formats: {
-		large?: ImageFormat;
-		small?: ImageFormat;
-		medium?: ImageFormat;
-		thumbnail?: ImageFormat;
-	};
-	hash: string;
-	ext: string;
-	mime: string;
-	size: number;
-	url: string;
-	previewUrl: string | null;
-	provider: string;
-	provider_metadata: any | null;
-	createdAt: string;
-	updatedAt: string;
-	publishedAt: string;
-}
-
-/**
- * RichText
- */
-export type RichText = {
-	type: 'paragraph' | 'text';
-	text?: string; // For "text" type
-	children?: RichText[]; // For "paragraph" type
-};
-
-// Base API instance
 const api = axios.create({
 	baseURL: `${PUBLIC_FRONTEND_URL}${API_PROXY}`,
 	timeout: 10000
@@ -152,6 +31,10 @@ const api = axios.create({
 export const sleep = (ms: number) => {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 };
+
+/**
+ * API Request
+ */
 
 export const apiRequest = async <T>(
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -203,40 +86,6 @@ const handleApiError = (error: unknown) => {
 };
 
 /**
- * Auth
- */
-
-export interface AuthResponse {
-	jwt: string;
-	user: {
-		id: number;
-		username: string;
-		email: string;
-	};
-}
-
-export const login = (identifier: string, password: string): Promise<AuthResponse> => {
-	return apiRequest<AuthResponse>('POST', `/auth/local`, {
-		identifier,
-		password
-	});
-};
-
-export interface RegisterResponse {
-	user: {
-		id: number;
-		username: string;
-		email: string;
-	};
-}
-
-export interface User {
-	id: number;
-	username: string;
-	email: string;
-}
-
-/**
  * User
  */
 
@@ -245,6 +94,13 @@ export const getUser = async (token: string): Promise<User> => {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}
+	});
+};
+
+export const login = (identifier: string, password: string): Promise<AuthResponse> => {
+	return apiRequest<AuthResponse>('POST', `/auth/local`, {
+		identifier,
+		password
 	});
 };
 
@@ -352,16 +208,6 @@ export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {
 
 export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
 	return apiRequest<ApiResponse<Video>>('GET', `/videos/${id}?populate=*`);
-};
-
-type PayPalOrder = {
-	id: string;
-	status: string;
-	links: {
-		href: string;
-		rel: string;
-		method: string;
-	}[];
 };
 
 /**

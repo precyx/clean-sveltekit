@@ -5,7 +5,7 @@
 	import RichText from '$lib/components/RichText.svelte';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
-	import type { Product } from '$lib/api/api.js';
+	import type { Product } from '$lib/api/types.ts';
 
 	export let data;
 	let { course, error, courseId } = data;

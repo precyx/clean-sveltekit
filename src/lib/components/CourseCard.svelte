@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Course } from '$lib/api/api';
+	import type { Course } from '$lib/api/types.ts';
 
 	export let course: Course;
 

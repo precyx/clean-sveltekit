@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
-	import type { Course } from '$lib/api/api.js';
+	import type { Course } from '$lib/api/types.ts';
 
 	export let data;
 	let { product, error, productId } = data;

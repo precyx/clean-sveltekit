@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Formula, Product } from '$lib/api/api';
+	import type { Formula, Product } from '$lib/api/types.ts';
 
 	let IMAGE_BASE = 'http://localhost:1337';
 

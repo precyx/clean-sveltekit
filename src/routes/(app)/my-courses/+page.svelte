@@ -2,7 +2,7 @@
 	import CourseCard from '$lib/components/CourseCard.svelte';
 	import Placeholder from '$lib/components/Placeholder.svelte';
 	import { goto } from '$app/navigation';
-	import type { Course } from '$lib/api/api.js';
+	import type { Course } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;

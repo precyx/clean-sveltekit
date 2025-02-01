@@ -5,11 +5,8 @@
 	import Formula from '$lib/components/Formula.svelte';
 	import Placeholder from '$lib/components/Placeholder.svelte';
 	import RichText from '$lib/components/RichText.svelte';
-	import type { Course, Formula as FormulaType } from '$lib/api/api.js';
-	import type { Product } from '$lib/api/api.js';
+	import type { Product, Video, Course, Formula as FormulaType } from '$lib/api/types.ts';
 	import { sleep } from '$lib/utils/Utils.js';
-
-	import type { Video } from '$lib/api/api.js';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 
 	export let data;

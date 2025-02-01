@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CourseCard from '$lib/components/CourseCard.svelte';
 	import { goto } from '$app/navigation';
-	import type { Product } from '$lib/api/api.js';
+	import type { Product } from '$lib/api/types.ts';
 
 	export let data;
 	const { products, error } = data;

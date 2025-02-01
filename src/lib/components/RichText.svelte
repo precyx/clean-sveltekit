@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { RichText } from '$lib/api/api';
+	import type { RichText } from '$lib/api/types.ts';
 	export let content: RichText[];
 </script>
 
