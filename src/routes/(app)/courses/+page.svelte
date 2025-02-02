@@ -53,10 +53,10 @@
 						>
 							{course.title}
 						</h2>
-						<p class="text-grey-300 mb-1 font-normal dark:text-blue-300">
+						<p class="text-grey-300 dark:text-grey-500 mb-1 text-base font-normal">
 							{course.category}
 						</p>
-						<p class="mb-1 font-medium text-green-300 dark:text-green-100">
+						<p class="mb-1 text-base font-medium text-green-300 dark:text-green-100">
 							$ {course.price}
 						</p>
 					</button>

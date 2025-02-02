@@ -13,7 +13,7 @@ export type ApiResponse<T> = {
 
 export type BaseEntity = {
 	id: number;
-	documentId?: string; // Optional external/unique reference
+	documentId: string;
 	createdAt: string;
 	updatedAt: string;
 	publishedAt: string | null;
@@ -153,6 +153,11 @@ export interface User {
 	id: number;
 	username: string;
 	email: string;
+	cart: Cart;
+}
+
+export interface Cart {
+	items: string[];
 }
 
 export type PayPalOrder = {

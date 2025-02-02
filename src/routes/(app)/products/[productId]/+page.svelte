@@ -104,12 +104,12 @@
 				</p>
 
 				<!-- Product Category -->
-				<p class="text-productlg mt-2 font-semibold text-blue-200 dark:text-blue-300">
+				<p class="text-productlg dark:text-grey-500 mt-2 font-semibold text-blue-200">
 					{product.data.category}
 				</p>
 
 				<!-- Time to Fabricate -->
-				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-2 font-semibold">
+				<p class="text-productlg text-grey-300 mt-2 font-semibold dark:text-blue-300">
 					{product.data.subcategory}
 				</p>
 

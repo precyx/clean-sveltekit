@@ -6,16 +6,20 @@
 	import { logout } from '$lib/api/api';
 	import { getUser } from '$lib/api/api';
 	import { user } from '$lib/stores/user';
+	import { cart } from '$lib/stores/cart';
 	import { theme } from '$lib/stores/theme';
+	import { sleep } from '$lib/utils/Utils';
 
 	import NavLink from '$lib/components/NavLink.svelte';
 	import PopupItem from '$lib/components/PopupItem.svelte';
 	import IconSun from '$lib/icons/IconSun.svelte';
 	import IconMoon from '$lib/icons/IconMoon.svelte';
 	import IconUser from '$lib/icons/IconUser.svelte';
+	import IconCart from '$lib/icons/iconCart.svelte';
 
 	import { isPersonalPage } from '$lib/utils/Utils';
 	import IconMenu from '$lib/icons/IconMenu.svelte';
+	import CartButton from './CartButton.svelte';
 
 	/* custom classes */
 	let { customClasses } = $props();
@@ -24,19 +28,35 @@
 		'http://localhost:1337/uploads/464160045_521706020573047_6761713450314237728_n_removebg_preview_d8777845b4.png';
 	let LOGO_WHITE = 'http://localhost:1337/uploads/logo_white_snaiderclean_788d70db2a.png';
 
+	/**
+	 * Size Calculation
+	 */
+	let element: HTMLElement | null = null; // Reference to the HTML element
+	let baseWidth = 0;
+
 	onMount(async () => {
 		if (browser) {
 			// Check if the user is already logged in
 			const token = localStorage.getItem('token');
 			if (token) {
 				try {
-					const userData = await getUser(token);
+					let userData = await getUser(token);
+					userData = {
+						...userData,
+						cart: { items: ['x1', 'x2'] }
+					};
 					user.set(userData);
 				} catch (err) {
 					console.error('Failed to fetch user:', err);
 					localStorage.removeItem('token');
 				}
 			}
+		}
+
+		// width calculation
+		if (element) {
+			await sleep(100);
+			baseWidth = element.offsetHeight + 80;
 		}
 	});
 
@@ -129,7 +149,7 @@
 			</NavLink>
 		</div>
 
-		<div class="absolute right-2 top-2 flex flex-row">
+		<div class="absolute right-2 top-2 flex flex-row items-center">
 			<button onclick={toggleTheme} class="transform p-2 p-4">
 				{#if $theme === 'dark'}
 					<IconSun
@@ -141,6 +161,8 @@
 					></IconMoon>
 				{/if}
 			</button>
+
+			<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart'}></CartButton>
 
 			<button class=" p-4" onclick={() => (showMobileProfile = !showMobileProfile)}>
 				<IconUser
@@ -187,7 +209,7 @@
 		</nav>
 
 		<!-- Action Buttons -->
-		<div class="relative z-20 ml-auto flex h-full items-center space-x-4">
+		<div class="relative z-20 ml-auto flex h-full items-center space-x-4" bind:this={element}>
 			<button onclick={toggleTheme} class="transform rounded p-2">
 				{#if $theme === 'dark'}
 					<IconSun
@@ -203,7 +225,10 @@
 			{#if !currentUser}
 				<NavLink href={'/login'}>Login</NavLink>
 			{:else}
-				<NavLink href={'/my-courses'}>Mis Cursos</NavLink>
+				{#if true}
+					<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart'}></CartButton>
+				{/if}
+
 				<div class="group relative z-30 flex items-center">
 					<button class="  p-2">
 						<IconUser
@@ -216,6 +241,7 @@
 						<div
 							class="dark:bg-grey-900 dark:border-grey-700 w-32 rounded-lg border border-gray-300 bg-white p-1 shadow-lg"
 						>
+							<PopupItem href={'/my-courses'}>Mis Cursos</PopupItem>
 							<PopupItem href={'/profile'}>Profile</PopupItem>
 							<PopupItem onclick={logout}>Logout</PopupItem>
 						</div>

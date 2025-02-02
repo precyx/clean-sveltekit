@@ -50,10 +50,10 @@
 						>
 							{product.title}
 						</h2>
-						<p class="mb-1 font-medium text-blue-200 dark:text-blue-300">
+						<p class="dark:text-grey-500 mb-1 text-base font-normal text-blue-200">
 							{product.category}
 						</p>
-						<p class="text-grey-300 dark:text-grey-500 font-medium">
+						<p class="text-grey-300 font-medium dark:text-blue-300">
 							{product.subcategory}
 						</p>
 					</button>

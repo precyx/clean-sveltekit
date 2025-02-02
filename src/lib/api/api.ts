@@ -12,12 +12,8 @@ import type {
 	Video,
 	PayPalOrder
 } from '$lib/api/types.ts';
-
 import { PUBLIC_FRONTEND_URL } from '$env/static/public';
-
-/**
- * API Proxy
- */
+// API Proxy
 const API_PROXY = 'api/proxy';
 
 /**
@@ -125,29 +121,40 @@ export const logout = () => {
  * Course
  */
 
-export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
-	const queryObject = {
-		populate: {
-			videos: {
-				populate: 'video'
-			},
-			videoPreview: true,
-			products: {
-				populate: {
-					formulas: {
-						populate: {
-							FormulaItem: {
-								populate: 'image'
-							}
+const BASE_COURSE_QUERY = {
+	populate: {
+		videos: {
+			populate: 'video'
+		},
+		videoPreview: true,
+		products: {
+			populate: {
+				formulas: {
+					populate: {
+						FormulaItem: {
+							populate: 'image'
 						}
-					},
-					images: true
-				}
+					}
+				},
+				images: true
 			}
 		}
-	};
-	const queryString = qs.stringify(queryObject, { encode: false });
+	}
+};
 
+export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
+	const queryString = qs.stringify(BASE_COURSE_QUERY, { encode: false });
+	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
+};
+
+export const getCoursesByIds = async (ids: string[]): Promise<ApiResponse<Course[]>> => {
+	const queryObject = {
+		...BASE_COURSE_QUERY,
+		filters: { documentId: { $in: ids } }
+	};
+	// ['sfnop7v7h9m18qu7z62yiras', 'xibkn7g7dpzgr7gfn815u435']
+
+	const queryString = qs.stringify(queryObject, { encode: false });
 	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
 };
 
