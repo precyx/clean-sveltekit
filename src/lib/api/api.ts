@@ -159,27 +159,7 @@ export const getCoursesByIds = async (ids: string[]): Promise<ApiResponse<Course
 };
 
 export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
-	const queryObject = {
-		populate: {
-			videos: {
-				populate: 'video'
-			},
-			videoPreview: true,
-			products: {
-				populate: {
-					formulas: {
-						populate: {
-							FormulaItem: {
-								populate: 'image'
-							}
-						}
-					},
-					images: true
-				}
-			}
-		}
-	};
-	const queryString = qs.stringify(queryObject, { encode: false });
+	const queryString = qs.stringify(BASE_COURSE_QUERY, { encode: false });
 
 	return apiRequest<ApiResponse<Course>>(
 		'GET',

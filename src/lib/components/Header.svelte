@@ -162,7 +162,8 @@
 				{/if}
 			</button>
 
-			<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart'}></CartButton>
+			<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
+			></CartButton>
 
 			<button class=" p-4" onclick={() => (showMobileProfile = !showMobileProfile)}>
 				<IconUser
@@ -226,7 +227,8 @@
 				<NavLink href={'/login'}>Login</NavLink>
 			{:else}
 				{#if true}
-					<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart'}></CartButton>
+					<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
+					></CartButton>
 				{/if}
 
 				<div class="group relative z-30 flex items-center">

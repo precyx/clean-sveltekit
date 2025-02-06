@@ -7,7 +7,7 @@
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import type { Product } from '$lib/api/types.ts';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
-	import { cart } from '$lib/stores/cart.js';
+	import { cart, addToCart } from '$lib/stores/cart.js';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -24,15 +24,10 @@
 		goto(`/products/${product.documentId}`);
 	};
 
-	const addToCart = () => {
-		cart.update((data) => {
-			if (!course?.data.documentId) return data;
-
-			const updatedItems = new Set([...(data?.items || []), course.data.documentId]);
-
-			return { items: Array.from(updatedItems) }; // Convert Set back to array
-		});
-		// save the product id to the user store
+	const _addToCart = () => {
+		if (course?.data.documentId) {
+			addToCart(course.data.documentId);
+		}
 	};
 </script>
 
@@ -123,7 +118,7 @@
 				</p>
 
 				<div class="mt-8">
-					<Button onclick={addToCart}>Agregar al carrito</Button>
+					<Button onclick={_addToCart}>Agregar al carrito</Button>
 
 					<div class="mt-4">
 						<PayPalButton></PayPalButton>
