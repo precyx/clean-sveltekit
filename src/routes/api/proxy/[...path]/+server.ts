@@ -1,6 +1,7 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import axios from 'axios';
+import type { AxiosError } from 'axios';
 
 import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 import { STRAPI_API_TOKEN } from '$env/static/private';
@@ -46,22 +47,15 @@ async function proxyToStrapi(
 
 		// Return the response from Strapi
 		return json(response.data, { status: response.status });
-	} catch (err) {
-		console.error('[ERROR]:', err);
+	} catch (err: AxiosError | any) {
+		//debugger;
 
-		// ✅ Handle Axios errors and return Strapi's exact error
-		if (axios.isAxiosError(err)) {
-			const status = err.response?.status || 500;
-			const errorData = err.response?.data || { message: 'Unknown error from Strapi' };
+		throw error(err?.status, err?.response?.data);
 
-			throw error(status, {
-				message: errorData.message || 'Strapi Error',
-				details: errorData
-			});
-		}
-
-		// ✅ Default fallback error
-		throw error(500, { message: 'Internal Server Error', details: String(err) });
+		console.error(
+			'⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ [ERROR]: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐',
+			err
+		);
 	}
 }
 

@@ -201,9 +201,9 @@ export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
  * Payment
  */
 
-export const createOrder = async (amount: string): Promise<PayPalOrder> => {
+export const createOrder = async (ids: string[]): Promise<PayPalOrder> => {
 	return await apiRequest('POST', '/payment/create-order', {
-		amount: amount
+		ids: ids
 	});
 };
 

@@ -1,31 +1,35 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	import axios from 'axios';
-	import { captureOrder, createOrder } from '$lib/api/api';
+	//import { createOrder, captureOrder } from '$lib/api/api';
 
-	let paypalLoaded = false;
+	// Props for the component
+	export let createOrder: () => Promise<string>;
+	export let onApprove: (data: paypal.ApproveData) => Promise<void>;
+	export let onError: (error: any) => void;
 
 	onMount(() => {
 		setTimeout(() => {
 			renderPayPalButton();
-		}, 200); // use timeout for waiting for the paypal script to load
+		}, 200); // Delay to ensure the PayPal SDK is fully loaded
 	});
 
+	// Function to render the PayPal button
 	function renderPayPalButton() {
+		if (!paypal) {
+			console.error('PayPal SDK not loaded.');
+			return;
+		}
+
 		paypal
 			.Buttons({
-				createOrder: async () => {
-					const response = await createOrder('10');
-					return response.id;
+				createOrder: async (data: any, actions: paypal.Actions) => {
+					return createOrder();
 				},
-				onApprove: async (data) => {
-					console.log('on approve data', data);
-					const response = await captureOrder(data.orderID);
-					alert('Payment Successful!');
+				onApprove: async (data: paypal.ApproveData) => {
+					onApprove(data);
 				},
 				onError: (err) => {
-					console.error('PayPal Checkout error', err);
-					alert('Payment failed!');
+					onError(err);
 				}
 			})
 			.render('#paypal-button');

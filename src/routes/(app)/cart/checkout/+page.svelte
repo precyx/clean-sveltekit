@@ -8,9 +8,11 @@
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 	import Button from '$lib/components/Button.svelte';
 	import IconClose from '$lib/icons/IconClose.svelte';
+	import { createOrder, captureOrder } from '$lib/api/api';
 
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
+	import PayPalButton from '$lib/components/PayPalButton.svelte';
 
 	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
@@ -38,17 +40,6 @@
 		});
 	});
 
-	const removeCartItem = (documentId: string) => {
-		// update cart store
-		removeFromCart(documentId);
-		// update courses
-		if (!courses) return;
-		courses = {
-			data: courses.data.filter((course) => course.documentId !== documentId),
-			meta: courses.meta
-		};
-	};
-
 	const goBack = () => {
 		goto('/cart/overview'); // Navigate back to course list
 	};
@@ -57,7 +48,76 @@
 	 * Payment
 	 */
 
-	let paypalActive: boolean = $state(false);
+	/*
+	const handlePaypalPayment = async () => {
+		let cartIds = $cart.items;
+
+		if (cartIds.length === 0) return;
+		console.log('Paypal Payment');
+
+		try {
+			//debugger;
+			// Step 1: Create Order
+			const orderResponse = await createOrder(cartIds);
+			const orderId = orderResponse.id;
+
+			// Step 2: Find the approval URL
+			const approvalUrl = orderResponse.links.find((link) => link.rel === 'approve')?.href;
+
+			// Step 3: Open a mini PayPal popup
+			const width = 600,
+				height = 700;
+			const left = (window.innerWidth - width) / 2;
+			const top = (window.innerHeight - height) / 2;
+
+			const paypalWindow = window.open(
+				approvalUrl,
+				'PayPal Checkout',
+				`width=${width},height=${height},top=${top},left=${left}`
+			);
+
+			// Step 4: Detect when the popup window closes
+			const checkPopupClosed = setInterval(async () => {
+				if (paypalWindow?.closed) {
+					clearInterval(checkPopupClosed);
+					// After closing, check if the order was approved
+					_capturePaypalOrder(orderId);
+				}
+			}, 500);
+		} catch (err) {
+			console.error('PayPal Payment error:', err);
+			alert('Payment failed!');
+		}
+	};
+
+	const _capturePaypalOrder = async (orderId: string) => {
+		const captureResponse = await captureOrder(orderId);
+		debugger;
+		alert('Payment Successful!');
+	};
+	*/
+
+	const _createOrder = async () => {
+		console.log('Paypal Payment');
+		let cartIds = $cart.items;
+		if (cartIds.length === 0) return;
+
+		// Step 1: Create Order
+		const orderResponse = await createOrder(cartIds);
+		const orderId = orderResponse.id;
+
+		return orderId;
+	};
+	const _onApprove = async (data: paypal.ApproveData) => {
+		let orderId = data.orderID;
+
+		const captureResponse = await captureOrder(orderId);
+
+		alert('Payment Successful!');
+	};
+	const _onError = (err: any) => {
+		console.log('ERRR', err);
+	};
 </script>
 
 <div class="">
@@ -153,11 +213,16 @@
 		</div>
 	</div>
 
-	<div class="mb-8"></div>
-
-	<div class="mb-12 mt-12 flex h-[40px] items-center justify-center">
+	<div class=" flex h-[40px] items-center justify-center">
 		<div class="ml-4">
-			<Button>Pagar</Button>
+			<!-- <Button onclick={handlePaypalPayment}>Pagar</Button> -->
+		</div>
+	</div>
+
+	<div class="flex items-center justify-center">
+		<div class="w-[300px]">
+			<PayPalButton createOrder={_createOrder} onApprove={_onApprove} onError={_onError}
+			></PayPalButton>
 		</div>
 	</div>
 {:else}
