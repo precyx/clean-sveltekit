@@ -26,6 +26,8 @@ async function proxyToStrapi(
 
 	console.log('🔗__API URL:', apiUrl);
 
+	console.log('🔥__STRAPI_API_TOKEN', STRAPI_API_TOKEN);
+
 	try {
 		// Extract headers from the incoming request
 		const headers = {
@@ -33,6 +35,7 @@ async function proxyToStrapi(
 			'Content-Type': 'application/json',
 			...Object.fromEntries(request.headers)
 		};
+		console.log('__HEADERS', headers);
 
 		// Read request body if applicable
 		const body = method !== 'GET' ? await request.json() : undefined;
