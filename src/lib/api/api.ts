@@ -82,7 +82,10 @@ const handleApiError = (error: unknown) => {
 		}
 	} else {
 		console.error('Non-Axios Error:', error);
-		throw { message: 'An unknown error occurred.', data: {} } as ServiceError;
+		throw {
+			message: 'An unknown error occurred: ' + error.message,
+			data: error.data
+		} as ServiceError;
 	}
 };
 
