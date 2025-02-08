@@ -22,7 +22,7 @@ const API_PROXY = 'api/proxy';
  * Axios Base
  */
 const api = axios.create({
-	baseURL: `${PUBLIC_FRONTEND_URL}${API_PROXY}`,
+	baseURL: `${PUBLIC_FRONTEND_URL}/${API_PROXY}`,
 	timeout: 10000
 });
 
