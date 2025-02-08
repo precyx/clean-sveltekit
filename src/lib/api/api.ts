@@ -152,7 +152,7 @@ const BASE_COURSE_QUERY = {
 
 export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 	const queryString = qs.stringify(BASE_COURSE_QUERY, { encode: false });
-	return apiRequest<ApiResponse<Course[]>>('GET', `api/courses?${queryString}`);
+	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
 };
 
 export const getCoursesByIds = async (ids: string[]): Promise<ApiResponse<Course[]>> => {
