@@ -14,7 +14,7 @@ import type {
 } from '$lib/api/types.ts';
 
 import type { ServiceError } from '$lib/api/types';
-import { PUBLIC_FRONTEND_URL } from '$env/static/public';
+import { PUBLIC_FRONTEND_URL, PUBLIC_STRAPI_API_URL } from '$env/static/public';
 // API Proxy
 const API_PROXY = 'api/proxy';
 
@@ -22,7 +22,7 @@ const API_PROXY = 'api/proxy';
  * Axios Base
  */
 const api = axios.create({
-	baseURL: `${PUBLIC_FRONTEND_URL}/${API_PROXY}`,
+	baseURL: `${PUBLIC_STRAPI_API_URL}/api`,
 	timeout: 10000
 });
 
