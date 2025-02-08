@@ -119,10 +119,6 @@
 
 				<div class="mt-8">
 					<Button onclick={_addToCart}>Agregar al carrito</Button>
-
-					<div class="mt-4">
-						<PayPalButton></PayPalButton>
-					</div>
 				</div>
 
 				<!-- Time to Fabricate -->

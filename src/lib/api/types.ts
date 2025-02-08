@@ -153,7 +153,6 @@ export interface User {
 	id: number;
 	username: string;
 	email: string;
-	cart: Cart;
 }
 
 export interface Cart {

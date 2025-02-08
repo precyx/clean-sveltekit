@@ -141,6 +141,7 @@
 	<div class="mb-12 mt-12 flex h-[40px] items-center justify-center">
 		<div class="ml-4">
 			<Button
+				disabled={!paypalActive}
 				onclick={() => {
 					goto('/cart/checkout');
 				}}>Continuar a pagar</Button

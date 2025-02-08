@@ -42,8 +42,7 @@
 				try {
 					let userData = await getUser(token);
 					userData = {
-						...userData,
-						cart: { items: ['x1', 'x2'] }
+						...userData
 					};
 					user.set(userData);
 				} catch (err) {

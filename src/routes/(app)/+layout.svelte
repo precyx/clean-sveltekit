@@ -3,14 +3,21 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import '../../app.postcss';
 
+	import { loadScript } from '@paypal/paypal-js';
+	import type { PayPalNamespace, PayPalScriptOptions } from '@paypal/paypal-js';
+
+	import { paypal } from '$lib/stores/paypal';
 	import { PUBLIC_PAYPAL_CLIENT_ID } from '$env/static/public';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		console.log('PUBLIC_PAYPAL_CLIENT_ID', PUBLIC_PAYPAL_CLIENT_ID);
-		const paypalScript = document.createElement('script');
-		paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${PUBLIC_PAYPAL_CLIENT_ID}&currency=USD`;
-		document.head.appendChild(paypalScript);
+	onMount(async () => {
+		const _paypal: PayPalNamespace | null = await loadScript({
+			clientId: PUBLIC_PAYPAL_CLIENT_ID,
+			environment: 'sandbox',
+			sdkBaseUrl: `https://www.paypal.com/sdk/js`
+		});
+
+		paypal.set(_paypal);
 	});
 </script>
 
