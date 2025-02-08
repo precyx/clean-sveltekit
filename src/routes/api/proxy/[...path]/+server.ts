@@ -22,7 +22,7 @@ async function proxyToStrapi(
 
 	const queryString = url.search; // ✅ Preserve query parameters
 	const fullPath = params.path.replace(/^\/+/, ''); // ✅ Remove leading '/'
-	const apiUrl = `${PUBLIC_STRAPI_API_URL}/api/${fullPath}${queryString}`; // ✅ Append query params
+	const apiUrl = `${PUBLIC_STRAPI_API_URL}/${fullPath}${queryString}`; // ✅ Append query params
 
 	console.log('🔗__API URL:', apiUrl);
 
