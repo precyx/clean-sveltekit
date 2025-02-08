@@ -11,6 +11,16 @@ export type ApiResponse<T> = {
 	};
 };
 
+export type ServiceError = {
+	message: string;
+	data: {
+		status: number;
+		name: string;
+		message: string;
+		details?: Record<string, unknown>;
+	} | null;
+};
+
 export type BaseEntity = {
 	id: number;
 	documentId: string;

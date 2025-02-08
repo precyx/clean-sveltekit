@@ -11,6 +11,7 @@
 	import { createOrder, captureOrder } from '$lib/api/api';
 
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
+	import type { ServiceError } from '$lib/api/types';
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
@@ -20,6 +21,7 @@
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
 	let loading: boolean = $state(false);
+	let error: string = $state('');
 
 	/**
 	 * User
@@ -57,25 +59,37 @@
 	 */
 
 	const _createOrder = async () => {
-		loading = true;
+		try {
+			loading = true;
 
-		console.log('Paypal Payment');
-		let cartIds = $cart.items;
-		if (cartIds.length === 0) return;
+			console.log('Paypal Payment');
+			let cartIds = $cart.items;
+			if (cartIds.length === 0) return;
 
-		// Step 1: Create Order
-		const orderResponse = await createOrder(cartIds);
-		const orderId = orderResponse.id;
+			// Step 1: Create Order
+			const orderResponse = await createOrder(cartIds);
+			const orderId = orderResponse.id;
 
-		return orderId;
+			return orderId;
+		} catch (err) {
+			console.log('🤖🤖🤖 CREATE ORDER ERROR 2', err);
+			loading = false;
+			error = err.message;
+		}
 	};
 	const _onApprove = async (data: OnApproveData) => {
-		let orderId = data.orderID;
-		const captureResponse = await captureOrder(orderId);
+		try {
+			let orderId = data.orderID;
+			const captureResponse = await captureOrder(orderId);
 
-		await sleep(1000);
-		loading = false;
-		goto(`/cart/success?orderId=${orderId}`);
+			await sleep(1000);
+			loading = false;
+			goto(`/cart/success?orderId=${orderId}`);
+		} catch (err) {
+			console.log('🤖🤖🤖 APPROVE ORDER ERROR 2', error);
+			loading = false;
+			error = err.message;
+		}
 	};
 	const _onCancel = (data: Record<string, unknown>) => {
 		console.log('CANCEL', data);
@@ -84,6 +98,7 @@
 	const _onError = (err: any) => {
 		console.log('ERRR', err);
 		loading = false;
+		error = err.message;
 	};
 </script>
 
@@ -198,6 +213,9 @@
 			></PayPalButton>
 		</div>
 	</div>
+	{#if error}
+		<div class="text-red-500">{error}</div>
+	{/if}
 {:else}
 	<p class="text-red-500">No hay cursos en el carrito</p>
 {/if}

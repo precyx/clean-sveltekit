@@ -30,7 +30,7 @@
 	};
 </script>
 
-<div class="mb-6 mt-6 flex justify-center">
+<div class="mb-6 mt-12 flex justify-center">
 	<div class="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-green-200">
 		<IconCheckBig classes="w-[100px] h-[100px] text-white"></IconCheckBig>
 	</div>
@@ -49,6 +49,6 @@
 	</div>
 </div>
 
-<div class="mt-12 flex justify-center">
+<div class="mb-12 mt-12 flex justify-center">
 	<Button onclick={gotoMyCourses}>Ver mis cursos</Button>
 </div>

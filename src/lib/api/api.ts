@@ -12,6 +12,8 @@ import type {
 	Video,
 	PayPalOrder
 } from '$lib/api/types.ts';
+
+import type { ServiceError } from '$lib/api/types';
 import { PUBLIC_FRONTEND_URL } from '$env/static/public';
 // API Proxy
 const API_PROXY = 'api/proxy';
@@ -62,22 +64,25 @@ const handleApiError = (error: unknown) => {
 
 		if (axiosError.response) {
 			console.error('API Error:', axiosError.response.data);
-			throw new Error(
-				axiosError.response.data?.details?.error?.message ||
+
+			throw {
+				message:
+					axiosError.response.data?.details?.error?.message ||
 					axiosError.response.data?.message ||
 					axiosError.response.data?.error?.message ||
-					'Something went wrong.'
-			);
+					'Something went wrong.',
+				data: axiosError?.response?.data?.error
+			} as ServiceError;
 		} else if (axiosError.request) {
 			console.error('Network Error: No response from server.');
-			throw new Error('Unable to connect to the server.');
+			throw { message: 'Unable to connect to the server.', data: {} } as ServiceError;
 		} else {
 			console.error('Unexpected Error:', axiosError.message);
-			throw new Error('An unexpected error occurred.');
+			throw { message: 'An unexpected error occurred.', data: {} } as ServiceError;
 		}
 	} else {
 		console.error('Non-Axios Error:', error);
-		throw new Error('An unknown error occurred.');
+		throw { message: 'An unknown error occurred.', data: {} } as ServiceError;
 	}
 };
 
