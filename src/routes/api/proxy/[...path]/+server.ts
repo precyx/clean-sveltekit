@@ -49,13 +49,21 @@ async function proxyToStrapi(
 		return json(response.data, { status: response.status });
 	} catch (err: AxiosError | any) {
 		//debugger;
-
+		/*
 		throw error(err?.status, err?.response?.data);
 
 		console.error(
 			'⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ [ERROR]: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐',
 			err
 		);
+		*/
+
+		console.error('❌ Proxy error:', err);
+
+		const statusCode = err.response?.status || 500; // ✅ Ensure a valid status code
+		const errorMessage = err.response?.data || { error: 'Internal Server Error' };
+
+		return json(errorMessage, { status: statusCode });
 	}
 }
 
