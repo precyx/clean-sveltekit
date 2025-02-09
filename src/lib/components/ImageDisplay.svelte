@@ -9,4 +9,6 @@
 
 {#if error}
 	<div class={' ' + classes}>No Image</div>
+{:else}
+	<img {src} {alt} onerror={() => (error = true)} class={' ' + classes} />
 {/if}
