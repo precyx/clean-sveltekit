@@ -6,8 +6,6 @@
 	let error = false;
 </script>
 
-<img {src} {alt} onerror={() => (error = true)} class={' ' + classes} />
-
 {#if error}
 	<div class={' ' + classes}>No Image</div>
 {:else}
