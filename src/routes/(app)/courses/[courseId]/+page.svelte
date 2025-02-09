@@ -86,7 +86,7 @@
 									<ImageDisplay
 										src={IMAGE_BASE + product.images[0]?.url}
 										alt={product.title}
-										classes={'h-[100px] w-[100px] shadow-lg rounded'}
+										classes={'h-[100px] w-[100px] shadow-lg rounded inset-0 w-full object-cover'}
 									></ImageDisplay>
 								</div>
 							{/if}

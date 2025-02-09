@@ -40,7 +40,7 @@
 								<ImageDisplay
 									src={IMAGE_BASE + course.videoPreview?.url}
 									alt={course.title}
-									classes={' w-[500px] rounded-lg shadow-lg'}
+									classes={' w-[500px] rounded-lg shadow-lg inset-0 w-full object-cover'}
 								></ImageDisplay>
 							{:else}
 								<Placeholder height="auto" width="500px">No Image Available</Placeholder>

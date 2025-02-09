@@ -38,7 +38,7 @@
 								<ImageDisplay
 									src={IMAGE_BASE + course.videoPreview?.url}
 									alt={course.title}
-									classes={'h-[200px] '}
+									classes={'h-[200px] inset-0 w-full object-cover'}
 								></ImageDisplay>
 							{:else}
 								<div class="flex h-40 w-full items-center justify-center bg-gray-300">
