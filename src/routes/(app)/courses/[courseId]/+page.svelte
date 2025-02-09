@@ -8,6 +8,7 @@
 	import type { Product } from '$lib/api/types.ts';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 	import { cart, addToCart } from '$lib/stores/cart.js';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -57,10 +58,10 @@
 			<!-- Product Image -->
 			<div class="mb-8">
 				{#if course.data.videoPreview?.url}
-					<img
+					<ImageDisplay
 						src={IMAGE_BASE + course.data.videoPreview?.url}
 						alt={course.data.title}
-						class="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
+						classes="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
 					/>
 				{:else}
 					<div

@@ -5,6 +5,7 @@
 	import type { Course } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	const { courses, error } = data;
@@ -68,10 +69,10 @@
 										{#if product.images.length}
 											{#each product.images as image}
 												<div class="mr-2">
-													<img
+													<ImageDisplay
 														src={IMAGE_BASE + image.url}
-														alt={image.alternativeText}
-														class="h-16 w-16 rounded-lg object-cover shadow-lg"
+														alt={'product'}
+														classes="h-16 w-16 rounded-lg object-cover shadow-lg"
 													/>
 												</div>
 											{/each}

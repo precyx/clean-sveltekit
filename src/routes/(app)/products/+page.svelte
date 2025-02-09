@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import type { Product } from '$lib/api/types.ts';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	const { products, error } = data;
@@ -36,10 +37,10 @@
 						<!-- Full Image -->
 						{#if product?.images && product.images.length}
 							<div class="w-full overflow-hidden group-hover:opacity-80">
-								<img
+								<ImageDisplay
 									src={IMAGE_BASE + product.images[0]?.url}
 									alt={product.title}
-									class="h-auto w-full max-w-[250px] rounded-lg object-contain shadow-md"
+									classes="h-auto w-full max-w-[250px] rounded-lg object-contain shadow-md"
 								/>
 							</div>
 						{/if}

@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
@@ -63,10 +64,10 @@
 				{video.data.lessonNumber}. {video.data.title}
 			</h1>
 		</div>
-		<img
+		<ImageDisplay
 			src={`${IMAGE_BASE}${video.data.video.url}`}
 			alt={video.data.title}
-			class="mb-8 w-full rounded-lg object-cover"
+			classes="mb-8 w-full rounded-lg object-cover"
 		/>
 	</div>
 {:else}

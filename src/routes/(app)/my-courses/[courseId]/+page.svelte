@@ -9,6 +9,7 @@
 	import { sleep } from '$lib/utils/Utils.js';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
+	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -104,10 +105,10 @@
 							>
 								<div class="w-full overflow-hidden rounded-lg group-hover:opacity-80">
 									{#if video.video?.url}
-										<img
+										<ImageDisplay
 											src={IMAGE_BASE + video.video?.url}
 											alt={video.title}
-											class="w-full rounded-lg object-cover"
+											classes="w-full rounded-lg object-cover"
 										/>
 									{:else}
 										<Placeholder width="250px" height="auto">No Image Available x</Placeholder>
@@ -174,10 +175,10 @@
 							<div class="dark:text-grey-0 flex font-medium text-blue-500">
 								<div class="mt-4 flex">
 									{#if item.image}
-										<img
+										<ImageDisplay
 											src={IMAGE_BASE + item.image.url}
 											alt={item.title}
-											class="h-24 w-24 rounded-lg object-cover shadow-lg"
+											classes="h-24 w-24 rounded-lg object-cover shadow-lg"
 										/>
 									{:else}
 										<div

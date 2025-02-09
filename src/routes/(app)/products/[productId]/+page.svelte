@@ -50,10 +50,10 @@
 			<div>
 				{#if product?.data.images && product.data.images.length}
 					<div>
-						<img
+						<ImageDisplay
 							src={IMAGE_BASE + product.data.images[0]?.url}
 							alt={product.data.title}
-							class="aspect-square w-full rounded-lg object-cover"
+							classes="aspect-square w-full rounded-lg object-cover"
 						/>
 					</div>
 				{/if}
