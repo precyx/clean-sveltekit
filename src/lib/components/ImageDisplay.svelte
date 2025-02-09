@@ -7,7 +7,7 @@
 </script>
 
 {#if error}
-	<div class={' ' + classes}>No Image</div>
+	<div class={' ' + classes} data-img-src={src}>No Image</div>
 {:else}
 	<img {src} {alt} onerror={() => (error = true)} class={' ' + classes} />
 {/if}
