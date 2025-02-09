@@ -5,7 +5,6 @@
 	import type { Course } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
-	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	const { courses, error } = data;

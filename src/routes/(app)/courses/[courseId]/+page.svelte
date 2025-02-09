@@ -3,7 +3,6 @@
 	import { getCourses } from '$lib/api/api.js';
 	import Button from '$lib/components/Button.svelte';
 	import RichText from '$lib/components/RichText.svelte';
-	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import type { Product } from '$lib/api/types.ts';
 	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
