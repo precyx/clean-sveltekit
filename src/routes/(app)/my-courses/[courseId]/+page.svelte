@@ -8,7 +8,6 @@
 	import type { Product, Video, Course, Formula as FormulaType } from '$lib/api/types.ts';
 	import { sleep } from '$lib/utils/Utils.js';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
@@ -18,8 +17,6 @@
 	let firstFormula: FormulaType | undefined = firstProduct?.formulas?.[0];
 
 	console.log('x course', course);
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const goBack = () => {
 		goto('/my-courses'); // Navigate back to course list
@@ -78,7 +75,7 @@
 		</div>
 
 		<!-- Product Detail Layout -->
-		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
+		<div class="grid w-[100%] grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
 			<div>
 				<div class="dark:text-grey-0 mb-4 mb-4 text-sm font-bold italic text-blue-500 lg:text-lg">
@@ -98,22 +95,18 @@
 						{#each course.data.videos as video}
 							<!-- 2 columns -->
 							<button
-								class=" group mb-4 grid grid-cols-2 gap-4"
+								class=" group mb-4 grid w-[100%] grid-cols-2 gap-4"
 								onclick={() => {
 									handleVideoClick(video);
 								}}
 							>
-								<div class="w-full overflow-hidden rounded-lg group-hover:opacity-80">
-									{#if video.video?.url}
-										<ImageDisplay
-											src={IMAGE_BASE + video.video?.url}
-											alt={video.title}
-											classes="w-full rounded-lg object-cover"
-										/>
-									{:else}
-										<Placeholder width="250px" height="auto">No Image Available x</Placeholder>
-									{/if}
-								</div>
+								<ImageDisplay
+									provider={video.video?.provider}
+									src={video.video?.url}
+									alt={video.title}
+									classes="w-full rounded-lg object-cover rounded-lg hover:opacity-80"
+								/>
+
 								<div
 									class="dark:text-grey-0 flex text-left font-medium text-blue-500 group-hover:text-blue-400"
 								>
@@ -176,7 +169,8 @@
 								<div class="mt-4 flex">
 									{#if item.image}
 										<ImageDisplay
-											src={IMAGE_BASE + item.image.url}
+											provider={item.image.provider}
+											src={item.image.url}
 											alt={item.title}
 											classes="h-24 w-24 rounded-lg object-cover shadow-lg"
 										/>

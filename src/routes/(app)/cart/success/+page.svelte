@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import IconCheckBig from '$lib/icons/IconCheckBig.svelte';
 	import Button from '$lib/components/Button.svelte';
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	let currentUser = $state($user);
 

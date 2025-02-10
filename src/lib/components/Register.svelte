@@ -50,7 +50,7 @@
 		try {
 			loading = true;
 			error = '';
-			await sleep(4000);
+			await sleep(1500);
 			await register(username, email, password);
 			goto('/login');
 		} catch (err: any) {

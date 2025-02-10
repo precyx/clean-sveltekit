@@ -5,14 +5,12 @@
 	import { getCoursesByIds } from '$lib/api/api.js';
 	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 	import Button from '$lib/components/Button.svelte';
 	import IconClose from '$lib/icons/IconClose.svelte';
 
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
 	let currentUser = $state($user);
@@ -74,17 +72,12 @@
 				class="dark:bg-grey-900 overflow-hidden group-hover:opacity-80"
 				href={'/courses/' + course.documentId}
 			>
-				{#if course.videoPreview?.url}
-					<ImageDisplay
-						src={IMAGE_BASE + course.videoPreview?.url}
-						alt={course.title}
-						classes={'rounded-lg shadow-md inset-0 w-full object-cover'}
-					></ImageDisplay>
-				{:else}
-					<div class="flex h-40 w-full items-center justify-center bg-gray-300">
-						<p class="text-gray-500">No Image Available</p>
-					</div>
-				{/if}
+				<ImageDisplay
+					provider={course.videoPreview?.provider}
+					src={course.videoPreview?.url}
+					alt={course.title}
+					classes={'rounded-lg shadow-md inset-0 w-full object-cover'}
+				></ImageDisplay>
 			</a>
 			<a class="ml-4" href={'/courses/' + course.documentId}>
 				<h2 class="dark:text-grey-0 mb-1 font-semibold text-blue-500">{course.title}</h2>

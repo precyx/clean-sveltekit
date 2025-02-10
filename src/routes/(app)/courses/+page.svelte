@@ -2,12 +2,9 @@
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import { goto } from '$app/navigation';
 	import type { Course } from '$lib/api/types.ts';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	export let data;
 	const { courses, error } = data;
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const handleCourseClick = (course: Course) => {
 		goto(`/courses/${course.documentId}`, {
@@ -34,17 +31,12 @@
 						<div
 							class="dark:bg-grey-900 flex w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 shadow-md group-hover:opacity-80"
 						>
-							{#if course.videoPreview?.url}
-								<ImageDisplay
-									src={IMAGE_BASE + course.videoPreview?.url}
-									alt={course.title}
-									classes={'h-[200px] inset-0 w-full object-cover'}
-								></ImageDisplay>
-							{:else}
-								<div class="flex h-40 w-full items-center justify-center bg-gray-300">
-									<p class="text-gray-500">No Image Available</p>
-								</div>
-							{/if}
+							<ImageDisplay
+								provider={course.videoPreview?.provider}
+								src={course.videoPreview?.url}
+								alt={course.title}
+								classes={'h-[200px] inset-0 w-full object-cover'}
+							></ImageDisplay>
 						</div>
 
 						<!-- Product Details -->

@@ -5,14 +5,11 @@
 	import RichText from '$lib/components/RichText.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import type { Product } from '$lib/api/types.ts';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 	import { cart, addToCart } from '$lib/stores/cart.js';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const goBack = () => {
 		goto('/courses'); // Navigate back to course list
@@ -56,19 +53,12 @@
 		<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
 			<div class="mb-8">
-				{#if course.data.videoPreview?.url}
-					<ImageDisplay
-						src={IMAGE_BASE + course.data.videoPreview?.url}
-						alt={course.data.title}
-						classes="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
-					/>
-				{:else}
-					<div
-						class="mb-8 flex aspect-square h-[260px] w-full items-center justify-center rounded-lg bg-gray-300"
-					>
-						<p class="text-gray-500">No Image Available</p>
-					</div>
-				{/if}
+				<ImageDisplay
+					provider={course.data.videoPreview?.provider}
+					src={course.data.videoPreview?.url}
+					alt={course.data.title}
+					classes="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
+				/>
 
 				<div class="text-mid dark:text-grey-0 mb-4 font-bold italic text-blue-500">
 					Productos en ese curso
@@ -84,7 +74,8 @@
 							{#if product?.images && product.images.length}
 								<div class="group-hover:opacity-80">
 									<ImageDisplay
-										src={IMAGE_BASE + product.images[0]?.url}
+										provider={product.images[0]?.provider}
+										src={product.images[0]?.url}
 										alt={product.title}
 										classes={'h-[100px] w-[100px] shadow-lg rounded inset-0 w-full object-cover'}
 									></ImageDisplay>

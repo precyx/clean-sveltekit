@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Formula, Product } from '$lib/api/types.ts';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
+	import ImageDisplay from './ImageDisplay.svelte';
 
 	let { formula, product } = $props() as {
 		formula: Formula | undefined;
@@ -18,7 +16,12 @@
 	<div class="mb-6 flex px-6">
 		{#if product?.images && product.images.length}
 			<div>
-				<img class="w-[100px] rounded" src={IMAGE_BASE + product?.images[0]?.url} alt="product" />
+				<ImageDisplay
+					classes="w-[100px] rounded"
+					provider={product?.images[0].provider}
+					src={product?.images[0]?.url}
+					alt="product"
+				></ImageDisplay>
 			</div>
 		{/if}
 

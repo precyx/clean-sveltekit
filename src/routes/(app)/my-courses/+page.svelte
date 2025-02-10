@@ -4,12 +4,9 @@
 	import { goto } from '$app/navigation';
 	import type { Course } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 
 	export let data;
 	const { courses, error } = data;
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const handleCourseClick = (course: Course) => {
 		goto(`/my-courses/${course.documentId}`, {
@@ -32,20 +29,15 @@
 			<div class="flex flex-wrap">
 				{#each courses.data as course}
 					<button
-						class="group mb-8 grid grid-cols-2 gap-4 rounded-lg text-left"
+						class="group mb-8 grid w-[100%] grid-cols-2 gap-4 rounded-lg text-left"
 						onclick={() => handleCourseClick(course)}
 					>
-						<div class="group-hover:opacity-80">
-							{#if course.videoPreview?.url}
-								<ImageDisplay
-									src={IMAGE_BASE + course.videoPreview?.url}
-									alt={course.title}
-									classes={' w-[500px] rounded-lg shadow-lg inset-0 w-full object-cover'}
-								></ImageDisplay>
-							{:else}
-								<Placeholder height="auto" width="500px">No Image Available</Placeholder>
-							{/if}
-						</div>
+						<ImageDisplay
+							provider={course.videoPreview?.provider}
+							src={course.videoPreview?.url}
+							alt={course.title}
+							classes={' w-[500px] rounded-lg shadow-lg inset-0 w-full object-cover'}
+						></ImageDisplay>
 
 						<!-- Product Details -->
 						<div class="ml-2 lg:ml-6">
@@ -69,7 +61,8 @@
 											{#each product.images as image}
 												<div class="mr-2">
 													<ImageDisplay
-														src={IMAGE_BASE + image.url}
+														provider={image.provider}
+														src={image.url}
 														alt={'product'}
 														classes="h-16 w-16 rounded-lg object-cover shadow-lg"
 													/>

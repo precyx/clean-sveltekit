@@ -2,13 +2,10 @@
 	import CourseCard from '$lib/components/CourseCard.svelte';
 	import { goto } from '$app/navigation';
 	import type { Product } from '$lib/api/types.ts';
-	import { PUBLIC_STRAPI_API_URL } from '$env/static/public';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 
 	export let data;
 	const { products, error } = data;
-
-	let IMAGE_BASE = PUBLIC_STRAPI_API_URL;
 
 	const handleProductClick = (product: Product) => {
 		goto(`/products/${product.documentId}`, {
@@ -38,7 +35,8 @@
 						{#if product?.images && product.images.length}
 							<div class="w-full overflow-hidden group-hover:opacity-80">
 								<ImageDisplay
-									src={IMAGE_BASE + product.images[0]?.url}
+									provider={product.images[0]?.provider}
+									src={product.images[0]?.url}
 									alt={product.title}
 									classes="h-auto w-full max-w-[250px] rounded-lg object-contain shadow-md"
 								/>
