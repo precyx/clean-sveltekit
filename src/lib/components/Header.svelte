@@ -114,7 +114,11 @@
 	class={`text-grey-300 dark:text-grey-100 relative z-50 w-full ${headerClasses} ${customClasses} h-[70px]`}
 >
 	<div class="lg:hidden">
-		<!-- Mobile Nav -->
+		<!--
+		 ###
+		 ### Mobile Nav 
+		 ###
+		 -->
 		<div class="absolute left-2 top-2 z-10">
 			<button class="z-10 p-4" onclick={() => (showMobileNav = !showMobileNav)}>
 				<IconMenu
@@ -148,18 +152,6 @@
 		</div>
 
 		<div class="absolute right-2 top-2 flex flex-row items-center">
-			<button onclick={toggleTheme} class="transform p-2 p-4">
-				{#if $theme === 'dark'}
-					<IconSun
-						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
-					></IconSun>
-				{:else}
-					<IconMoon
-						classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
-					></IconMoon>
-				{/if}
-			</button>
-
 			<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
 			></CartButton>
 
@@ -180,6 +172,18 @@
 								<a href={'/profile'}>Profile</a>
 								<button onclick={logout}>Logout</button>
 							{/if}
+							<button onclick={toggleTheme} class="flex transform items-center p-2">
+								{#if $theme === 'dark'}
+									<IconSun
+										classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+									></IconSun>
+								{:else}
+									<IconMoon
+										classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+									></IconMoon>
+								{/if}
+								<span class="ml-2">{$theme === 'dark' ? 'Claro' : 'Oscurro'}</span>
+							</button>
 						</nav>
 					</div>
 				</div>
@@ -188,7 +192,11 @@
 	</div>
 
 	<div class="container mx-auto flex hidden h-full items-center lg:flex">
-		<!-- Navigation -->
+		<!--
+		 ###
+		 ### Desktop Nav 
+		 ###
+		 -->
 		<nav class="absolute inset-x-0 mx-auto flex h-full items-center justify-center space-x-3">
 			<NavLink href={'/courses'}>Courses</NavLink>
 			<NavLink href={'/products'}>Products</NavLink>
@@ -207,7 +215,11 @@
 			<NavLink href={'/about-us'}>Sobre Nosotros</NavLink>
 		</nav>
 
-		<!-- Action Buttons -->
+		<!--
+		 ###
+		 ### Action Buttons 
+		 ###
+		 -->
 		<div class="relative z-20 ml-auto flex h-full items-center space-x-4" bind:this={element}>
 			<button onclick={toggleTheme} class="transform rounded p-2">
 				{#if $theme === 'dark'}
