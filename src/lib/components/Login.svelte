@@ -52,7 +52,7 @@
 
 			goto('/my-courses');
 		} catch (err: any) {
-			error = err;
+			error = err.message;
 		} finally {
 			loading = false;
 		}

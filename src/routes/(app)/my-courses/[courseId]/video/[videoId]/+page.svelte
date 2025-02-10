@@ -62,8 +62,8 @@
 			</h1>
 		</div>
 		<ImageDisplay
-			provider={video.data.video.provider}
-			src={`${video.data.video.url}`}
+			provider={video?.data?.video?.provider}
+			src={`${video?.data?.video?.url}`}
 			alt={video.data.title}
 			classes="mb-8 w-full rounded-lg object-cover"
 		/>
