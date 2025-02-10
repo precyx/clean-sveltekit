@@ -13,7 +13,7 @@
 	let error = false;
 </script>
 
-{#if error}
+{#if error || !imgSrc}
 	<div
 		class={'bg-grey-50 dark:bg-grey-900 ' + classes}
 		data-img-src={imgSrc}
