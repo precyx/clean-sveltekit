@@ -9,8 +9,10 @@
 	import { paypal } from '$lib/stores/paypal';
 	import { PUBLIC_PAYPAL_CLIENT_ID } from '$env/static/public';
 	import { onMount } from 'svelte';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
 	onMount(async () => {
+		// Load PayPal
 		const _paypal: PayPalNamespace | null = await loadScript({
 			clientId: PUBLIC_PAYPAL_CLIENT_ID,
 			environment: 'sandbox',
@@ -18,6 +20,9 @@
 		});
 
 		paypal.set(_paypal);
+
+		// Inject Vercel Insights
+		injectSpeedInsights();
 	});
 </script>
 
