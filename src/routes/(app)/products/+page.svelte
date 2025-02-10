@@ -32,16 +32,15 @@
 				{#each products.data as product}
 					<button class="group rounded-lg text-left" onclick={() => handleProductClick(product)}>
 						<!-- Full Image -->
-						{#if product?.images && product.images.length}
-							<div class="w-full overflow-hidden group-hover:opacity-80">
-								<ImageDisplay
-									provider={product.images[0]?.provider}
-									src={product.images[0]?.url}
-									alt={product.title}
-									classes="h-auto w-full max-w-[250px] rounded-lg object-contain shadow-md"
-								/>
-							</div>
-						{/if}
+
+						<div class="w-full overflow-hidden group-hover:opacity-80">
+							<ImageDisplay
+								provider={product?.images[0]?.provider}
+								src={product?.images[0]?.url}
+								alt={product.title}
+								classes="h-auto w-full max-w-[250px] rounded-lg object-contain shadow-md"
+							/>
+						</div>
 
 						<!-- Product Details -->
 						<h2
