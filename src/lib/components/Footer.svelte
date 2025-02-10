@@ -3,9 +3,8 @@
 	import { theme } from '$lib/stores/theme';
 	import { isPersonalPage } from '$lib/utils/Utils';
 
-	let LOGO =
-		'http://localhost:1337/uploads/464160045_521706020573047_6761713450314237728_n_removebg_preview_d8777845b4.png';
-	let LOGO_WHITE = 'http://localhost:1337/uploads/logo_white_snaiderclean_788d70db2a.png';
+	let LOGO = '/img/logo-color.png';
+	let LOGO_WHITE = '/img/logo-white.png';
 
 	let currentTheme: string;
 
