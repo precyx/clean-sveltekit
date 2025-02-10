@@ -79,10 +79,10 @@
 			<!-- Product Image -->
 			<div>
 				<div class="dark:text-grey-0 mb-4 mb-4 text-sm font-bold italic text-blue-500 lg:text-lg">
-					Videos ({course.data.videos.length})
+					Videos ({course?.data?.videos?.length})
 				</div>
 
-				{#if course.data.videos.length}
+				{#if course?.data?.videos?.length}
 					<div
 						class={'relative overflow-y-hidden transition-all duration-300 ease-in-out '}
 						id="expandable-content"
