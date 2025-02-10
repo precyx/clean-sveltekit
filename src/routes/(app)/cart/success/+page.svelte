@@ -35,7 +35,9 @@
 
 <div class="mb-10 w-full">
 	<div class="w-full text-center">
-		<h1 class="dark:text-grey-0 mb-2 mt-4 text-center text-xl font-extrabold text-blue-500">
+		<h1
+			class="dark:text-grey-0 mb-2 mt-4 text-center text-lg font-extrabold text-blue-500 lg:text-xl"
+		>
 			Gracias {$user?.username}!
 		</h1>
 		<h2

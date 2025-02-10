@@ -6,7 +6,7 @@
 	export let href = '';
 </script>
 
-<a class="flex p-2" {href}>
+<a class="flex p-2 active:opacity-70" {href}>
 	<div
 		class=" mr-2 text-base font-medium text-blue-500 dark:text-gray-50 ${IS_PERSONAL_PAGE
 			? ' text-grey-0'

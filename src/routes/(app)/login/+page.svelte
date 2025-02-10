@@ -3,9 +3,13 @@
 	import Register from '$lib/components/Register.svelte';
 </script>
 
-<div class="container mx-auto px-4">
+<div class="">
 	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-		<Login></Login>
-		<Register></Register>
+		<div class="mb-10">
+			<Login></Login>
+		</div>
+		<div class="mb-10">
+			<Register></Register>
+		</div>
 	</div>
 </div>

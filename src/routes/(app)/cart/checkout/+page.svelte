@@ -118,7 +118,9 @@
 </div>
 
 <div class="mb-10">
-	<h1 class="dark:text-grey-0 mb-2 text-xl font-extrabold text-blue-500">Resumen del Pedido</h1>
+	<h1 class="dark:text-grey-0 mb-2 text-lg font-extrabold text-blue-500 lg:text-xl">
+		Resumen del Pedido
+	</h1>
 	<h2 class="text-productbase mb-8 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
 		{$cart.items.length} articulos
 	</h2>

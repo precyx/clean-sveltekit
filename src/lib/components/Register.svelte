@@ -70,7 +70,9 @@
 </script>
 
 <form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
-	<h2 class="dark:text-grey-0 mb-2 mb-4 text-xl font-extrabold text-blue-500">Register</h2>
+	<h2 class="dark:text-grey-0 mb-2 mb-4 text-lg font-extrabold text-blue-500 lg:text-xl">
+		Register
+	</h2>
 
 	<div class="mb-4">
 		<TextInput
