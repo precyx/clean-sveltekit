@@ -46,6 +46,9 @@
 		html,
 		body {
 			@apply dark:bg-grey-1000 flex min-h-screen flex-col bg-white font-raleway;
+			button {
+				touch-action: manipulation;
+			}
 		}
 	</style>
 </svelte:head>
