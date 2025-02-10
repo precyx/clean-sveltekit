@@ -140,7 +140,7 @@
 		 -->
 		<div class="absolute left-2 top-2 z-10">
 			<button
-				class="z-10 touch-manipulation p-4 active:opacity-70"
+				class="z-10 touch-manipulation p-4 active:opacity-60"
 				onclick={() => (showMobileNav = !showMobileNav)}
 			>
 				<IconMenu
@@ -154,11 +154,11 @@
 					class="absolute left-0 top-[60px] z-10 flex w-[250px] bg-black p-4"
 				>
 					<nav class="flex flex-col space-y-3">
-						<a class="active:opacity-70" href={'/landing'}>Home</a>
-						<a class="active:opacity-70" href={'/courses'}>Courses</a>
-						<a class="active:opacity-70" href={'/products'}>Products</a>
-						<a class="active:opacity-70" href={'/contact'}>Contacto</a>
-						<a class="active:opacity-70" href={'/about-us'}>Sobre Nosotros</a>
+						<a class="active:opacity-60" href={'/landing'}>Home</a>
+						<a class="active:opacity-60" href={'/courses'}>Courses</a>
+						<a class="active:opacity-60" href={'/products'}>Products</a>
+						<a class="active:opacity-60" href={'/contact'}>Contacto</a>
+						<a class="active:opacity-60" href={'/about-us'}>Sobre Nosotros</a>
 					</nav>
 				</div>
 			{/if}
@@ -166,7 +166,7 @@
 
 		<div class="absolute inset-x-0 mx-auto flex h-full items-center justify-center space-x-3">
 			<NavLink href={'/landing'}>
-				<div class="relative top-[-15px] h-[60px] active:opacity-70">
+				<div class="relative top-[-15px] h-[60px] active:opacity-60">
 					{#if IS_PERSONAL_PAGE || $theme === 'dark'}
 						<img src={LOGO_WHITE} class="w-[90px]" alt="logo" />
 					{:else}
@@ -185,7 +185,7 @@
 				onclick={() => (showMobileProfile = !showMobileProfile)}
 			>
 				<IconUser
-					classes={`h-6 w-6 dark:text-gray-50 active:opacity-70 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+					classes={`h-6 w-6 dark:text-gray-50 active:opacity-60 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
 				></IconUser>
 			</button>
 
@@ -202,7 +202,7 @@
 							{/if}
 							<button
 								onclick={toggleTheme}
-								class="flex transform items-center p-2 active:opacity-70"
+								class="flex transform items-center p-2 active:opacity-60"
 							>
 								{#if $theme === 'dark'}
 									<IconSun
@@ -233,7 +233,7 @@
 			<NavLink href={'/products'}>Products</NavLink>
 
 			<NavLink href={'/landing'}>
-				<div class="relative top-[-15px] h-[60px] active:opacity-70">
+				<div class="relative top-[-15px] h-[60px] active:opacity-60">
 					{#if IS_PERSONAL_PAGE || $theme === 'dark'}
 						<img src={LOGO_WHITE} class="w-[90px]" alt="logo" />
 					{:else}
