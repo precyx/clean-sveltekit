@@ -51,13 +51,13 @@
 								class="text-grey-300 lg:text-productbase mb-1 text-base font-medium dark:text-blue-300"
 							>
 								{course.category} •
-								{course.videos.length} videos
+								{course?.videos?.length} videos
 							</p>
 
 							<div class="mt-4 flex">
 								{#each course.products as product (product.id)}
 									<p class="text-grey-300 text-productbase mb-1 font-medium dark:text-blue-300">
-										{#if product.images.length}
+										{#if product?.images?.length}
 											{#each product.images as image}
 												<div class="mr-2">
 													<ImageDisplay
