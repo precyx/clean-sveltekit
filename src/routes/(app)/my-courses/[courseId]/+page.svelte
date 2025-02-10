@@ -64,13 +64,13 @@
 			</div>
 
 			<div class="dark:text-grey-500 text-blue-200">
-				{course.data.title}
+				{course?.data?.title}
 			</div>
 		</div>
 
 		<div class="mb-4">
 			<p class="dark:text-grey-0 mt-2 text-lg font-bold tracking-tight text-blue-500 lg:text-xl">
-				{course.data.title}
+				{course?.data?.title}
 			</p>
 		</div>
 
@@ -162,7 +162,7 @@
 
 					<div class="mt-8">
 						<div class="dark:text-grey-0 mb-2 text-sm font-bold italic text-blue-500 lg:text-lg">
-							Ingredientes ({firstFormula.FormulaItem.length})
+							Ingredientes ({firstFormula?.FormulaItem?.length})
 						</div>
 						{#each firstFormula.FormulaItem as item (item.id)}
 							<div class="dark:text-grey-0 flex font-medium text-blue-500">
