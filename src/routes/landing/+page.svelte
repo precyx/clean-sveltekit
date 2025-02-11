@@ -30,32 +30,35 @@
 </svelte:head>
 
 <section class="relative h-[800px] w-full">
-	<!-- Full-Width Background Image -->
-	<div
-		class="absolute inset-0 h-full w-full bg-black bg-cover bg-center dark:opacity-50"
-		style={`background-image: url(${landingImg});`}
-	></div>
-
-	<!-- Adaptive Gradient Overlay -->
-	<div class="absolute inset-0 h-[800px]">
-		<!-- Light Mode Gradient -->
+	<div class="relative z-10 h-full">
+		<div class="-z-1 absolute left-0 top-0 h-full w-full bg-black"></div>
+		<!-- Full-Width Background Image -->
 		<div
-			class="h-full w-full bg-gradient-to-t from-[rgba(240,252,255,0)] via-[rgba(255,255,255,0.5)] to-[rgba(255,255,255,1)] dark:hidden"
+			class="absolute inset-0 h-full w-full bg-black bg-cover bg-center dark:opacity-50"
+			style={`background-image: url(${landingImg});`}
 		></div>
 
-		<!-- Dark Mode Gradient -->
-		<div
-			class="hidden h-full w-full bg-gradient-to-b from-[rgba(10,71,96,1)] via-[rgba(10,71,96,0.2)] to-[rgba(10,71,96,0)] dark:block"
-		></div>
-	</div>
+		<!-- Adaptive Gradient Overlay -->
+		<div class="absolute inset-0 h-[800px]">
+			<!-- Light Mode Gradient -->
+			<div
+				class="h-full w-full bg-gradient-to-t from-[rgba(240,252,255,0)] via-[rgba(255,255,255,0.5)] to-[rgba(255,255,255,1)] dark:hidden"
+			></div>
 
-	<!-- Content -->
-	<div class="relative z-10 px-5 py-10 lg:px-40">
-		<h1 class="lg:text-xxl text-xl font-black text-blue-500 dark:text-white">
-			Limpiadores <br /> Potentes y Eficaces
-		</h1>
-		<div class="relative z-10 mb-6 mt-3">
-			<Button>Comienza Hoy</Button>
+			<!-- Dark Mode Gradient -->
+			<div
+				class="hidden h-full w-full bg-gradient-to-b from-[rgba(10,71,96,1)] via-[rgba(10,71,96,0.2)] to-[rgba(10,71,96,0)] dark:block"
+			></div>
+		</div>
+
+		<!-- Content -->
+		<div class="relative z-10 px-5 py-10 lg:px-40">
+			<h1 class="lg:text-xxl text-xl font-black text-blue-500 dark:text-white">
+				Limpiadores <br /> Potentes y Eficaces
+			</h1>
+			<div class="relative z-10 mb-6 mt-3">
+				<Button>Comienza Hoy</Button>
+			</div>
 		</div>
 	</div>
 </section>

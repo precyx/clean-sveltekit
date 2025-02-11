@@ -4,7 +4,7 @@
 	import '../../app.postcss';
 </script>
 
-<div class="app font-raleway dark:bg-black">
+<div class="app dark:bg-grey-1000 font-raleway">
 	<Header customClasses="bg-white dark:bg-blue-600" />
 
 	<main class="mx-auto w-full flex-1 flex-grow">

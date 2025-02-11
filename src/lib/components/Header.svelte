@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -9,6 +10,7 @@
 	import { cart } from '$lib/stores/cart';
 	import { theme } from '$lib/stores/theme';
 	import { sleep } from '$lib/utils/Utils';
+	import { clickOutside } from '$lib/utils/clickOutside';
 
 	import NavLink from '$lib/components/NavLink.svelte';
 	import PopupItem from '$lib/components/PopupItem.svelte';
@@ -122,16 +124,33 @@
 
 	let mobileNavRef: HTMLElement | null = $state(null);
 
-	const handleClickOutside = (event) => {
-		if (mobileNavRef && !mobileNavRef.contains(event.target)) {
-			showMobileNav = false; // Close the menu if click is outside
-		}
+	const closeMobileNav = () => {
+		showMobileNav = false;
 	};
+	const closeMobileProfile = () => {
+		showMobileProfile = false;
+	};
+
+	afterNavigate(() => {
+		showMobileNav = false;
+		showMobileProfile = false;
+	});
 </script>
 
+<div class="h-[70px] w-full"></div>
 <header
-	class={`text-grey-300 dark:text-grey-100 relative z-50 w-full ${headerClasses} ${customClasses} h-[70px]`}
+	class={`text-grey-300 dark:text-grey-100 fixed top-0 z-50 w-full ${headerClasses} ${customClasses} h-[70px]`}
 >
+	<!-- Header Gradient-->
+	<!--
+	<div
+		id="header-gradient"
+		class="background-grey-300 fixed left-0 top-0 h-[70px] w-full "
+	>
+		xxx
+	</div>
+-->
+
 	<div class="lg:hidden">
 		<!--
 		 ###
@@ -150,7 +169,9 @@
 
 			{#if showMobileNav}
 				<div
-					bind:this={mobileNavRef}
+					use:clickOutside={() => {
+						showMobileNav = false;
+					}}
 					class="absolute left-0 top-[60px] z-10 flex w-[250px] bg-black p-4"
 				>
 					<nav class="flex flex-col space-y-3">
@@ -190,8 +211,14 @@
 			</button>
 
 			{#if showMobileProfile}
-				<div class="absolute right-0 top-[60px] flex w-[250px] bg-black p-4">
+				<div
+					class="absolute right-0 top-[60px] flex w-[250px] bg-black p-4"
+					use:clickOutside={() => {
+						showMobileProfile = false;
+					}}
+				>
 					<div class=" flex justify-center bg-black">
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<nav class="flex flex-col space-y-3">
 							{#if !currentUser}
 								<NavLink href={'/login'}>Login</NavLink>

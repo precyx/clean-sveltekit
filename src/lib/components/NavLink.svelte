@@ -20,6 +20,7 @@
 </script>
 
 <a
+	{onclick}
 	{href}
 	class={`${customClasses} ${colorClasses} px-2 py-1 font-medium aria-[current='page']:underline`}
 	aria-current={page.url.pathname === href ? 'page' : undefined}
