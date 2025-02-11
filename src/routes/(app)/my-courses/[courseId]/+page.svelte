@@ -31,7 +31,7 @@
 
 	onMount(async () => {
 		if (element) {
-			await sleep(100);
+			await sleep(300);
 			baseHeight = element.offsetHeight + 80;
 			mounted = true;
 		}
@@ -52,10 +52,7 @@
 {:else if course?.data}
 	<div class="">
 		<div class="text-productsm mb-1 mt-4 flex flex-wrap items-center lg:text-base">
-			<button
-				onclick={goBack}
-				class="mr-3 flex items-center text-blue-500 hover:underline dark:text-blue-300"
-			>
+			<button onclick={goBack} class="mr-3 flex items-center hover:underline dark:text-blue-300">
 				Mis Cursos
 			</button>
 
@@ -68,8 +65,8 @@
 			</div>
 		</div>
 
-		<div class="mb-4">
-			<p class="dark:text-grey-0 mt-2 text-lg font-bold tracking-tight text-blue-500 lg:text-xl">
+		<div class="mb-2 lg:mb-4">
+			<p class="dark:text-grey-0 text-lg font-bold tracking-tight text-blue-500 lg:text-xl">
 				{course?.data?.title}
 			</p>
 		</div>
@@ -78,7 +75,9 @@
 		<div class="grid w-[100%] grid-cols-1 items-start gap-16 md:grid-cols-2">
 			<!-- Product Image -->
 			<div>
-				<div class="dark:text-grey-0 mb-4 mb-4 text-sm font-bold italic text-blue-500 lg:text-lg">
+				<div
+					class="dark:text-grey-0 mb-2 text-sm font-bold italic text-blue-500 lg:mb-6 lg:text-lg"
+				>
 					Videos ({course?.data?.videos?.length})
 				</div>
 
@@ -161,7 +160,9 @@
 					</div>
 
 					<div class="mt-8">
-						<div class="dark:text-grey-0 mb-2 text-sm font-bold italic text-blue-500 lg:text-lg">
+						<div
+							class="dark:text-grey-0 mb-2 text-sm font-bold italic text-blue-500 lg:mb-6 lg:text-lg"
+						>
 							Ingredientes ({firstFormula?.FormulaItem?.length})
 						</div>
 						{#each firstFormula.FormulaItem as item (item.id)}

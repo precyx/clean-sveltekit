@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
+	import IconArrow from '$lib/icons/IconArrow.svelte';
 	import type { Course } from '$lib/api/types.ts';
 
 	export let data;
@@ -19,20 +20,11 @@
 	};
 </script>
 
-<div class="mb-6">
+<div class="text-productsm mb-2 lg:mb-4 lg:text-base">
 	<button onclick={goBack} class="dark:text-grey-0 flex items-center text-blue-500 hover:underline">
 		<!-- Back Arrow Icon -->
-		<svg
-			class="mr-2 h-5 w-5"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
-			></path>
-		</svg>
-		Back to Products
+		<IconArrow direction="left" classes="text-blue-200 dark:text-grey-500 mr-2" />
+		<div class="text-blue-500 dark:text-blue-300">Back to Products</div>
 	</button>
 </div>
 
@@ -57,11 +49,13 @@
 				{/if}
 				{#if product.data.courses?.length}
 					<!-- Cursos Section -->
-					<div class="text-mid dark:text-grey-0 mb-4 mt-6 font-bold italic text-blue-500">
+					<div
+						class="text-mid dark:text-grey-0 mb-2 mt-4 font-bold italic text-blue-500 lg:mb-4 lg:mt-6"
+					>
 						Cursos
 					</div>
 					<div
-						class="mt-6 grid grid-cols-1 items-start gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+						class=" grid grid-cols-1 items-start gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
 					>
 						{#each product.data.courses as course}
 							<button class="group text-left" onclick={() => handleCourseClick(course)}>
@@ -79,7 +73,7 @@
 
 								<!-- Product Details -->
 								<h2
-									class="dark:text-grey-0 text-productsm mb-1 mt-4 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+									class="dark:text-grey-0 text-productsm mb-1 mt-2 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300 lg:mt-4"
 								>
 									{course.title}
 								</h2>

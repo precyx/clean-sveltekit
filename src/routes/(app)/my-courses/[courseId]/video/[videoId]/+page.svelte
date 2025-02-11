@@ -57,7 +57,7 @@
 {:else if video?.data}
 	<div class="">
 		<div class="mb-4">
-			<h1 class="dark:text-grey-0 mt-2 text-lg font-bold text-blue-500 lg:text-xl">
+			<h1 class="dark:text-grey-0 text-lg font-bold text-blue-500 lg:text-xl">
 				{video.data.lessonNumber}. {video.data.title}
 			</h1>
 		</div>

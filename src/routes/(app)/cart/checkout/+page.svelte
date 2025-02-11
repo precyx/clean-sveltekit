@@ -5,6 +5,7 @@
 	import { getCoursesByIds } from '$lib/api/api.js';
 	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
+	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import IconClose from '$lib/icons/IconClose.svelte';
 	import { createOrder, captureOrder } from '$lib/api/api';
@@ -100,28 +101,19 @@
 	};
 </script>
 
-<div class="">
+<div class="text-productsm lg:text-base">
 	<button onclick={goBack} class="dark:text-grey-0 flex items-center text-blue-500 hover:underline">
 		<!-- Back Arrow Icon -->
-		<svg
-			class="mr-2 h-5 w-5"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
-			></path>
-		</svg>
-		Volver al resumen
+		<ArrowIcon direction="left" classes="text-blue-200 dark:text-grey-500 mr-2" />
+		<div class="text-blue-500 dark:text-blue-300">Volver al resumen</div>
 	</button>
 </div>
 
-<div class="mb-10">
-	<h1 class="dark:text-grey-0 mb-2 text-lg font-extrabold text-blue-500 lg:text-xl">
+<div class="mb-4 lg:mb-6">
+	<h1 class="dark:text-grey-0 text-lg font-extrabold text-blue-500 lg:text-xl">
 		Resumen del Pedido
 	</h1>
-	<h2 class="text-productbase mb-8 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
+	<h2 class="text-productbase mb-4 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
 		{$cart.items.length} articulos
 	</h2>
 </div>

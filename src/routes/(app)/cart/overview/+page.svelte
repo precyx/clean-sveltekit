@@ -54,11 +54,11 @@
 	let paypalActive: boolean = $state(false);
 </script>
 
-<div class="mb-10">
-	<h1 class="dark:text-grey-0 mb-2 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
+<div class="mb-4 lg:mb-6">
+	<h1 class="dark:text-grey-0 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
 		Carrito de compras
 	</h1>
-	<h2 class="text-productbase mb-8 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
+	<h2 class="text-productbase mb-4 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
 		{$cart.items.length} articulos
 	</h2>
 </div>

@@ -18,7 +18,7 @@
 <main>
 	<div class="mx-auto max-w-screen-xl">
 		<h1 class="dark:text-grey-0 mb-2 mb-4 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
-			Nuestros Cursos
+			Nuestros Cursos ({courses?.data?.length})
 		</h1>
 
 		{#if error}

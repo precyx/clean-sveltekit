@@ -7,6 +7,7 @@
 	import type { Product } from '$lib/api/types.ts';
 	import { cart, addToCart } from '$lib/stores/cart.js';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
+	import IconArrow from '$lib/icons/IconArrow.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
@@ -28,20 +29,11 @@
 	};
 </script>
 
-<div class="mb-6">
+<div class="text-productsm mb-2 lg:mb-4 lg:text-base">
 	<button onclick={goBack} class="dark:text-grey-0 flex items-center text-blue-500 hover:underline">
 		<!-- Back Arrow Icon -->
-		<svg
-			class="mr-2 h-5 w-5"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
-			></path>
-		</svg>
-		Back to Courses
+		<IconArrow direction="left" classes="text-blue-200 dark:text-grey-500 mr-2" />
+		<div class="text-blue-500 dark:text-blue-300">Back to Courses</div>
 	</button>
 </div>
 
@@ -57,10 +49,12 @@
 					provider={course.data.videoPreview?.provider}
 					src={course.data.videoPreview?.url}
 					alt={course.data.title}
-					classes="mb-8 aspect-square h-[260px] w-full rounded-lg object-cover"
+					classes="aspect-square h-[260px] w-full rounded-lg object-cover"
 				/>
 
-				<div class="text-mid dark:text-grey-0 mb-4 font-bold italic text-blue-500">
+				<div
+					class="text-mid dark:text-grey-0 mb-2 mt-4 font-bold italic text-blue-500 lg:mb-4 lg:mt-6"
+				>
 					Productos en ese curso
 				</div>
 

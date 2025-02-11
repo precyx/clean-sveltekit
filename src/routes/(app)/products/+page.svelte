@@ -18,10 +18,12 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-2 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
-			Nuestros Productos
+		<h1 class="dark:text-grey-0 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
+			Nuestros Productos ({products?.data?.length})
 		</h1>
-		<p class="text-productbase mb-8 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
+		<p
+			class="text-productbase mb-4 font-bold italic text-blue-400 dark:text-blue-100 lg:mb-8 lg:text-lg"
+		>
 			Limpieza de Mano, Cocina, Baño
 		</p>
 
@@ -42,18 +44,20 @@
 							/>
 						</div>
 
-						<!-- Product Details -->
-						<h2
-							class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
-						>
-							{product.title}
-						</h2>
-						<p class="dark:text-grey-500 mb-1 text-base font-normal text-blue-200">
-							{product.category}
-						</p>
-						<p class="text-grey-300 font-medium dark:text-blue-300">
-							{product.subcategory}
-						</p>
+						<div>
+							<!-- Product Details -->
+							<h2
+								class="dark:text-grey-0 mb-1 mt-4 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+							>
+								{product.title}
+							</h2>
+							<p class="dark:text-grey-500 mb-1 text-base font-normal text-blue-200">
+								{product.category}
+							</p>
+							<p class="text-grey-300 font-medium dark:text-blue-300">
+								{product.subcategory}
+							</p>
+						</div>
 					</button>
 				{/each}
 			</div>
