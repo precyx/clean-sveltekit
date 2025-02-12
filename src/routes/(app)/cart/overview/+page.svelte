@@ -66,7 +66,7 @@
 {#if courses && courses.data.length > 0}
 	{#each courses.data as course}
 		<div
-			class="mb-4 grid grid-cols-1 items-start gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[200px,1fr,1fr,1fr]"
+			class="dark:border-grey-900 relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 md:grid-cols-[100px,1fr,50px,50px] lg:grid-cols-[200px,1fr,1fr,1fr]"
 		>
 			<a
 				class="dark:bg-grey-900 overflow-hidden group-hover:opacity-80"
@@ -79,18 +79,19 @@
 					classes={'rounded-lg shadow-md inset-0 w-full object-cover'}
 				></ImageDisplay>
 			</a>
-			<a class="ml-4" href={'/courses/' + course.documentId}>
+			<a class="ml-2 sm:ml-4" href={'/courses/' + course.documentId}>
 				<h2 class="dark:text-grey-0 mb-1 font-semibold text-blue-500">{course.title}</h2>
 				<p class="text-grey-300 font-normal">{course.category}</p>
+				<p class="hidden text-right md:block"></p>
 			</a>
 			<a class="text-right" href={'/courses/' + course.documentId}>
 				<p class="mt-1 text-base font-medium text-green-300 dark:text-green-100">
 					$ {course.price}
 				</p>
 			</a>
-			<div class="flex justify-end">
+			<div class="absolute bottom-2 right-0 flex justify-end md:relative md:bottom-0 md:right-0">
 				<button
-					class="ml-4 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-blue-500 bg-opacity-15"
+					class="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-blue-500 bg-opacity-5"
 					onclick={() => removeCartItem(course.documentId)}
 				>
 					<IconClose classes="text-blue-500 dark:text-white w-5 h-5"></IconClose>

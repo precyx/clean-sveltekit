@@ -121,7 +121,7 @@
 {#if courses && courses.data.length > 0}
 	{#each courses.data as course}
 		<div
-			class="mb-4 grid grid-cols-1 items-start gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[120px,1fr,1fr]"
+			class="dark:border-grey-900 relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 md:grid-cols-[100px,1fr,50px] lg:grid-cols-[200px,1fr,1fr]"
 		>
 			<div class="dark:bg-grey-900 overflow-hidden group-hover:opacity-80">
 				<ImageDisplay
@@ -131,9 +131,10 @@
 					classes={'rounded-lg shadow-md inset-0 w-full object-cover'}
 				></ImageDisplay>
 			</div>
-			<div class="ml-4">
+			<div class="ml-2 sm:ml-4">
 				<h2 class="dark:text-grey-0 mb-1 font-semibold text-blue-500">{course.title}</h2>
 				<p class="text-grey-300 font-normal">{course.category}</p>
+				<p class="hidden text-right md:block"></p>
 			</div>
 			<div class="text-right">
 				<p class="mt-1 text-base font-medium text-green-300 dark:text-green-100">
