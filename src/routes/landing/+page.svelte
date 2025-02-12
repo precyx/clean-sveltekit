@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
 	import Testimonial from '$lib/components/Testimonial.svelte';
+	import IconArrow from '$lib/icons/IconArrow.svelte';
+	import { goto } from '$app/navigation';
 	export let data;
 
 	let landingImg = '/img/landing1.jpg';
@@ -22,6 +24,10 @@
 			text: 'El curso me enseñó trucos sencillos y efectivos. Los productos que hice son fáciles de usar y realmente cumplen su función.'
 		}
 	];
+
+	const clickBeginNow = () => {
+		goto('/courses');
+	};
 </script>
 
 <svelte:head>
@@ -57,7 +63,10 @@
 				Limpiadores <br /> Potentes y Eficaces
 			</h1>
 			<div class="relative z-10 mb-6 mt-3">
-				<Button>Comienza Hoy</Button>
+				<Button onclick={clickBeginNow}>
+					Comienza Hoy
+					<IconArrow direction="right" classes="ml-2"></IconArrow>
+				</Button>
 			</div>
 		</div>
 	</div>

@@ -7,6 +7,7 @@
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import IconClose from '$lib/icons/IconClose.svelte';
+	import IconArrow from '$lib/icons/IconArrow.svelte';
 
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
@@ -138,8 +139,10 @@
 				disabled={!paypalActive}
 				onclick={() => {
 					goto('/cart/checkout');
-				}}>Continuar a pagar</Button
-			>
+				}}
+				>Continuar a pagar
+				<IconArrow direction="right" classes="ml-2"></IconArrow>
+			</Button>
 		</div>
 	</div>
 {:else}

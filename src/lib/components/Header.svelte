@@ -172,7 +172,7 @@
 					use:clickOutside={() => {
 						showMobileNav = false;
 					}}
-					class="absolute left-0 top-[60px] z-10 flex w-[250px] bg-black p-4"
+					class="absolute left-[-8px] top-[62px] z-10 flex w-[250px] bg-black p-4"
 				>
 					<nav class="flex flex-col space-y-3">
 						<a class="active:opacity-60" href={'/landing'}>Home</a>
@@ -198,8 +198,10 @@
 		</div>
 
 		<div class="absolute right-2 top-2 flex flex-row items-center">
-			<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
-			></CartButton>
+			{#if $cart.items.length != 0}
+				<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
+				></CartButton>
+			{/if}
 
 			<button
 				class=" touch-manipulation p-4"
@@ -212,7 +214,7 @@
 
 			{#if showMobileProfile}
 				<div
-					class="absolute right-0 top-[60px] flex w-[250px] bg-black p-4"
+					class="absolute right-[-8px] top-[62px] flex w-[250px] bg-black p-4"
 					use:clickOutside={() => {
 						showMobileProfile = false;
 					}}
@@ -225,7 +227,7 @@
 							{:else}
 								<a href={'/my-courses'}>Mis Cursos</a>
 								<a href={'/profile'}>Profile</a>
-								<button onclick={logout}>Logout</button>
+								<button class="text-left" onclick={logout}>Logout</button>
 							{/if}
 							<button
 								onclick={toggleTheme}
@@ -291,14 +293,16 @@
 				{/if}
 			</button>
 
+			{#if $cart.items.length != 0}
+				<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
+				></CartButton>
+			{/if}
+
 			{#if !currentUser}
 				<NavLink href={'/login'}>Login</NavLink>
-			{:else}
-				{#if true}
-					<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
-					></CartButton>
-				{/if}
+			{/if}
 
+			{#if currentUser}
 				<div class="group relative z-30 flex items-center">
 					<button class="  p-2">
 						<IconUser
