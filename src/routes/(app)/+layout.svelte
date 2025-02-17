@@ -26,7 +26,7 @@
 	});
 </script>
 
-<Header customClasses="dark:bg-grey-1000 bg-white" />
+<Header customClasses="dark:bg-grey-1100 bg-white" />
 <main class="mx-auto mt-0 w-full max-w-5xl flex-1 flex-grow px-5 lg:mt-12">
 	<slot />
 </main>
@@ -45,7 +45,7 @@
 	<style>
 		html,
 		body {
-			@apply dark:bg-grey-1000 flex min-h-screen flex-col bg-white font-raleway;
+			@apply dark:bg-grey-1100 flex min-h-screen flex-col bg-white font-raleway;
 			button {
 				touch-action: manipulation;
 			}

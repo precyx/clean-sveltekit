@@ -14,7 +14,7 @@
 	onMount(() => {
 		setTimeout(async () => {
 			renderPayPalButton();
-		}, 200); // Delay to ensure the PayPal SDK is fully loaded
+		}, 500); // Delay to ensure the PayPal SDK is fully loaded
 	});
 
 	// Function to render the PayPal button

@@ -74,7 +74,7 @@
 
 <!-- Additional Content Below -->
 
-<section class="dark:bg-grey-1000 bg-white px-5 py-16 md:px-10 lg:px-20">
+<section class="dark:bg-grey-1100 bg-white px-5 py-16 md:px-10 lg:px-20">
 	<h2 class="dark:text-grey-0 mb-8 text-xl font-extrabold text-blue-500">
 		Lo que dice nuestra clientes
 	</h2>

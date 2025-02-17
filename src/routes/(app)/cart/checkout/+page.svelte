@@ -71,7 +71,7 @@
 
 			return orderId;
 		} catch (err) {
-			console.log('🤖🤖🤖 CREATE ORDER ERROR 2', err);
+			console.log('🤖🤖🤖 CREATE ORDER ERROR 2', err.message);
 			loading = false;
 			error = err.message;
 		}
@@ -85,7 +85,7 @@
 			loading = false;
 			goto(`/cart/success?orderId=${orderId}`);
 		} catch (err) {
-			console.log('🤖🤖🤖 APPROVE ORDER ERROR 2', error);
+			console.log('🤖🤖🤖 APPROVE ORDER ERROR 2', error.message);
 			loading = false;
 			error = err.message;
 		}
@@ -97,7 +97,11 @@
 	const _onError = (err: any) => {
 		console.log('ERRR', err);
 		loading = false;
-		error = err.message;
+
+		// show paypal error, if there is no api error
+		if (!error) {
+			error = err.message;
+		}
 	};
 </script>
 
