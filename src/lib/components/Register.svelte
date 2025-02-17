@@ -2,6 +2,7 @@
 	import { register } from '$lib/api/api';
 	import { goto } from '$app/navigation';
 	import { sleep } from '$lib/utils/Utils';
+	import { user } from '$lib/stores/user';
 
 	import TextInput from '$lib/components/TextInput.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
@@ -50,9 +51,12 @@
 		try {
 			loading = true;
 			error = '';
-			await sleep(1500);
-			await register(username, email, password);
-			goto('/login');
+			await sleep(500);
+			let res = await register(username, email, password);
+
+			localStorage.setItem('token', res.token);
+			user.set(res.user); // Update user store with logged-in user data
+			goto('/my-courses');
 		} catch (err: any) {
 			error = err.message;
 		} finally {

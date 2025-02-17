@@ -94,17 +94,15 @@ const handleApiError = (error: unknown) => {
  */
 
 export const getUser = async (token: string): Promise<User> => {
-	return apiRequest<User>('GET', `/users/me`, undefined, {
-		headers: {
-			Authorization: `Bearer ${token}`
-		}
+	return apiRequest<User>('POST', `/user-custom/me`, {
+		token: token
 	});
 };
 
-export const login = (identifier: string, password: string): Promise<AuthResponse> => {
-	return apiRequest<AuthResponse>('POST', `/auth/local`, {
-		identifier,
-		password
+export const login = (email: string, password: string): Promise<AuthResponse> => {
+	return apiRequest<AuthResponse>('POST', `/user-custom/login`, {
+		email: email,
+		password: password
 	});
 };
 
@@ -113,7 +111,7 @@ export const register = async (
 	email: string,
 	password: string
 ): Promise<RegisterResponse> => {
-	return apiRequest<RegisterResponse>('POST', `/auth/local/register`, {
+	return apiRequest<RegisterResponse>('POST', `/user-custom/register`, {
 		username,
 		email,
 		password

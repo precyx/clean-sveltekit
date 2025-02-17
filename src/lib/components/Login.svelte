@@ -47,9 +47,8 @@
 			error = '';
 			await sleep(200);
 			const res = await login(email, password);
-			localStorage.setItem('token', res.jwt);
+			localStorage.setItem('token', res.token);
 			user.set(res.user); // Update user store with logged-in user data
-
 			goto('/my-courses');
 		} catch (err: any) {
 			error = err.message;

@@ -143,12 +143,12 @@ export type RichText = {
 };
 
 export interface AuthResponse {
-	jwt: string;
 	user: {
 		id: number;
 		username: string;
 		email: string;
 	};
+	token: string;
 }
 
 export interface RegisterResponse {
@@ -157,6 +157,7 @@ export interface RegisterResponse {
 		username: string;
 		email: string;
 	};
+	token: string;
 }
 
 export interface User {
