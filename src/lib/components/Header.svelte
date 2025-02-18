@@ -176,8 +176,8 @@
 				>
 					<nav class="flex flex-col space-y-3">
 						<a class="active:opacity-60" href={'/landing'}>Home</a>
-						<a class="active:opacity-60" href={'/courses'}>Courses</a>
-						<a class="active:opacity-60" href={'/products'}>Products</a>
+						<a class="active:opacity-60" href={'/courses'}>Cursos</a>
+						<a class="active:opacity-60" href={'/products'}>Productos</a>
 						<a class="active:opacity-60" href={'/contact'}>Contacto</a>
 						<a class="active:opacity-60" href={'/about-us'}>Sobre Nosotros</a>
 					</nav>
@@ -223,11 +223,11 @@
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<nav class="flex flex-col space-y-3">
 							{#if !currentUser}
-								<NavLink href={'/login'}>Login</NavLink>
+								<NavLink href={'/login'}>Iniciar sesión</NavLink>
 							{:else}
 								<a href={'/my-courses'}>Mis Cursos</a>
-								<a href={'/profile'}>Profile</a>
-								<button class="text-left" onclick={logout}>Logout</button>
+								<a href={'/profile'}>Perfil</a>
+								<button class="text-left" onclick={logout}>Cerrar sesión</button>
 							{/if}
 							<button
 								onclick={toggleTheme}
@@ -258,8 +258,8 @@
 		 ###
 		 -->
 		<nav class="absolute inset-x-0 mx-auto flex h-full items-center justify-center space-x-3">
-			<NavLink href={'/courses'}>Courses</NavLink>
-			<NavLink href={'/products'}>Products</NavLink>
+			<NavLink href={'/courses'}>Cursos</NavLink>
+			<NavLink href={'/products'}>Productos</NavLink>
 
 			<NavLink href={'/landing'}>
 				<div class="relative top-[-15px] h-[60px] active:opacity-60">
@@ -299,7 +299,7 @@
 			{/if}
 
 			{#if !currentUser}
-				<NavLink href={'/login'}>Login</NavLink>
+				<NavLink href={'/login'}>Iniciar sesión</NavLink>
 			{/if}
 
 			{#if currentUser}
@@ -316,8 +316,8 @@
 							class="dark:bg-grey-900 dark:border-grey-700 w-32 rounded-lg border border-gray-300 bg-white p-1 shadow-lg"
 						>
 							<PopupItem href={'/my-courses'}>Mis Cursos</PopupItem>
-							<PopupItem href={'/profile'}>Profile</PopupItem>
-							<PopupItem onclick={logout}>Logout</PopupItem>
+							<PopupItem href={'/profile'}>Perfil</PopupItem>
+							<PopupItem onclick={logout}>Cerrar sesión</PopupItem>
 						</div>
 					</div>
 				</div>

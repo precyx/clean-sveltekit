@@ -169,6 +169,7 @@ export interface User {
 	documentId: number;
 	username: string;
 	email: string;
+	confirmed: boolean;
 }
 
 export interface Cart {

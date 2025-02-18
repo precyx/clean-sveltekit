@@ -23,21 +23,21 @@
 		let newErrors: any = {}; // Create a new object
 
 		if (!username) {
-			newErrors.username = 'Username is required.';
+			newErrors.username = 'El nombre de usuario es obligatorio.';
 		} else if (username.length < 2) {
-			newErrors.username = 'Username must be at least 2 characters.';
+			newErrors.username = 'El nombre de usuario debe tener al menos 2 caracteres.';
 		}
 
 		if (!email) {
-			newErrors.email = 'Email is required.';
+			newErrors.email = 'El correo electrónico es obligatorio.';
 		} else if (!/^\S+@\S+\.\S+$/.test(email)) {
-			newErrors.email = 'Invalid email format.';
+			newErrors.email = 'Formato de correo electrónico inválido.';
 		}
 
 		if (!password) {
-			newErrors.password = 'Password is required.';
+			newErrors.password = 'La contraseña es obligatoria.';
 		} else if (password.length < 2) {
-			newErrors.password = 'Password must be at least 2 characters.';
+			newErrors.password = 'La contraseña debe tener al menos 2 caracteres.';
 		}
 
 		errors = { ...newErrors };
@@ -75,14 +75,14 @@
 
 <form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
 	<h2 class="dark:text-grey-0 mb-2 mb-4 text-lg font-extrabold text-blue-500 lg:text-xl">
-		Register
+		Registrarse
 	</h2>
 
 	<div class="mb-4">
 		<TextInput
 			id="username"
-			label="Username"
-			placeholder="Username"
+			label="Nombre de usuario"
+			placeholder="Nombre de usuario"
 			type="text"
 			bind:value={username}
 			required={true}
@@ -93,8 +93,8 @@
 	<div class="mb-4">
 		<TextInput
 			id="email"
-			label="Email"
-			placeholder="Email"
+			label="Correo electrónico"
+			placeholder="Correo electrónico"
 			type="email"
 			bind:value={email}
 			required={true}
@@ -105,8 +105,8 @@
 	<div class="mb-6">
 		<TextInput
 			id="password"
-			label="Password"
-			placeholder="Password"
+			label="Contraseña"
+			placeholder="Contraseña"
 			type="password"
 			bind:value={password}
 			required={true}
@@ -124,9 +124,9 @@
 
 	<Button type="submit" disabled={loading}>
 		{#if loading}
-			<Spinner /> Registering...
+			<Spinner /> Registrándose...
 		{:else}
-			Register
+			Registrarse
 		{/if}
 	</Button>
 </form>

@@ -19,4 +19,7 @@
 	<div>
 		{currentUser?.email}
 	</div>
+	<div>
+		Confirmed: {currentUser?.confirmed ? 'Yes' : 'No'}
+	</div>
 </div>
