@@ -144,24 +144,29 @@ export type RichText = {
 
 export interface AuthResponse {
 	user: {
-		id: number;
+		documentId: number;
 		username: string;
 		email: string;
 	};
-	token: string;
+	loginToken: string;
 }
 
 export interface RegisterResponse {
 	user: {
-		id: number;
+		documentId: number;
 		username: string;
 		email: string;
 	};
-	token: string;
+	loginToken: string;
+}
+
+export interface ConfirmRegistrationResponse {
+	message: string;
+	confirmed: boolean;
 }
 
 export interface User {
-	id: number;
+	documentId: number;
 	username: string;
 	email: string;
 }

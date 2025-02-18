@@ -5,6 +5,7 @@ import qs from 'qs';
 import type {
 	AuthResponse,
 	RegisterResponse,
+	ConfirmRegistrationResponse,
 	User,
 	ApiResponse,
 	Course,
@@ -93,9 +94,9 @@ const handleApiError = (error: unknown) => {
  * User
  */
 
-export const getUser = async (token: string): Promise<User> => {
+export const getUser = async (loginToken: string): Promise<User> => {
 	return apiRequest<User>('POST', `/user-custom/me`, {
-		token: token
+		loginToken: loginToken
 	});
 };
 
@@ -119,8 +120,16 @@ export const register = async (
 };
 
 export const logout = () => {
-	localStorage.removeItem('token');
+	localStorage.removeItem('loginToken');
 	window.location.href = '/login';
+};
+
+export const confirmRegistration = async (
+	confirmToken: string
+): Promise<ConfirmRegistrationResponse> => {
+	return apiRequest<ConfirmRegistrationResponse>('POST', `/user-custom/confirm-registration`, {
+		confirmToken
+	});
 };
 
 /**

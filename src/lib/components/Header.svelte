@@ -38,17 +38,17 @@
 	onMount(async () => {
 		if (browser) {
 			// Check if the user is already logged in
-			const token = localStorage.getItem('token');
-			if (token) {
+			const loginToken = localStorage.getItem('loginToken');
+			if (loginToken) {
 				try {
-					let userData = await getUser(token);
+					let userData = await getUser(loginToken);
 					userData = {
 						...userData
 					};
 					user.set(userData);
 				} catch (err) {
 					console.error('Failed to fetch user:', err);
-					localStorage.removeItem('token');
+					localStorage.removeItem('loginToken');
 				}
 			}
 		}

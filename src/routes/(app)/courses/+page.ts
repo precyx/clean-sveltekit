@@ -3,14 +3,6 @@ import { browser } from '$app/environment';
 import { getCourses } from '$lib/api/api';
 
 export const load = async () => {
-	/*if (browser) {
-		const token = localStorage.getItem('token');
-		if (!token) {
-			goto('/login');
-			return;
-		}
-	}*/
-
 	let courses;
 	let error;
 
