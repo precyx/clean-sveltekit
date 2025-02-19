@@ -162,6 +162,7 @@ export interface RegisterResponse {
 
 export interface ConfirmRegistrationResponse {
 	message: string;
+	email: string;
 	confirmed: boolean;
 }
 
@@ -184,4 +185,9 @@ export type PayPalOrder = {
 		rel: string;
 		method: string;
 	}[];
+};
+
+export type EmailStore = {
+	email: string;
+	status: 'verified' | 'pending';
 };

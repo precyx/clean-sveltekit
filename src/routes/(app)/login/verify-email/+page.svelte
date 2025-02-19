@@ -5,6 +5,7 @@
 	import { confirmRegistration } from '$lib/api/api';
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
+	import { emailState } from '$lib/stores/email.svelte';
 
 	let error = $state('');
 	let success = $state('');
@@ -21,10 +22,11 @@
 
 		try {
 			let res = await confirmRegistration(confirmToken);
-			//goto('/email-confirmed');
 
 			if (res.confirmed) {
+				emailState.email = res.email;
 				success = 'Email confirmed successfully';
+				goto('/login/email-confirmed');
 			}
 		} catch (err: any) {
 			error = err.message;
@@ -37,12 +39,12 @@
 </script>
 
 <div class="">
-	<h2 class="dark:text-grey-0 mb-2 mb-4 text-lg font-extrabold text-blue-500 lg:text-xl">
-		Confirming Email...
+	<h2 class="mb-2 mb-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
+		Confirmando Correo Electrónico...
 	</h2>
 
 	{#if success}
-		<div class="text-grey-300 dark:text-grey-100 mb-4">
+		<div class="mb-4 text-grey-300 dark:text-grey-100">
 			{success}
 		</div>
 		<Button classes="mt-6" onclick={clickMyCourses}>Go to my courses</Button>
