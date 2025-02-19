@@ -10,6 +10,8 @@
 
 	let username = '';
 	let email = '';
+	let country = '';
+	let phone = '';
 	let password = '';
 	let error = '';
 
@@ -17,15 +19,24 @@
 	let loading = false;
 	let submitted = false;
 
+	const removeEmptyStrings = <T extends Record<string, any>>(obj: T): T => {
+		for (const key in obj) {
+			if (obj[key] === '') {
+				delete obj[key]; // Remove the key if its value is an empty string
+			}
+		}
+		return obj;
+	};
+
 	const validate = () => {
 		if (!submitted) return;
 
 		let newErrors: any = {}; // Create a new object
 
 		if (!username) {
-			newErrors.username = 'El nombre de usuario es obligatorio.';
+			newErrors.username = 'El nombre es obligatorio.';
 		} else if (username.length < 2) {
-			newErrors.username = 'El nombre de usuario debe tener al menos 2 caracteres.';
+			newErrors.username = 'El nombre debe tener al menos 2 caracteres.';
 		}
 
 		if (!email) {
@@ -52,9 +63,10 @@
 			loading = true;
 			error = '';
 			await sleep(500);
-			let res = await register(username, email, password);
-
+			let data = removeEmptyStrings({ username, email, country, phone, password });
+			let res = await register(data);
 			localStorage.setItem('loginToken', res.loginToken);
+
 			user.set(res.user); // Update user store with logged-in user data
 			goto('/profile');
 		} catch (err: any) {
@@ -74,15 +86,15 @@
 </script>
 
 <form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
-	<h2 class="dark:text-grey-0 mb-2 mb-4 text-lg font-extrabold text-blue-500 lg:text-xl">
+	<h2 class="mb-2 mb-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
 		Registrarse
 	</h2>
 
 	<div class="mb-4">
 		<TextInput
 			id="username"
-			label="Nombre de usuario"
-			placeholder="Nombre de usuario"
+			label="Nombre *"
+			placeholder="Nombre *"
 			type="text"
 			bind:value={username}
 			required={true}
@@ -93,8 +105,8 @@
 	<div class="mb-4">
 		<TextInput
 			id="email"
-			label="Correo electrónico"
-			placeholder="Correo electrónico"
+			label="Correo electrónico *"
+			placeholder="Correo electrónico *"
 			type="email"
 			bind:value={email}
 			required={true}
@@ -102,11 +114,11 @@
 		/>
 	</div>
 
-	<div class="mb-6">
+	<div class="mb-4">
 		<TextInput
 			id="password"
-			label="Contraseña"
-			placeholder="Contraseña"
+			label="Contraseña *"
+			placeholder="Contraseña *"
 			type="password"
 			bind:value={password}
 			required={true}
@@ -114,19 +126,44 @@
 		/>
 	</div>
 
-	{#if loading}
-		<p class="mb-4 text-sm text-red-500">{error}</p>
-	{/if}
+	<div class="mb-4">
+		<TextInput
+			id="country"
+			label="Pais"
+			placeholder="Pais"
+			type="text"
+			bind:value={country}
+			required={false}
+			error={errors.country}
+		/>
+	</div>
 
-	{#if error}
-		<p class="mb-4 text-sm text-red-500">{error}</p>
-	{/if}
-
-	<Button type="submit" disabled={loading}>
+	<div class="mb-4">
+		<TextInput
+			id="phone"
+			label="Telefono"
+			placeholder="Telefono"
+			type="text"
+			bind:value={phone}
+			required={false}
+			error={errors.phone}
+		/>
+	</div>
+	<div class="mt-6">
 		{#if loading}
-			<Spinner /> Registrándose...
-		{:else}
-			Registrarse
+			<p class="mb-4 text-sm text-red-500">{error}</p>
 		{/if}
-	</Button>
+
+		{#if error}
+			<p class="mb-4 text-sm text-red-500">{error}</p>
+		{/if}
+
+		<Button type="submit" disabled={loading}>
+			{#if loading}
+				<Spinner /> Registrándose...
+			{:else}
+				Registrarse
+			{/if}
+		</Button>
+	</div>
 </form>

@@ -107,14 +107,24 @@ export const login = (email: string, password: string): Promise<AuthResponse> =>
 	});
 };
 
-export const register = async (
-	username: string,
-	email: string,
-	password: string
-): Promise<RegisterResponse> => {
+export const register = async ({
+	username,
+	email,
+	password,
+	country,
+	phone
+}: {
+	username: string;
+	email: string;
+	password: string;
+	country: string;
+	phone: string;
+}): Promise<RegisterResponse> => {
 	return apiRequest<RegisterResponse>('POST', `/user-custom/register`, {
 		username,
 		email,
+		country,
+		phone,
 		password
 	});
 };

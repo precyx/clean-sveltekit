@@ -156,6 +156,7 @@ export interface RegisterResponse {
 		documentId: number;
 		username: string;
 		email: string;
+		confirmed: boolean;
 	};
 	loginToken: string;
 }
