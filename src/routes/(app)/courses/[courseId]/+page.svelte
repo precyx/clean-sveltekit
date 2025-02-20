@@ -47,11 +47,11 @@
 	};
 </script>
 
-<div class="text-productsm mb-2 lg:mb-4 lg:text-base">
-	<button onclick={goBack} class="dark:text-grey-0 flex items-center text-blue-500 hover:underline">
+<div class="mb-2 text-productsm lg:mb-4 lg:text-base">
+	<button onclick={goBack} class="flex items-center text-blue-500 hover:underline dark:text-grey-0">
 		<!-- Back Arrow Icon -->
 		<IconArrow direction="left" classes="text-blue-200 dark:text-grey-500 mr-2" />
-		<div class="text-blue-500 dark:text-blue-300">Back to Courses</div>
+		<div class="text-blue-500 dark:text-blue-300">Volver a los cursos</div>
 	</button>
 </div>
 
@@ -71,7 +71,7 @@
 				/>
 
 				<div
-					class="text-mid dark:text-grey-0 mb-2 mt-4 font-bold italic text-blue-500 lg:mb-4 lg:mt-6"
+					class="text-mid mb-2 mt-4 font-bold italic text-blue-500 dark:text-grey-0 lg:mb-4 lg:mt-6"
 				>
 					Productos en ese curso
 				</div>
@@ -96,7 +96,7 @@
 
 							<!-- Product Details -->
 							<h2
-								class="dark:text-grey-0 text-productsm mb-1 mt-2 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300"
+								class="mb-1 mt-2 text-productsm font-medium text-blue-500 group-hover:text-blue-400 dark:text-grey-0 dark:group-hover:text-blue-300"
 							>
 								{product.title}
 							</h2>
@@ -108,11 +108,11 @@
 			<!-- Product Info -->
 			<div class="">
 				<!-- Product Title -->
-				<p class="dark:text-grey-0 text-productxl font-bold text-blue-500">
+				<p class="text-productxl font-bold text-blue-500 dark:text-grey-0">
 					{course.data.title}
 				</p>
 				<!-- Product Category -->
-				<p class="text-productlg mt-2 font-semibold text-blue-200 dark:text-blue-300">
+				<p class="mt-2 text-productlg font-semibold text-blue-200 dark:text-blue-300">
 					{course.data.Category}
 				</p>
 
@@ -133,12 +133,12 @@
 				</div>
 
 				<!-- Time to Fabricate -->
-				<p class="text-productlg text-grey-300 dark:text-grey-200 mt-6 font-semibold">
+				<p class="mt-6 text-productlg font-semibold text-grey-300 dark:text-grey-200">
 					{course.data.videos.length} videos
 				</p>
 
 				<!-- Product Description -->
-				<p class="dark:text-grey-100 text-grey-500 mt-6 text-base font-medium">
+				<p class="mt-6 text-base font-medium text-grey-500 dark:text-grey-100">
 					<RichText content={course.data.description}></RichText>
 				</p>
 			</div>
