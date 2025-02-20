@@ -159,7 +159,7 @@
 										alt={country.name}
 									/>
 								</div>
-								<div class="text-blue-500 dark:text-white">{country.name}</div>
+								<div class="text-left text-blue-500 dark:text-white">{country.name}</div>
 							</button>
 						{/each}
 					{:else}
