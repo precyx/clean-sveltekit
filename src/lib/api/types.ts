@@ -171,6 +171,8 @@ export interface User {
 	documentId: number;
 	username: string;
 	email: string;
+	country: string;
+	phone: string;
 	confirmed: boolean;
 }
 

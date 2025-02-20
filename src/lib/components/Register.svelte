@@ -7,6 +7,7 @@
 	import TextInput from '$lib/components/TextInput.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import CountryPicker from '$lib/components/CountryPicker.svelte';
 
 	let username = '';
 	let email = '';
@@ -57,6 +58,7 @@
 	};
 
 	const handleRegister = async () => {
+		console.log('vals', removeEmptyStrings({ username, email, country, phone, password }));
 		submitted = true;
 		if (!validate()) return;
 		try {
@@ -126,6 +128,7 @@
 		/>
 	</div>
 
+	<!-- 
 	<div class="mb-4">
 		<TextInput
 			id="country"
@@ -136,6 +139,19 @@
 			required={false}
 			error={errors.country}
 		/>
+	</div>
+-->
+
+	<div class="mb-4">
+		<CountryPicker
+			error={errors.country}
+			required={false}
+			id="country"
+			bind:value={country}
+			label="Pais"
+			searchText="Buscar Pais"
+			selectText="Seleccionar Pais"
+		></CountryPicker>
 	</div>
 
 	<div class="mb-4">
