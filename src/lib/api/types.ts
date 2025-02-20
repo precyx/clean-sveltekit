@@ -143,21 +143,12 @@ export type RichText = {
 };
 
 export interface AuthResponse {
-	user: {
-		documentId: number;
-		username: string;
-		email: string;
-	};
+	user: User;
 	loginToken: string;
 }
 
 export interface RegisterResponse {
-	user: {
-		documentId: number;
-		username: string;
-		email: string;
-		confirmed: boolean;
-	};
+	user: User;
 	loginToken: string;
 }
 

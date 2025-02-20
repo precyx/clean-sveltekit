@@ -68,8 +68,9 @@
 			let data = removeEmptyStrings({ username, email, country, phone, password });
 			let res = await register(data);
 			localStorage.setItem('loginToken', res.loginToken);
-
-			user.set(res.user); // Update user store with logged-in user data
+			// set user
+			$user.user = res.user;
+			$user.status = 'set';
 			goto('/profile');
 		} catch (err: any) {
 			error = err.message;

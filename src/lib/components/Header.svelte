@@ -2,6 +2,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import { onMount, onDestroy } from 'svelte';
+	import type { User } from '$lib/api/types';
 
 	import { browser } from '$app/environment';
 	import { logout } from '$lib/api/api';
@@ -45,11 +46,16 @@
 					userData = {
 						...userData
 					};
-					user.set(userData);
+					$user.user = userData;
+					$user.status = 'set';
 				} catch (err) {
 					console.error('Failed to fetch user:', err);
 					localStorage.removeItem('loginToken');
+
+					$user.status = 'error';
 				}
+			} else {
+				$user.status = 'error';
 			}
 		}
 
@@ -74,11 +80,12 @@
 	/**
 	 * User
 	 */
-	let currentUser = $state($user);
+	let currentUser: User | null = $state(null);
 
 	$effect(() => {
 		user.subscribe((value) => {
-			currentUser = value;
+			//console.log('XXX', value);
+			currentUser = value.user;
 		});
 	});
 
@@ -139,7 +146,7 @@
 
 <div class="h-[70px] w-full"></div>
 <header
-	class={`text-grey-300 dark:text-grey-100 fixed top-0 z-50 w-full ${headerClasses} ${customClasses} h-[70px]`}
+	class={`fixed top-0 z-50 w-full text-grey-300 dark:text-grey-100 ${headerClasses} ${customClasses} h-[70px]`}
 >
 	<!-- Header Gradient-->
 	<!--
@@ -227,7 +234,9 @@
 							{:else}
 								<a href={'/my-courses'}>Mis Cursos</a>
 								<a href={'/profile'}>Perfil</a>
-								<button class="text-left" onclick={logout}>Cerrar sesión</button>
+								<button class="text-left" onclick={logout}
+									>Cerrar sesión ({currentUser.username})</button
+								>
 							{/if}
 							<button
 								onclick={toggleTheme}
@@ -313,7 +322,7 @@
 					<!-- Popover -->
 					<div class="absolute right-0 top-[40px] hidden group-hover:block">
 						<div
-							class="dark:bg-grey-900 dark:border-grey-700 w-32 rounded-lg border border-gray-300 bg-white p-1 shadow-lg"
+							class="w-32 rounded-lg border border-gray-300 bg-white p-1 shadow-lg dark:border-grey-700 dark:bg-grey-900"
 						>
 							<PopupItem href={'/my-courses'}>Mis Cursos</PopupItem>
 							<PopupItem href={'/profile'}>Perfil</PopupItem>

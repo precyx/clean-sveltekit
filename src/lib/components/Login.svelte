@@ -48,7 +48,9 @@
 			await sleep(200);
 			const res = await login(email, password);
 			localStorage.setItem('loginToken', res.loginToken);
-			user.set(res.user); // Update user store with logged-in user data
+			// set user
+			$user.user = res.user;
+			$user.status = 'set';
 			goto('/profile');
 		} catch (err: any) {
 			error = err.message;
@@ -66,7 +68,7 @@
 </script>
 
 <form on:submit|preventDefault={handleLogin} novalidate class="w-full max-w-md rounded-lg">
-	<h2 class="dark:text-grey-0 mb-2 mb-4 text-lg font-extrabold text-blue-500 lg:text-xl">
+	<h2 class="mb-2 mb-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
 		Iniciar sesión
 	</h2>
 

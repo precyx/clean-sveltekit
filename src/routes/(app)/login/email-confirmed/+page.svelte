@@ -38,7 +38,7 @@
 		<h2
 			class="mb-2 mb-4 text-center text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl"
 		>
-			Correo electrónico confirmada!
+			Correo electrónico <br /> confirmada!
 		</h2>
 
 		<div
