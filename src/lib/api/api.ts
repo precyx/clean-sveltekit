@@ -167,8 +167,30 @@ const BASE_COURSE_QUERY = {
 	}
 };
 
+const MANY_COURSES_QUERY = {
+	populate: {
+		videoPreview: true
+	}
+};
+
+const MY_COURSES_QUERY = {
+	populate: {
+		videoPreview: true,
+		products: {
+			populate: {
+				images: true
+			}
+		}
+	}
+};
+
 export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
-	const queryString = qs.stringify(BASE_COURSE_QUERY, { encode: false });
+	const queryString = qs.stringify(MANY_COURSES_QUERY, { encode: false });
+	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
+};
+
+export const getMyCourses = async (): Promise<ApiResponse<Course[]>> => {
+	const queryString = qs.stringify(MY_COURSES_QUERY, { encode: false });
 	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
 };
 
@@ -198,8 +220,15 @@ export const getCourse = async (id: string): Promise<ApiResponse<Course>> => {
  * Product
  */
 
+const MANY_PRODUCTS_QUERY = {
+	populate: {
+		images: true
+	}
+};
+
 export const getProducts = async (): Promise<ApiResponse<Product[]>> => {
-	return apiRequest<ApiResponse<Product[]>>('GET', `/products?populate=*`);
+	const queryString = qs.stringify(MANY_PRODUCTS_QUERY, { encode: false });
+	return apiRequest<ApiResponse<Product[]>>('GET', `/products?${queryString}`);
 };
 
 export const getProduct = async (id: string): Promise<ApiResponse<Product>> => {

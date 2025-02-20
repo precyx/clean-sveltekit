@@ -1,13 +1,13 @@
 import { goto } from '$app/navigation';
 import { browser } from '$app/environment';
-import { getCourses } from '$lib/api/api';
+import { getMyCourses } from '$lib/api/api';
 
 export const load = async () => {
 	let courses;
 	let error;
 
 	try {
-		courses = await getCourses();
+		courses = await getMyCourses();
 	} catch (err: any) {
 		error = err.message;
 	}
