@@ -12,6 +12,9 @@
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 
+	let data_loading: boolean = $state(false);
+	let data_error: string = $state('');
+
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
 	let currentUser = $state($user);
@@ -31,7 +34,13 @@
 	});
 
 	onMount(() => {
-		if ($cart.items.length === 0) return;
+		if ($cart) {
+			if ($cart.items.length === 0) {
+				data_error = 'No hay cursos en el carrito';
+				return;
+			}
+		}
+
 		getCoursesByIds($cart.items).then((data) => {
 			courses = data;
 		});
@@ -56,10 +65,10 @@
 </script>
 
 <div class="mb-4 lg:mb-6">
-	<h1 class="dark:text-grey-0 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
+	<h1 class="mt-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
 		Carrito de compras
 	</h1>
-	<h2 class="text-productbase mb-4 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
+	<h2 class="mb-4 text-productbase font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
 		{$cart.items.length} articulos
 	</h2>
 </div>
@@ -67,10 +76,10 @@
 {#if courses && courses.data.length > 0}
 	{#each courses.data as course}
 		<div
-			class="dark:border-grey-900 relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 md:grid-cols-[100px,1fr,50px,50px] lg:grid-cols-[200px,1fr,1fr,1fr]"
+			class="relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 dark:border-grey-900 md:grid-cols-[100px,1fr,50px,50px] lg:grid-cols-[200px,1fr,1fr,1fr]"
 		>
 			<a
-				class="dark:bg-grey-900 overflow-hidden group-hover:opacity-80"
+				class="overflow-hidden group-hover:opacity-80 dark:bg-grey-900"
 				href={'/courses/' + course.documentId}
 			>
 				<ImageDisplay
@@ -81,8 +90,8 @@
 				></ImageDisplay>
 			</a>
 			<a class="ml-2 sm:ml-4" href={'/courses/' + course.documentId}>
-				<h2 class="dark:text-grey-0 mb-1 font-semibold text-blue-500">{course.title}</h2>
-				<p class="text-grey-300 font-normal">{course.category}</p>
+				<h2 class="mb-1 font-semibold text-blue-500 dark:text-grey-0">{course.title}</h2>
+				<p class="font-normal text-grey-300">{course.category}</p>
 				<p class="hidden text-right md:block"></p>
 			</a>
 			<a class="text-right" href={'/courses/' + course.documentId}>
@@ -102,7 +111,7 @@
 	{/each}
 
 	<div
-		class="bg-grey-50 dark:bg-grey-900 text-productlg mb-10 flex h-[50px] items-center justify-center rounded-md"
+		class="mb-10 flex h-[50px] items-center justify-center rounded-md bg-grey-50 text-productlg dark:bg-grey-900"
 	>
 		<div class="flex">
 			<div class="mr-2 font-semibold text-blue-500 dark:text-white">Total:</div>
@@ -113,7 +122,7 @@
 	</div>
 
 	<div class="mb-8">
-		<h2 class="text-productbase mb-4 font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg">
+		<h2 class="mb-4 text-productbase font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg">
 			Informacion de Usario
 		</h2>
 
@@ -126,7 +135,7 @@
 	</div>
 
 	<div class="mb-8">
-		<h2 class="text-productbase mb-4 font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg">
+		<h2 class="mb-4 text-productbase font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg">
 			Opcion de Pago
 		</h2>
 
@@ -146,5 +155,5 @@
 		</div>
 	</div>
 {:else}
-	<p class="text-red-500">No hay cursos en el carrito</p>
+	<p class="text-red-500">{data_error}</p>
 {/if}

@@ -19,6 +19,8 @@
 
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
+	let data_loading: boolean = $state(false);
+	let data_error: string = $state('');
 	let loading: boolean = $state(false);
 	let error: string = $state('');
 
@@ -43,7 +45,13 @@
 	});
 
 	onMount(() => {
-		if ($cart.items.length === 0) return;
+		if ($cart) {
+			if ($cart.items.length === 0) {
+				data_error = 'No hay cursos en el carrito';
+				return;
+			}
+		}
+
 		getCoursesByIds($cart.items).then((data) => {
 			courses = data;
 		});
@@ -106,7 +114,7 @@
 </script>
 
 <div class="text-productsm lg:text-base">
-	<button onclick={goBack} class="dark:text-grey-0 flex items-center text-blue-500 hover:underline">
+	<button onclick={goBack} class="flex items-center text-blue-500 hover:underline dark:text-grey-0">
 		<!-- Back Arrow Icon -->
 		<ArrowIcon direction="left" classes="text-blue-200 dark:text-grey-500 mr-2" />
 		<div class="text-blue-500 dark:text-blue-300">Volver al resumen</div>
@@ -114,10 +122,10 @@
 </div>
 
 <div class="mb-4 lg:mb-6">
-	<h1 class="dark:text-grey-0 text-lg font-extrabold text-blue-500 lg:text-xl">
+	<h1 class="text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
 		Resumen del Pedido
 	</h1>
-	<h2 class="text-productbase mb-4 font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
+	<h2 class="mb-4 text-productbase font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
 		{$cart.items.length} articulos
 	</h2>
 </div>
@@ -125,9 +133,9 @@
 {#if courses && courses.data.length > 0}
 	{#each courses.data as course}
 		<div
-			class="dark:border-grey-900 relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 md:grid-cols-[100px,1fr,50px] lg:grid-cols-[200px,1fr,1fr]"
+			class="relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 dark:border-grey-900 md:grid-cols-[100px,1fr,50px] lg:grid-cols-[200px,1fr,1fr]"
 		>
-			<div class="dark:bg-grey-900 overflow-hidden group-hover:opacity-80">
+			<div class="overflow-hidden group-hover:opacity-80 dark:bg-grey-900">
 				<ImageDisplay
 					provider={course.videoPreview?.provider}
 					src={course.videoPreview?.url}
@@ -136,8 +144,8 @@
 				></ImageDisplay>
 			</div>
 			<div class="ml-2 sm:ml-4">
-				<h2 class="dark:text-grey-0 mb-1 font-semibold text-blue-500">{course.title}</h2>
-				<p class="text-grey-300 font-normal">{course.category}</p>
+				<h2 class="mb-1 font-semibold text-blue-500 dark:text-grey-0">{course.title}</h2>
+				<p class="font-normal text-grey-300">{course.category}</p>
 				<p class="hidden text-right md:block"></p>
 			</div>
 			<div class="text-right">
@@ -149,7 +157,7 @@
 	{/each}
 
 	<div
-		class="bg-grey-50 dark:bg-grey-900 text-productlg mb-10 flex h-[50px] items-center justify-center rounded-md"
+		class="mb-10 flex h-[50px] items-center justify-center rounded-md bg-grey-50 text-productlg dark:bg-grey-900"
 	>
 		<div class="flex">
 			<div class="mr-2 font-semibold text-blue-500 dark:text-white">Total:</div>
@@ -162,7 +170,7 @@
 	<div class="mb-8 flex justify-between">
 		<div>
 			<h2
-				class="text-productbase mb-4 font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg"
+				class="mb-4 text-productbase font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg"
 			>
 				Informacion de Usario
 			</h2>
@@ -176,7 +184,7 @@
 		</div>
 		<div class="ml-20 w-[400px]">
 			<h2
-				class="text-productbase mb-4 font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg"
+				class="mb-4 text-productbase font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg"
 			>
 				Opcion de Pago
 			</h2>
@@ -209,5 +217,5 @@
 		<div class="text-red-500">{error}</div>
 	{/if}
 {:else}
-	<p class="text-red-500">No hay cursos en el carrito</p>
+	<p class="text-red-500">{data_error}</p>
 {/if}
