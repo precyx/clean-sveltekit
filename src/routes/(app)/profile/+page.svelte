@@ -3,22 +3,45 @@
 	import { onMount } from 'svelte';
 	import type { User } from '$lib/api/types';
 	import { goto } from '$app/navigation';
+	import { getUser } from '$lib/api/api';
 
 	type Country = {
 		name: string;
 		code: string;
 	};
 
+	let error: string = $state('');
+
 	let currentUser: User | null = $state($user.user);
 	let country: Country | null = $state(null);
 
 	onMount(async () => {
+		let loginToken = localStorage.getItem('loginToken');
+
+		if (!loginToken) {
+			goto('/login');
+			return;
+		}
+
+		try {
+			currentUser = await getUser(loginToken);
+
+			let response = await fetch('/data/country.json');
+			let _countries: Country[] = await response.json();
+
+			country = _countries.find((c) => c.code === $user?.user?.country) || null;
+		} catch (err: any) {
+			error = err.message;
+		}
+
+		/*
 		user.subscribe(async (_user) => {
 			console.log('Profile - USER', $user);
 			if (_user.status === 'error') {
 				goto('/login');
 			}
 			if (_user.user == null) return;
+			
 
 			currentUser = _user.user;
 
@@ -27,6 +50,7 @@
 
 			country = _countries.find((c) => c.code === $user?.user?.country) || null;
 		});
+		*/
 	});
 </script>
 

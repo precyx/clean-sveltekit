@@ -4,9 +4,29 @@
 	import { goto } from '$app/navigation';
 	import type { Course } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
+	import { onMount } from 'svelte';
+	import { getMyCourses } from '$lib/api/api';
 
-	export let data;
-	const { courses, error } = data;
+	let courses: Course[] | null = $state(null);
+	let error = $state('');
+	let loading = $state(true);
+
+	onMount(async () => {
+		let loginToken = localStorage.getItem('loginToken');
+		if (!loginToken) {
+			goto('/login');
+			return;
+		}
+
+		try {
+			let result = await getMyCourses(loginToken);
+			courses = result.data;
+		} catch (err: any) {
+			error = err.message;
+		} finally {
+			loading = false;
+		}
+	});
 
 	const handleCourseClick = (course: Course) => {
 		goto(`/my-courses/${course.documentId}`, {
@@ -19,15 +39,15 @@
 
 <main>
 	<div class="mx-auto max-w-screen-xl">
-		<h1 class="dark:text-grey-0 mb-4 mt-4 text-lg font-extrabold text-blue-500 lg:text-xl">
-			Mis cursos ({courses?.data?.length})
+		<h1 class="mb-4 mt-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
+			Mis cursos ({courses?.length})
 		</h1>
 
 		{#if error}
 			<div class="text-red-500">{error}</div>
-		{:else if courses?.data?.length}
+		{:else if courses && courses?.length > 0}
 			<div class="flex flex-wrap">
-				{#each courses.data as course}
+				{#each courses as course}
 					<button
 						class="group mb-8 grid w-[100%] grid-cols-2 gap-4 rounded-lg text-left"
 						onclick={() => handleCourseClick(course)}
@@ -42,13 +62,13 @@
 						<!-- Product Details -->
 						<div class="ml-2 lg:ml-6">
 							<h2
-								class="dark:text-grey-0 text-productbase mb-1 font-medium text-blue-500 group-hover:text-blue-400 dark:group-hover:text-blue-300 lg:text-lg"
+								class="mb-1 text-productbase font-medium text-blue-500 group-hover:text-blue-400 dark:text-grey-0 dark:group-hover:text-blue-300 lg:text-lg"
 							>
 								{course.title}
 							</h2>
 
 							<p
-								class="text-grey-300 lg:text-productbase mb-1 text-base font-medium dark:text-blue-300"
+								class="mb-1 text-base font-medium text-grey-300 dark:text-blue-300 lg:text-productbase"
 							>
 								{course.category} •
 								{course?.videos?.length} videos
@@ -56,7 +76,7 @@
 
 							<div class="mt-4 flex">
 								{#each course.products as product (product.id)}
-									<p class="text-grey-300 text-productbase mb-1 font-medium dark:text-blue-300">
+									<div class="mb-1 text-productbase font-medium text-grey-300 dark:text-blue-300">
 										{#if product?.images?.length}
 											{#each product.images as image}
 												<div class="mr-2">
@@ -64,19 +84,19 @@
 														provider={image.provider}
 														src={image.url}
 														alt={'product'}
-														classes="h-16 w-16 rounded-lg object-cover shadow-lg"
+														classes="h-12 w-12 sm:w-16 sm:h-16 rounded-lg object-cover shadow-lg"
 													/>
 												</div>
 											{/each}
 										{/if}
-									</p>
+									</div>
 								{/each}
 							</div>
 						</div>
 					</button>
 				{/each}
 			</div>
-		{:else}
+		{:else if !loading}
 			<p>No courses available at the moment.</p>
 		{/if}
 	</div>

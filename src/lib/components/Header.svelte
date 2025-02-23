@@ -234,9 +234,7 @@
 							{:else}
 								<a href={'/my-courses'}>Mis Cursos</a>
 								<a href={'/profile'}>Perfil</a>
-								<button class="text-left" onclick={logout}
-									>Cerrar sesión ({currentUser.username})</button
-								>
+								<button class="text-left" onclick={logout}>Cerrar sesión</button>
 							{/if}
 							<button
 								onclick={toggleTheme}

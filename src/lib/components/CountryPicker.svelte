@@ -4,6 +4,7 @@
 	import { on } from 'svelte/events';
 	import { writable } from 'svelte/store';
 	import { clickOutside } from '$lib/utils/clickOutside';
+	import IconGlobe from '$lib/icons/IconGlobe.svelte';
 
 	type Props = {
 		id: string;
@@ -38,7 +39,6 @@
 	});
 
 	const onSearch = (e) => {
-		console.log('search', e.target.value);
 		filteredCountries = countries.filter((country) =>
 			country.name.toLowerCase().startsWith(search)
 		);
@@ -49,7 +49,6 @@
 		showPopover = false;
 		inputMode = 'select';
 		value = country.code;
-		console.log('click country');
 	};
 
 	const clickSearch = () => {
@@ -59,7 +58,6 @@
 	const clickOpenCountryPicker = () => {
 		showPopover = true;
 		inputMode = 'search';
-		console.log('click picker');
 	};
 </script>
 
@@ -85,7 +83,6 @@
 				use:clickOutside={() => {
 					showPopover = false;
 					inputMode = 'select';
-					console.log('outside search');
 				}}
 				class=" relative mt-1 block w-full rounded-md border-2 px-4 py-3 focus:ring-0
           {error
@@ -101,11 +98,18 @@
 						alt={selectedCountry?.name}
 					/>
 				{:else}
-					<div class=" h-[20px] w-[26px] rounded-sm bg-grey-300 dark:bg-grey-700"></div>
+					<!-- 
+					<div
+						class=" dark:bg-grey-600 flex h-[20px] w-[26px] items-center justify-center rounded-sm border border-blue-500 dark:border-grey-300"
+					>
+				</div>
+			-->
+					<IconGlobe classes="w-5 dark:text-grey-300 text-blue-500"></IconGlobe>
 				{/if}
 			</div>
 
 			<input
+				readonly
 				{id}
 				type="text"
 				value={selectedCountry?.name}
@@ -114,7 +118,6 @@
 				onclick={clickOpenCountryPicker}
 				use:clickOutside={() => {
 					showPopover = false;
-					console.log('outside select');
 					//inputMode = 'select';
 				}}
 				class=" relative mt-1 block w-full cursor-pointer rounded-md border-2 px-4 py-3 pl-[55px] focus:ring-0
@@ -124,7 +127,7 @@
 			/>
 
 			<IconTriangle
-				classes={'absolute pointer-events-none right-5 top-[18px] w-4 text-blue-500 dark:text-grey-300'}
+				classes={'absolute pointer-events-none right-5 top-[20px] w-[15px] text-blue-500 dark:text-grey-300'}
 			></IconTriangle>
 		{/if}
 

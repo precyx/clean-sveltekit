@@ -52,7 +52,7 @@ export const apiRequest = async <T>(
 
 		return response.data;
 	} catch (error) {
-		console.log('XXXX');
+		//console.log('XXXX');
 		handleApiError(error);
 		throw error; // Re-throw for UI-level handling if necessary
 	}
@@ -95,8 +95,10 @@ const handleApiError = (error: unknown) => {
  */
 
 export const getUser = async (loginToken: string): Promise<User> => {
-	return apiRequest<User>('POST', `/user-custom/me`, {
-		loginToken: loginToken
+	return apiRequest<User>('GET', `/user-custom/me`, undefined, {
+		headers: {
+			'User-Authorization': `Bearer ${loginToken}`
+		}
 	});
 };
 
@@ -189,9 +191,13 @@ export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
 };
 
-export const getMyCourses = async (): Promise<ApiResponse<Course[]>> => {
+export const getMyCourses = async (loginToken: string): Promise<ApiResponse<Course[]>> => {
 	const queryString = qs.stringify(MY_COURSES_QUERY, { encode: false });
-	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
+	return apiRequest<ApiResponse<Course[]>>('GET', `/my-courses?${queryString}`, undefined, {
+		headers: {
+			'User-Authorization': `Bearer ${loginToken}`
+		}
+	});
 };
 
 export const getCoursesByIds = async (ids: string[]): Promise<ApiResponse<Course[]>> => {
