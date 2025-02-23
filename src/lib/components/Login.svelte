@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { login } from '$lib/api/api';
+	import { login, getCart } from '$lib/api/api';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { user } from '$lib/stores/user';
@@ -48,6 +48,8 @@
 			await sleep(200);
 			const res = await login(email, password);
 			localStorage.setItem('loginToken', res.loginToken);
+			// load cart
+			const cartData = await getCart();
 			// set user
 			$user.user = res.user;
 			$user.status = 'set';

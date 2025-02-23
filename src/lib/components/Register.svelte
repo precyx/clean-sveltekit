@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { register } from '$lib/api/api';
+	import { register, getCart } from '$lib/api/api';
 	import { goto } from '$app/navigation';
 	import { sleep } from '$lib/utils/Utils';
 	import { user } from '$lib/stores/user';

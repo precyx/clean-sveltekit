@@ -6,7 +6,7 @@
 
 	import { browser } from '$app/environment';
 	import { logout } from '$lib/api/api';
-	import { getUser } from '$lib/api/api';
+	import { getUser, getCart } from '$lib/api/api';
 	import { user } from '$lib/stores/user';
 	import { cart } from '$lib/stores/cart';
 	import { theme } from '$lib/stores/theme';
@@ -18,7 +18,6 @@
 	import IconSun from '$lib/icons/IconSun.svelte';
 	import IconMoon from '$lib/icons/IconMoon.svelte';
 	import IconUser from '$lib/icons/IconUser.svelte';
-	import IconCart from '$lib/icons/iconCart.svelte';
 
 	import { isPersonalPage } from '$lib/utils/Utils';
 	import IconMenu from '$lib/icons/IconMenu.svelte';
@@ -38,14 +37,18 @@
 
 	onMount(async () => {
 		if (browser) {
+			// load cart
+			const cartData = await getCart();
+
 			// Check if the user is already logged in
 			const loginToken = localStorage.getItem('loginToken');
 			if (loginToken) {
 				try {
-					let userData = await getUser(loginToken);
+					let userData = await getUser();
 					userData = {
 						...userData
 					};
+					// set user
 					$user.user = userData;
 					$user.status = 'set';
 				} catch (err) {
@@ -64,18 +67,7 @@
 			await sleep(100);
 			baseWidth = element.offsetHeight + 80;
 		}
-
-		/*if (browser) {
-			// handle outside click
-			window.addEventListener('click', handleClickOutside);
-		}*/
 	});
-
-	/*onDestroy(() => {
-		if (browser) {
-			window.removeEventListener('click', handleClickOutside);
-		}
-	});*/
 
 	/**
 	 * User
@@ -84,7 +76,6 @@
 
 	$effect(() => {
 		user.subscribe((value) => {
-			//console.log('XXX', value);
 			currentUser = value.user;
 		});
 	});
@@ -205,8 +196,8 @@
 		</div>
 
 		<div class="absolute right-2 top-2 flex flex-row items-center">
-			{#if $cart.items.length != 0}
-				<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
+			{#if $cart?.courses?.length != 0}
+				<CartButton {IS_PERSONAL_PAGE} count={$cart?.courses?.length} href={'/cart/overview'}
 				></CartButton>
 			{/if}
 
@@ -300,8 +291,8 @@
 				{/if}
 			</button>
 
-			{#if $cart.items.length != 0}
-				<CartButton {IS_PERSONAL_PAGE} count={$cart.items.length} href={'/cart/overview'}
+			{#if $cart?.courses?.length != 0}
+				<CartButton {IS_PERSONAL_PAGE} count={$cart?.courses?.length} href={'/cart/overview'}
 				></CartButton>
 			{/if}
 

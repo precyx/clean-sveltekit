@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { cart, removeFromCart } from '$lib/stores/cart.js';
+	import { cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
-	import { getCoursesByIds } from '$lib/api/api.js';
+	import { getCoursesByIds, getCart, createOrder, captureOrder } from '$lib/api/api.js';
 	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import IconClose from '$lib/icons/IconClose.svelte';
-	import { createOrder, captureOrder } from '$lib/api/api';
 
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
 	import type { ServiceError } from '$lib/api/types';
@@ -44,15 +43,18 @@
 		return total;
 	});
 
-	onMount(() => {
-		if ($cart) {
-			if ($cart.items.length === 0) {
-				data_error = 'No hay cursos en el carrito';
-				return;
-			}
+	onMount(async () => {
+		// load cart
+		let cartData = await getCart();
+		let cartItems = cartData.courses.map((course: any) => course.documentId);
+
+		if (cartItems.length === 0) {
+			data_error = 'No hay articulos en el carrito';
+			return;
 		}
 
-		getCoursesByIds($cart.items).then((data) => {
+		// load courses
+		getCoursesByIds(cartItems).then((data) => {
 			courses = data;
 		});
 	});
@@ -70,7 +72,7 @@
 			loading = true;
 
 			console.log('Paypal Payment');
-			let cartIds = $cart.items;
+			let cartIds: string[] = $cart?.courses.map((course: any) => course.documentId) || [];
 			if (cartIds.length === 0) return;
 
 			// Step 1: Create Order
@@ -126,7 +128,7 @@
 		Resumen del Pedido
 	</h1>
 	<h2 class="mb-4 text-productbase font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
-		{$cart.items.length} articulos
+		{$cart?.courses?.length} articulos
 	</h2>
 </div>
 

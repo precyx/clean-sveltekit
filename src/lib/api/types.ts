@@ -167,10 +167,6 @@ export interface User {
 	confirmed: boolean;
 }
 
-export interface Cart {
-	items: string[];
-}
-
 export type PayPalOrder = {
 	id: string;
 	status: string;
@@ -185,3 +181,12 @@ export type EmailStore = {
 	email: string;
 	status: 'verified' | 'pending';
 };
+
+/**
+ * Cart
+ */
+
+export interface Cart extends BaseEntity {
+	user: User;
+	courses: Course[];
+}

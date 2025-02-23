@@ -5,11 +5,10 @@
 	import RichText from '$lib/components/RichText.svelte';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import IconArrow from '$lib/icons/IconArrow.svelte';
-	import { getCourses } from '$lib/api/api.js';
-	import type { Product } from '$lib/api/types.ts';
+	import { updateCart, getCart } from '$lib/api/api';
+	import type { Product, Cart } from '$lib/api/types.ts';
 
-	import { cart, addToCart } from '$lib/stores/cart.js';
-	import { user } from '$lib/stores/user';
+	import { cart } from '$lib/stores/cart.js';
 	import IconPlus from '$lib/icons/IconPlus.svelte';
 	import IconCheck from '$lib/icons/IconCheck.svelte';
 
@@ -18,9 +17,15 @@
 
 	let isInCart = false;
 
-	onMount(() => {
-		if (!course?.data) return;
-		_checkIsInCart(course.data.documentId);
+	cart.subscribe((cart: Cart) => {
+		if (!cart) return;
+
+		let courseId = course?.data?.documentId || '';
+		let cartIds = cart.courses.map((item) => item.documentId);
+
+		if (cartIds.includes(courseId)) {
+			isInCart = true;
+		}
 	});
 
 	const goBack = () => {
@@ -33,16 +38,9 @@
 		goto(`/products/${product.documentId}`);
 	};
 
-	const _addToCart = () => {
+	const _addToCart = async () => {
 		if (course?.data.documentId) {
-			addToCart(course.data.documentId);
-			_checkIsInCart(course.data.documentId);
-		}
-	};
-
-	const _checkIsInCart = (courseId: string) => {
-		if ($cart.items.includes(courseId)) {
-			isInCart = true;
+			await updateCart(course?.data.documentId);
 		}
 	};
 </script>
@@ -113,7 +111,7 @@
 				</p>
 				<!-- Product Category -->
 				<p class="mt-2 text-productlg font-semibold text-blue-200 dark:text-blue-300">
-					{course.data.Category}
+					{course?.data?.category}
 				</p>
 
 				<p class="font-regular text-xl text-green-300 dark:text-green-100">

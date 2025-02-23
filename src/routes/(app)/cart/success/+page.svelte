@@ -36,12 +36,12 @@
 <div class="mb-10 w-full">
 	<div class="w-full text-center">
 		<h1
-			class="dark:text-grey-0 mb-2 mt-4 text-center text-lg font-extrabold text-blue-500 lg:text-xl"
+			class="mb-2 mt-4 text-center text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl"
 		>
-			Gracias {$user?.username}!
+			Gracias {$user?.user?.username}!
 		</h1>
 		<h2
-			class="text-productbase mb-8 font-medium italic text-blue-400 dark:text-blue-100 lg:text-lg"
+			class="mb-8 text-productbase font-medium italic text-blue-400 dark:text-blue-100 lg:text-lg"
 		>
 			Pago de <span class="font-bold">50$</span> fue exitoso
 		</h2>

@@ -19,7 +19,7 @@
 		}
 
 		try {
-			let result = await getMyCourses(loginToken);
+			let result = await getMyCourses();
 			courses = result.data;
 		} catch (err: any) {
 			error = err.message;

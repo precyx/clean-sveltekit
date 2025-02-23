@@ -24,7 +24,7 @@
 		}
 
 		try {
-			currentUser = await getUser(loginToken);
+			currentUser = await getUser();
 
 			let response = await fetch('/data/country.json');
 			let _countries: Country[] = await response.json();

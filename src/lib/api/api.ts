@@ -11,11 +11,13 @@ import type {
 	Course,
 	Product,
 	Video,
-	PayPalOrder
+	PayPalOrder,
+	Cart
 } from '$lib/api/types.ts';
 
 import type { ServiceError } from '$lib/api/types';
 import { PUBLIC_FRONTEND_URL, PUBLIC_STRAPI_API_URL } from '$env/static/public';
+import { cart } from '$lib/stores/cart';
 // API Proxy
 const API_PROXY = 'api/proxy';
 
@@ -58,6 +60,33 @@ export const apiRequest = async <T>(
 	}
 };
 
+export const AUTH_ApiRequest = async <T>(
+	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+	url: string,
+	data?: object,
+	config?: AxiosRequestConfig
+): Promise<T> => {
+	try {
+		let loginToken = localStorage.getItem('loginToken');
+		// Execute request (token is handled in the proxy)
+		const response = await api({
+			method,
+			url,
+			data,
+			...config,
+			headers: {
+				...config?.headers,
+				'User-Authorization': `Bearer ${loginToken}`
+			}
+		});
+
+		return response.data;
+	} catch (error) {
+		handleApiError(error);
+		throw error; // Re-throw for UI-level handling if necessary
+	}
+};
+
 // Error handling function
 const handleApiError = (error: unknown) => {
 	if (axios.isAxiosError(error)) {
@@ -94,12 +123,8 @@ const handleApiError = (error: unknown) => {
  * User
  */
 
-export const getUser = async (loginToken: string): Promise<User> => {
-	return apiRequest<User>('GET', `/user-custom/me`, undefined, {
-		headers: {
-			'User-Authorization': `Bearer ${loginToken}`
-		}
-	});
+export const getUser = async (): Promise<User> => {
+	return AUTH_ApiRequest<User>('GET', `/user-custom/me`);
 };
 
 export const login = (email: string, password: string): Promise<AuthResponse> => {
@@ -191,13 +216,9 @@ export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
 };
 
-export const getMyCourses = async (loginToken: string): Promise<ApiResponse<Course[]>> => {
+export const getMyCourses = async (): Promise<ApiResponse<Course[]>> => {
 	const queryString = qs.stringify(MY_COURSES_QUERY, { encode: false });
-	return apiRequest<ApiResponse<Course[]>>('GET', `/my-courses?${queryString}`, undefined, {
-		headers: {
-			'User-Authorization': `Bearer ${loginToken}`
-		}
-	});
+	return AUTH_ApiRequest<ApiResponse<Course[]>>('GET', `/my-courses?${queryString}`);
 };
 
 export const getCoursesByIds = async (ids: string[]): Promise<ApiResponse<Course[]>> => {
@@ -269,4 +290,30 @@ export const createOrder = async (ids: string[]): Promise<PayPalOrder> => {
 
 export const captureOrder = async (orderId: string): Promise<any> => {
 	return await apiRequest('POST', '/payment/capture-order', { orderId });
+};
+
+/**
+ * Cart
+ */
+
+export const updateCart = async (courseId: string): Promise<Cart> => {
+	let data: Cart = await AUTH_ApiRequest('POST', '/cart/update', {
+		courseId: courseId
+	});
+	cart.set(data);
+	return data;
+};
+
+export const getCart = async (): Promise<Cart> => {
+	let data: Cart = await AUTH_ApiRequest('GET', '/cart/get');
+	cart.set(data);
+	return data;
+};
+
+export const deleteCart = async (courseId: string): Promise<Cart> => {
+	let data: Cart = await AUTH_ApiRequest('POST', `/cart/delete`, {
+		courseId: courseId
+	});
+	cart.set(data);
+	return data;
 };

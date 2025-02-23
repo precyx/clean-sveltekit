@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { cart, removeFromCart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
-	import { getCoursesByIds } from '$lib/api/api.js';
+	import { getCoursesByIds, getCart, deleteCart } from '$lib/api/api.js';
 	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import Button from '$lib/components/Button.svelte';
@@ -11,6 +10,7 @@
 
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
+	import { on } from 'svelte/events';
 
 	let data_loading: boolean = $state(false);
 	let data_error: string = $state('');
@@ -33,22 +33,25 @@
 		return total;
 	});
 
-	onMount(() => {
-		if ($cart) {
-			if ($cart.items.length === 0) {
-				data_error = 'No hay cursos en el carrito';
-				return;
-			}
+	onMount(async () => {
+		// load cart
+		let cartData = await getCart();
+		let cartItems = cartData.courses.map((course: any) => course.documentId);
+
+		if (cartItems.length === 0) {
+			data_error = 'No hay articulos en el carrito';
+			return;
 		}
 
-		getCoursesByIds($cart.items).then((data) => {
+		// load courses
+		getCoursesByIds(cartItems).then((data) => {
 			courses = data;
 		});
 	});
 
 	const removeCartItem = (documentId: string) => {
 		// update cart store
-		removeFromCart(documentId);
+		deleteCart(documentId);
 		// update courses
 		if (!courses) return;
 		courses = {
@@ -69,7 +72,7 @@
 		Carrito de compras
 	</h1>
 	<h2 class="mb-4 text-productbase font-bold italic text-blue-400 dark:text-blue-100 lg:text-lg">
-		{$cart.items.length} articulos
+		{courses?.data?.length} articulos
 	</h2>
 </div>
 
@@ -128,8 +131,8 @@
 
 		{#if currentUser}
 			<div class="text-grey-300">
-				<p>{currentUser.username}</p>
-				<p>{currentUser.email}</p>
+				<p>{currentUser?.user?.username}</p>
+				<p>{currentUser?.user?.email}</p>
 			</div>
 		{/if}
 	</div>
