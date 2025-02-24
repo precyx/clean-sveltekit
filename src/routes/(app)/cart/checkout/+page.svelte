@@ -6,8 +6,7 @@
 	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import IconClose from '$lib/icons/IconClose.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
 	import type { ServiceError } from '$lib/api/types';
@@ -45,6 +44,7 @@
 
 	onMount(async () => {
 		// load cart
+		data_loading = true;
 		let cartData = await getCart();
 		let cartItems = cartData.courses.map((course: any) => course.documentId);
 
@@ -57,6 +57,7 @@
 		getCoursesByIds(cartItems).then((data) => {
 			courses = data;
 		});
+		data_loading = false;
 	});
 
 	const goBack = () => {
@@ -134,7 +135,13 @@
 	</h2>
 </div>
 
-{#if courses && courses.data.length > 0}
+{#if data_error}
+	<p class="text-red-500">{data_error}</p>
+{:else if data_loading}
+	<div class="flex items-center justify-center">
+		<Spinner classes="border-blue-500 dark:border-grey-0" size="24px"></Spinner>
+	</div>
+{:else if courses && courses.data.length > 0}
 	{#each courses.data as course}
 		<div
 			class="relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 dark:border-grey-900 md:grid-cols-[100px,1fr,50px] lg:grid-cols-[200px,1fr,1fr]"
@@ -220,6 +227,4 @@
 	{#if error}
 		<div class="text-red-500">{error}</div>
 	{/if}
-{:else}
-	<p class="text-red-500">{data_error}</p>
 {/if}

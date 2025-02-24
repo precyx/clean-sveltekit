@@ -1,15 +1,19 @@
 <script>
-	export let size = '18px'; // Default size, can be overridden
+	export let size = '18px';
+	export let color = '#fff';
+	export let classes = '';
 </script>
 
-<div class="spinner" style="width: {size}; height: {size};"></div>
+<div
+	class={`spinner border-2 ${classes} border-t-transparent dark:border-t-transparent`}
+	style="width: {size}; height: {size};"
+></div>
 
 <style>
 	.spinner {
 		display: inline-block;
 		width: 16px;
 		height: 16px;
-		border: 2px solid #fff;
 		border-radius: 50%;
 		border-top-color: transparent;
 		animation: spin 0.6s linear infinite;

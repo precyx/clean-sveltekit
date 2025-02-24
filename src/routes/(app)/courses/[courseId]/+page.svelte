@@ -12,12 +12,15 @@
 	import { user } from '$lib/stores/user.js';
 	import IconPlus from '$lib/icons/IconPlus.svelte';
 	import IconCheck from '$lib/icons/IconCheck.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { sleep } from '$lib/utils/Utils';
 
 	export let data;
 	let { course, error, courseId } = data;
 
 	let isInCart: boolean = false;
 	let alreadyBought: boolean = false;
+	let loadingAddToCart: boolean = false;
 
 	onMount(async () => {
 		let _myCourses = await getMyCoursesShort();
@@ -50,7 +53,10 @@
 
 	const _addToCart = async () => {
 		if (course?.data.documentId) {
+			loadingAddToCart = true;
+			await sleep(200);
 			await updateCart(course?.data.documentId);
+			loadingAddToCart = false;
 		}
 	};
 </script>
@@ -136,19 +142,27 @@
 							}}>Inicia sesión para comprar</Button
 						>
 					{:else if alreadyBought}
-						<Button disabled={true}>
-							<IconCheck classes={'w-5 h-5 mr-2'}></IconCheck>
-							Ya comprado
-						</Button>
+						<div class="flex">
+							<div
+								class="flex rounded-full border border-green-300 px-10 py-2 text-base font-medium italic text-green-300 dark:border-green-100 dark:text-green-100"
+							>
+								<IconCheck classes={'w-[20px] text-green-300 dark:text-green-100 mr-2'}></IconCheck>
+								<p>Ya comprado</p>
+							</div>
+						</div>
 					{:else if isInCart}
 						<Button disabled={true}>
 							<IconCheck classes={'w-5 h-5 mr-2'}></IconCheck>
 							Ya en el carrito
 						</Button>
 					{:else}
-						<Button onclick={_addToCart}>
-							<IconPlus classes={'w-5 h-5 mr-2'}></IconPlus>
-							Agregar al carrito
+						<Button onclick={_addToCart} disabled={loadingAddToCart}>
+							{#if loadingAddToCart}
+								<Spinner classes="border-white" />
+							{:else}
+								<IconPlus classes={'w-5 h-5'}></IconPlus>
+							{/if}
+							<p class="ml-2">Agregar al carrito</p>
 						</Button>
 					{/if}
 				</div>

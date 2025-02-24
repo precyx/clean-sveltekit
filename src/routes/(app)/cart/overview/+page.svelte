@@ -11,12 +11,14 @@
 	import { user } from '$lib/stores/user';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import { on } from 'svelte/events';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { sleep } from '$lib/utils/Utils';
 
 	let data_loading: boolean = $state(false);
 	let data_error: string = $state('');
+	let loading_deleteCartItem: boolean = $state(false);
 
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
-
 	let currentUser = $state($user);
 
 	$effect(() => {
@@ -35,6 +37,7 @@
 
 	onMount(async () => {
 		// load cart
+		data_loading = true;
 		let cartData = await getCart();
 		let cartItems = cartData.courses.map((course: any) => course.documentId);
 
@@ -47,11 +50,15 @@
 		getCoursesByIds(cartItems).then((data) => {
 			courses = data;
 		});
+		data_loading = false;
 	});
 
-	const removeCartItem = (documentId: string) => {
+	const removeCartItem = async (documentId: string) => {
 		// update cart store
-		deleteCart(documentId);
+		loading_deleteCartItem = true;
+		await sleep(50);
+		await deleteCart(documentId);
+		loading_deleteCartItem = false;
 		// update courses
 		if (!courses) return;
 		courses = {
@@ -76,10 +83,18 @@
 	</h2>
 </div>
 
-{#if courses && courses.data.length > 0}
+{#if data_error}
+	<p class="text-red-500">{data_error}</p>
+{:else if data_loading}
+	<div class="flex items-center justify-center">
+		<Spinner classes="border-blue-500 dark:border-grey-0" size="24px"></Spinner>
+	</div>
+{:else if courses && courses.data.length > 0}
 	{#each courses.data as course}
 		<div
 			class="relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 dark:border-grey-900 md:grid-cols-[100px,1fr,50px,50px] lg:grid-cols-[200px,1fr,1fr,1fr]"
+			class:opacity-50={loading_deleteCartItem}
+			class:pointer-events-none={loading_deleteCartItem}
 		>
 			<a
 				class="overflow-hidden group-hover:opacity-80 dark:bg-grey-900"
@@ -105,9 +120,17 @@
 			<div class="absolute bottom-2 right-0 flex justify-end md:relative md:bottom-0 md:right-0">
 				<button
 					class="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-blue-500 bg-opacity-5"
+					class:pointer-events-none={loading_deleteCartItem}
 					onclick={() => removeCartItem(course.documentId)}
 				>
-					<IconClose classes="text-blue-500 dark:text-white w-5 h-5"></IconClose>
+					{#if loading_deleteCartItem}
+						<Spinner
+							classes={'relative left-[4px] top-[0px] border-blue-500 dark:border-grey-0'}
+							size="16px"
+						/>
+					{:else}
+						<IconClose classes="text-blue-500 dark:text-white w-5 h-5"></IconClose>
+					{/if}
 				</button>
 			</div>
 		</div>
@@ -157,6 +180,4 @@
 			</Button>
 		</div>
 	</div>
-{:else}
-	<p class="text-red-500">{data_error}</p>
 {/if}

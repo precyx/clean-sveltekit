@@ -104,7 +104,7 @@
 
 	<Button type="submit" disabled={loading}>
 		{#if loading}
-			<Spinner /> Iniciando sesión...
+			<Spinner classes="border-white" /> Iniciando sesión...
 		{:else}
 			Iniciar sesión
 		{/if}

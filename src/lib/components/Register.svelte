@@ -179,7 +179,7 @@
 
 		<Button type="submit" disabled={loading}>
 			{#if loading}
-				<Spinner /> Registrándose...
+				<Spinner classes="border-white" /> Registrándose...
 			{:else}
 				Registrarse
 			{/if}
