@@ -49,7 +49,7 @@
 			const res = await login(email, password);
 			localStorage.setItem('loginToken', res.loginToken);
 			// load cart
-			const cartData = await getCart();
+			await getCart();
 			// set user
 			$user.user = res.user;
 			$user.status = 'set';
