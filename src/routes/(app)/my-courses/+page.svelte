@@ -97,7 +97,7 @@
 				{/each}
 			</div>
 		{:else if !loading}
-			<p>No courses available at the moment.</p>
+			<p class="text-red-500">No hay cursos</p>
 		{/if}
 	</div>
 </main>

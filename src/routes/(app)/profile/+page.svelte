@@ -106,7 +106,7 @@
 			</div>
 		</div>
 	{:else if $user.status == 'error'}
-		<div>Error</div>
+		<p class="text-red-500">Error</p>
 	{:else}
 		<div></div>
 	{/if}

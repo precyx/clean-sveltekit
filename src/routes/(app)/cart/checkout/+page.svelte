@@ -90,9 +90,11 @@
 		try {
 			let orderId = data.orderID;
 			const captureResponse = await captureOrder(orderId);
-
 			await sleep(1000);
 			loading = false;
+			// load cart
+			await getCart();
+			// redirect to success
 			goto(`/cart/success?orderId=${orderId}`);
 		} catch (err) {
 			console.log('🤖🤖🤖 APPROVE ORDER ERROR 2', error.message);
@@ -137,12 +139,12 @@
 		<div
 			class="relative mb-4 grid grid-cols-[100px,1fr,50px] items-start gap-2 border-b border-blue-100 pb-4 dark:border-grey-900 md:grid-cols-[100px,1fr,50px] lg:grid-cols-[200px,1fr,1fr]"
 		>
-			<div class="overflow-hidden group-hover:opacity-80 dark:bg-grey-900">
+			<div class=" overflow-hidden group-hover:opacity-80 dark:bg-grey-900">
 				<ImageDisplay
 					provider={course.videoPreview?.provider}
 					src={course.videoPreview?.url}
 					alt={course.title}
-					classes={'rounded-lg shadow-md inset-0 w-full object-cover'}
+					classes={'rounded-lg shadow-md inset-0 w-full object-cover h-[80px]'}
 				></ImageDisplay>
 			</div>
 			<div class="ml-2 sm:ml-4">
@@ -179,8 +181,8 @@
 
 			{#if currentUser}
 				<div class="text-grey-300">
-					<p>{currentUser.username}</p>
-					<p>{currentUser.email}</p>
+					<p>{currentUser?.user?.username}</p>
+					<p>{currentUser?.user?.email}</p>
 				</div>
 			{/if}
 		</div>

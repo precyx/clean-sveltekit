@@ -211,6 +211,8 @@ const MY_COURSES_QUERY = {
 	}
 };
 
+const MY_COURSES_SHORT_QUERY = {};
+
 export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 	const queryString = qs.stringify(MANY_COURSES_QUERY, { encode: false });
 	return apiRequest<ApiResponse<Course[]>>('GET', `/courses?${queryString}`);
@@ -218,6 +220,11 @@ export const getCourses = async (): Promise<ApiResponse<Course[]>> => {
 
 export const getMyCourses = async (): Promise<ApiResponse<Course[]>> => {
 	const queryString = qs.stringify(MY_COURSES_QUERY, { encode: false });
+	return AUTH_ApiRequest<ApiResponse<Course[]>>('GET', `/my-courses?${queryString}`);
+};
+
+export const getMyCoursesShort = async (): Promise<ApiResponse<Course[]>> => {
+	const queryString = qs.stringify(MY_COURSES_SHORT_QUERY, { encode: false });
 	return AUTH_ApiRequest<ApiResponse<Course[]>>('GET', `/my-courses?${queryString}`);
 };
 
@@ -283,13 +290,13 @@ export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
  */
 
 export const createOrder = async (ids: string[]): Promise<PayPalOrder> => {
-	return await apiRequest('POST', '/payment/create-order', {
+	return await AUTH_ApiRequest('POST', '/payment/create-order', {
 		ids: ids
 	});
 };
 
 export const captureOrder = async (orderId: string): Promise<any> => {
-	return await apiRequest('POST', '/payment/capture-order', { orderId });
+	return await AUTH_ApiRequest('POST', '/payment/capture-order', { orderId });
 };
 
 /**

@@ -5,19 +5,29 @@
 	import RichText from '$lib/components/RichText.svelte';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import IconArrow from '$lib/icons/IconArrow.svelte';
-	import { updateCart, getCart } from '$lib/api/api';
+	import { updateCart, getCart, getMyCoursesShort } from '$lib/api/api';
 	import type { Product, Cart } from '$lib/api/types.ts';
 
 	import { cart } from '$lib/stores/cart.js';
+	import { user } from '$lib/stores/user.js';
 	import IconPlus from '$lib/icons/IconPlus.svelte';
 	import IconCheck from '$lib/icons/IconCheck.svelte';
 
 	export let data;
 	let { course, error, courseId } = data;
 
-	let isInCart = false;
+	let isInCart: boolean = false;
+	let alreadyBought: boolean = false;
 
-	cart.subscribe((cart: Cart) => {
+	onMount(async () => {
+		let _myCourses = await getMyCoursesShort();
+		let _myCourseIds = _myCourses.data.map((course) => course.documentId);
+		if (_myCourseIds.includes(courseId)) {
+			alreadyBought = true;
+		}
+	});
+
+	cart.subscribe((cart: Cart | null) => {
 		if (!cart) return;
 
 		let courseId = course?.data?.documentId || '';
@@ -118,16 +128,29 @@
 					$ {course.data.price}
 				</p>
 
-				<div class="mt-8">
-					<Button disabled={isInCart} onclick={_addToCart}>
-						{#if isInCart}
+				<div class="mt-6">
+					{#if !$user.user}
+						<Button
+							onclick={() => {
+								goto('/login');
+							}}>Inicia sesión para comprar</Button
+						>
+					{:else if alreadyBought}
+						<Button disabled={true}>
+							<IconCheck classes={'w-5 h-5 mr-2'}></IconCheck>
+							Ya comprado
+						</Button>
+					{:else if isInCart}
+						<Button disabled={true}>
 							<IconCheck classes={'w-5 h-5 mr-2'}></IconCheck>
 							Ya en el carrito
-						{:else}
+						</Button>
+					{:else}
+						<Button onclick={_addToCart}>
 							<IconPlus classes={'w-5 h-5 mr-2'}></IconPlus>
 							Agregar al carrito
-						{/if}
-					</Button>
+						</Button>
+					{/if}
 				</div>
 
 				<!-- Time to Fabricate -->

@@ -38,12 +38,13 @@
 	onMount(async () => {
 		if (browser) {
 			// load cart
-			const cartData = await getCart();
+			await getCart();
 
 			// Check if the user is already logged in
 			const loginToken = localStorage.getItem('loginToken');
 			if (loginToken) {
 				try {
+					// get user
 					let userData = await getUser();
 					userData = {
 						...userData
@@ -225,7 +226,9 @@
 							{:else}
 								<a href={'/my-courses'}>Mis Cursos</a>
 								<a href={'/profile'}>Perfil</a>
-								<button class="text-left" onclick={logout}>Cerrar sesión</button>
+								<button class="text-left text-red-400 dark:text-red-400" onclick={logout}
+									>Cerrar sesión</button
+								>
 							{/if}
 							<button
 								onclick={toggleTheme}
@@ -315,7 +318,9 @@
 						>
 							<PopupItem href={'/my-courses'}>Mis Cursos</PopupItem>
 							<PopupItem href={'/profile'}>Perfil</PopupItem>
-							<PopupItem onclick={logout}>Cerrar sesión</PopupItem>
+							<PopupItem classes="text-red-400 dark:text-red-400" onclick={logout}
+								>Cerrar sesión</PopupItem
+							>
 						</div>
 					</div>
 				</div>
