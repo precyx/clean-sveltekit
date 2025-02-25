@@ -19,8 +19,8 @@
 
 	let data_loading: boolean = $state(false);
 	let data_error: string = $state('');
-	let loading: boolean = $state(false);
-	let error: string = $state('');
+	let payment_loading: boolean = $state(false);
+	let payment_error: string = $state('');
 
 	/**
 	 * User
@@ -70,7 +70,7 @@
 
 	const _createOrder = async () => {
 		try {
-			loading = true;
+			payment_loading = true;
 
 			console.log('Paypal Payment');
 			let cartIds: string[] = $cart?.courses.map((course: any) => course.documentId) || [];
@@ -82,9 +82,9 @@
 
 			return orderId;
 		} catch (err) {
-			console.log('🤖🤖🤖 CREATE ORDER ERROR 2', err.message);
-			loading = false;
-			error = err.message;
+			console.log('🤖 CREATE ORDER ERROR', err.message);
+			payment_loading = false;
+			payment_error = err.message;
 		}
 	};
 	const _onApprove = async (data: OnApproveData) => {
@@ -92,28 +92,28 @@
 			let orderId = data.orderID;
 			const captureResponse = await captureOrder(orderId);
 			await sleep(1000);
-			loading = false;
+			payment_loading = false;
 			// load cart
 			await getCart();
 			// redirect to success
 			goto(`/cart/success?orderId=${orderId}`);
 		} catch (err) {
-			console.log('🤖🤖🤖 APPROVE ORDER ERROR 2', error.message);
-			loading = false;
-			error = err.message;
+			console.log('🤖 APPROVE ORDER ERROR', err.message);
+			payment_loading = false;
+			payment_error = err.message;
 		}
 	};
 	const _onCancel = (data: Record<string, unknown>) => {
 		console.log('CANCEL', data);
-		loading = false;
+		payment_loading = false;
 	};
 	const _onError = (err: any) => {
 		console.log('ERRR', err);
-		loading = false;
+		payment_loading = false;
 
-		// show paypal error, if there is no api error
-		if (!error) {
-			error = err.message;
+		// show paypal error, if there is no other error
+		if (!payment_error) {
+			payment_error = err.message;
 		}
 	};
 </script>
@@ -204,16 +204,16 @@
 		</div>
 	</div>
 
-	<div class=" flex h-[40px] items-center justify-center">
-		<div class="ml-4">
-			<!-- <Button onclick={handlePaypalPayment}>Pagar</Button> -->
+	{#if payment_loading}
+		<div class=" flex h-[40px] items-center justify-center">
+			<Spinner classes="border-blue-500 dark:border-white"></Spinner>
 		</div>
-	</div>
+	{/if}
 
 	<div
 		class="flex items-center justify-center"
-		class:pointer-events-none={loading}
-		class:opacity-50={loading}
+		class:pointer-events-none={payment_loading}
+		class:opacity-50={payment_loading}
 	>
 		<div class="w-[300px]">
 			<PayPalButton
@@ -224,7 +224,7 @@
 			></PayPalButton>
 		</div>
 	</div>
-	{#if error}
-		<div class="text-red-500">{error}</div>
+	{#if payment_error}
+		<div class="text-red-500">{payment_error}</div>
 	{/if}
 {/if}
