@@ -47,9 +47,9 @@
 		}
 
 		// load courses
-		getCoursesByIds(cartItems).then((data) => {
-			courses = data;
-		});
+		let coursesByIds = await getCoursesByIds(cartItems);
+		courses = coursesByIds;
+
 		data_loading = false;
 	});
 

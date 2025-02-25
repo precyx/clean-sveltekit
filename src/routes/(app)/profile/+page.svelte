@@ -12,7 +12,7 @@
 
 	let error: string = $state('');
 
-	let currentUser: User | null = $state($user.user);
+	let currentUser: User | null = $state(null);
 	let country: Country | null = $state(null);
 
 	onMount(async () => {
@@ -29,7 +29,7 @@
 			let response = await fetch('/data/country.json');
 			let _countries: Country[] = await response.json();
 
-			country = _countries.find((c) => c.code === $user?.user?.country) || null;
+			country = _countries.find((c) => c.code === currentUser?.country) || null;
 		} catch (err: any) {
 			error = err.message;
 		}
