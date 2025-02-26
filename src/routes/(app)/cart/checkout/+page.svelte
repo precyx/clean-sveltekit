@@ -43,21 +43,25 @@
 	});
 
 	onMount(async () => {
-		// load cart
-		data_loading = true;
-		let cartData = await getCart();
-		let cartItems = cartData.courses.map((course: any) => course.documentId);
+		try {
+			// load cart
+			data_loading = true;
+			let cartData = await getCart();
+			let cartItems = cartData.courses.map((course: any) => course.documentId);
 
-		if (cartItems.length === 0) {
-			data_error = 'No hay articulos en el carrito';
-			return;
+			if (cartItems.length === 0) {
+				data_error = 'No hay articulos en el carrito';
+				return;
+			}
+
+			// load courses
+			let coursesByIds = await getCoursesByIds(cartItems);
+			courses = coursesByIds;
+		} catch (err: any) {
+			data_error = err.message;
+		} finally {
+			data_loading = false;
 		}
-
-		// load courses
-		let coursesByIds = await getCoursesByIds(cartItems);
-		courses = coursesByIds;
-
-		data_loading = false;
 	});
 
 	const goBack = () => {
