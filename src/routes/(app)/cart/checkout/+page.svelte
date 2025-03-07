@@ -11,6 +11,7 @@
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
 	import type { ServiceError } from '$lib/api/types';
 	import { user } from '$lib/stores/user';
+	import { paymentOption as paymentOptionStore } from '$lib/stores/paymentOption';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import { sleep } from '$lib/utils/Utils';
@@ -71,6 +72,25 @@
 	/**
 	 * Payment
 	 */
+
+	let _paypmentOptions = [
+		{
+			name: 'paypal',
+			img: '/img/paypal-logo.png',
+			imgDark: '/img/paypal-logo-white.png'
+		},
+		{
+			name: 'pago-movil',
+			img: '/img/pago-movil.svg',
+			imgDark: '/img/pago-movil-dark.svg'
+		}
+	];
+	let selectedPaymentOption: any = $state(null);
+
+	// load payment option
+	paymentOptionStore.subscribe((value) => {
+		selectedPaymentOption = _paypmentOptions.find((option) => option.name === value);
+	});
 
 	const _createOrder = async () => {
 		try {
@@ -182,7 +202,7 @@
 		</div>
 	</div>
 
-	<div class="mb-8 flex justify-between">
+	<div class="mb-8 flex flex-col">
 		<div>
 			<h2
 				class="mb-4 text-productbase font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg"
@@ -197,14 +217,23 @@
 				</div>
 			{/if}
 		</div>
-		<div class="ml-20 w-[400px]">
+		<div class="mt-8">
 			<h2
 				class="mb-4 text-productbase font-bold italic text-blue-500 dark:text-blue-100 lg:text-lg"
 			>
 				Opcion de Pago
 			</h2>
 
-			<PaymentOption active={true} controlled={true}></PaymentOption>
+			{#if selectedPaymentOption}
+				<PaymentOption
+					active={true}
+					controlled={true}
+					img={selectedPaymentOption?.img}
+					imgDark={selectedPaymentOption?.imgDark}
+				></PaymentOption>
+			{:else}
+				<div>No hay opcion de pago</div>
+			{/if}
 		</div>
 	</div>
 
@@ -220,12 +249,18 @@
 		class:opacity-50={payment_loading}
 	>
 		<div class="w-[300px]">
-			<PayPalButton
-				createOrder={_createOrder}
-				onApprove={_onApprove}
-				onError={_onError}
-				onCancel={_onCancel}
-			></PayPalButton>
+			{#if selectedPaymentOption?.name === 'paypal'}
+				<PayPalButton
+					createOrder={_createOrder}
+					onApprove={_onApprove}
+					onError={_onError}
+					onCancel={_onCancel}
+				></PayPalButton>
+			{:else if selectedPaymentOption?.name === 'pago-movil'}
+				<div>Pago Movil</div>
+			{:else}
+				<div class="text-center">Seleccione una opcion de pago valido...</div>
+			{/if}
 		</div>
 	</div>
 	{#if payment_error}

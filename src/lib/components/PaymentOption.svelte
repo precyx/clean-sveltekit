@@ -2,16 +2,29 @@
 	import { theme } from '$lib/stores/theme';
 	import IconCheck from '$lib/icons/IconCheck.svelte';
 
-	let { active = $bindable(), controlled = false } = $props();
+	/*type Props = {
+		active?: boolean;
+		controlled?: boolean;
+		img?: string;
+		imgDark?: string;
+	};*/
+
+	let {
+		active = $bindable(),
+		controlled = false,
+		img = '',
+		imgDark = '',
+		onClick = () => {}
+	} = $props();
 
 	const toggle = () => {
-		if (controlled) return;
-		active = !active;
+		onClick();
+		return;
 	};
 </script>
 
 <button
-	class="bg-grey-50 dark:bg-grey-900 group flex w-full cursor-pointer items-center rounded-md border-2 border-blue-400 border-opacity-0 p-6 dark:border-blue-300"
+	class="group mb-2 flex w-full cursor-pointer items-center rounded-md border-2 border-blue-400 border-opacity-0 bg-grey-50 p-3 dark:border-blue-300 dark:bg-grey-900 sm:p-6"
 	class:border-opacity-100={active}
 	class:border-opacity-0={!active}
 	class:dark:border-opacity-100={active}
@@ -29,9 +42,9 @@
 	</div>
 	<div class="ml-6">
 		{#if $theme === 'dark'}
-			<img src={'/img/paypal-logo-white.png'} alt="Paypal" class="w-32" />
+			<img src={imgDark} alt="paymentimg" class=" max-w-[70px] sm:max-w-[100px]" />
 		{:else}
-			<img src={'/img/paypal-logo.png'} alt="Paypal" class="w-32" />
+			<img src={img} alt="paymentimg" class="max-w-[70px] sm:max-w-[100px]" />
 		{/if}
 	</div></button
 >

@@ -9,6 +9,7 @@
 	import IconArrow from '$lib/icons/IconArrow.svelte';
 
 	import { user } from '$lib/stores/user';
+	import { paymentOption as paymentOptionStore } from '$lib/stores/paymentOption';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import { on } from 'svelte/events';
 	import Spinner from '$lib/components/Spinner.svelte';
@@ -75,7 +76,25 @@
 	 * Payment
 	 */
 
-	let paypalActive: boolean = $state(false);
+	let _paypmentOptions = [
+		{
+			name: 'paypal',
+			img: '/img/paypal-logo.png',
+			imgDark: '/img/paypal-logo-white.png'
+		},
+		{
+			name: 'pago-movil',
+			img: '/img/pago-movil.svg',
+			imgDark: '/img/pago-movil-dark.svg'
+		}
+	];
+
+	let selectedPaymentOption: string = $state('');
+
+	const selectPaymentOption = (_option: string) => {
+		selectedPaymentOption = _option;
+		paymentOptionStore.set(_option);
+	};
 </script>
 
 <div class="mb-4 lg:mb-6">
@@ -169,13 +188,23 @@
 			Opcion de Pago
 		</h2>
 
-		<PaymentOption bind:active={paypalActive}></PaymentOption>
+		{#each _paypmentOptions as option}
+			<PaymentOption
+				active={selectedPaymentOption === option.name}
+				controlled={false}
+				img={option.img}
+				imgDark={option.imgDark}
+				onClick={() => {
+					selectPaymentOption(option.name);
+				}}
+			></PaymentOption>
+		{/each}
 	</div>
 
 	<div class="mb-12 mt-12 flex h-[40px] items-center justify-center">
 		<div class="ml-4">
 			<Button
-				disabled={!paypalActive}
+				disabled={selectedPaymentOption == ''}
 				onclick={() => {
 					goto('/cart/checkout');
 				}}
