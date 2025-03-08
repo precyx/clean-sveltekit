@@ -190,3 +190,23 @@ export interface Cart extends BaseEntity {
 	user: User;
 	courses: Course[];
 }
+
+/**
+ * Order
+ */
+
+export interface Order extends BaseEntity {
+	user: User;
+	courses: Course[];
+	total: number;
+	orderId: string;
+	paymentMethod: string;
+	totalPrice: number;
+	prices: {
+		price: number;
+		documentId: string;
+	};
+	orderDate: string;
+	orderStatus: string;
+	orderHistory: string;
+}

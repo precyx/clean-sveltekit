@@ -12,7 +12,8 @@ import type {
 	Product,
 	Video,
 	PayPalOrder,
-	Cart
+	Cart,
+	Order
 } from '$lib/api/types.ts';
 
 import type { ServiceError } from '$lib/api/types';
@@ -312,7 +313,7 @@ export const updateCart = async (courseId: string): Promise<Cart> => {
 };
 
 export const getCart = async (): Promise<Cart> => {
-	let data: Cart = await AUTH_ApiRequest('GET', '/cart/get');
+	let data: Cart = await AUTH_ApiRequest('GET', '/cart');
 	cart.set(data);
 	return data;
 };
@@ -328,3 +329,7 @@ export const deleteCart = async (courseId: string): Promise<Cart> => {
 /**
  * Order
  */
+
+export const getOrdersByUser = async (): Promise<Order[]> => {
+	return AUTH_ApiRequest('GET', '/orders');
+};
