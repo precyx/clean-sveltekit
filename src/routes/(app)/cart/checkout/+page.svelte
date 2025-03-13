@@ -9,7 +9,6 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
-	import type { ServiceError } from '$lib/api/types';
 	import { user } from '$lib/stores/user';
 	import { paymentOption as paymentOptionStore } from '$lib/stores/paymentOption';
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
@@ -105,7 +104,7 @@
 			const orderId = orderResponse.id;
 
 			return orderId;
-		} catch (err) {
+		} catch (err: any) {
 			console.log('🤖 CREATE ORDER ERROR', err.message);
 			payment_loading = false;
 			payment_error = err.message;
@@ -121,7 +120,7 @@
 			await getCart();
 			// redirect to success
 			goto(`/cart/success?orderId=${orderId}`);
-		} catch (err) {
+		} catch (err: any) {
 			console.log('🤖 APPROVE ORDER ERROR', err.message);
 			payment_loading = false;
 			payment_error = err.message;

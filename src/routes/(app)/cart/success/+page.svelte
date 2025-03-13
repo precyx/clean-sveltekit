@@ -41,9 +41,9 @@
 			Gracias {$user?.user?.username}!
 		</h1>
 		<h2
-			class="mb-8 text-productbase font-medium italic text-blue-400 dark:text-blue-100 lg:text-lg"
+			class="mb-8 text-productbase font-medium italic text-grey-300 dark:text-grey-500 lg:text-lg"
 		>
-			Pago de <span class="font-bold">50$</span> fue exitoso
+			Pago de <span class="font-bold">XY$</span> fue exitoso
 		</h2>
 	</div>
 </div>

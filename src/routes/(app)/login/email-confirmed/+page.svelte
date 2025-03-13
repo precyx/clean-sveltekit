@@ -42,7 +42,7 @@
 		</h2>
 
 		<div
-			class="mb-8 text-center text-productbase font-medium italic text-blue-400 dark:text-blue-100 lg:text-lg"
+			class="mb-8 text-center text-productbase font-medium italic text-grey-300 dark:text-grey-500 lg:text-lg"
 		>
 			Tu correo: <span class="font-bold">{emailSnapshot}</span>
 		</div>
