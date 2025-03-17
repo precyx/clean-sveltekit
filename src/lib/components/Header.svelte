@@ -38,12 +38,12 @@
 	onMount(async () => {
 		if (!browser) return;
 
-		// load cart
-		await getCart();
-
 		// Check if the user is already logged in
 		const loginToken = localStorage.getItem('loginToken');
 		if (loginToken) {
+			// load cart
+			await getCart();
+
 			try {
 				// get user
 				let userData = await getUser();
@@ -198,7 +198,7 @@
 
 		<div class="absolute right-2 top-2 flex flex-row items-center">
 			<!-- Cart -->
-			{#if $cart?.courses?.length}
+			{#if $cart?.courses?.lengthx}
 				<CartButton {IS_PERSONAL_PAGE} count={$cart?.courses?.length} href={'/cart/overview'}
 				></CartButton>
 			{/if}

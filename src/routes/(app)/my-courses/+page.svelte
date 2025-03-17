@@ -5,7 +5,7 @@
 	import type { Course } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import { onMount } from 'svelte';
-	import { getMyCourses } from '$lib/api/api';
+	import { getMyCourses, login } from '$lib/api/api';
 
 	let courses: Course[] | null = $state(null);
 	let error = $state('');

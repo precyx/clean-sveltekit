@@ -23,6 +23,9 @@
 	let loadingAddToCart: boolean = false;
 
 	onMount(async () => {
+		let loginToken = localStorage.getItem('loginToken');
+		if (!loginToken) return;
+
 		let _myCourses = await getMyCoursesShort();
 		let _myCourseIds = _myCourses.data.map((course) => course.documentId);
 		if (_myCourseIds.includes(courseId)) {
