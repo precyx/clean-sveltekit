@@ -2,11 +2,19 @@
 	import { goto } from '$app/navigation';
 	import { cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
-	import { getCoursesByIds, getCart, createOrder, captureOrder } from '$lib/api/api.js';
-	import type { Course, ApiResponse } from '$lib/api/types.ts';
+	import {
+		getCoursesByIds,
+		getCart,
+		createOrder,
+		captureOrder,
+		getPagomovilBankInfo
+	} from '$lib/api/api.js';
+	import type { Course, ApiResponse, PagoMovilBankInfo } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import TextInput from '$lib/components/TextInput.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
 	import { user } from '$lib/stores/user';
@@ -14,6 +22,8 @@
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import { sleep } from '$lib/utils/Utils';
+	import IconCopy from '$lib/icons/IconCopy.svelte';
+	import CountryPicker from '$lib/components/CountryPicker.svelte';
 
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
@@ -42,28 +52,6 @@
 		return total;
 	});
 
-	onMount(async () => {
-		try {
-			// load cart
-			data_loading = true;
-			let cartData = await getCart();
-			let cartItems = cartData.courses.map((course: any) => course.documentId);
-
-			if (cartItems.length === 0) {
-				data_error = 'No hay articulos en el carrito';
-				return;
-			}
-
-			// load courses
-			let coursesByIds = await getCoursesByIds(cartItems);
-			courses = coursesByIds;
-		} catch (err: any) {
-			data_error = err.message;
-		} finally {
-			data_loading = false;
-		}
-	});
-
 	const goBack = () => {
 		goto('/cart/overview'); // Navigate back to course list
 	};
@@ -79,17 +67,22 @@
 			imgDark: '/img/paypal-logo-white.png'
 		},
 		{
-			name: 'pago-movil',
+			name: 'pagomovil',
 			img: '/img/pago-movil.svg',
 			imgDark: '/img/pago-movil-dark.svg'
 		}
 	];
-	let selectedPaymentOption: any = $state(null);
+	let selectedPaymentOption: string = $state('');
 
-	// load payment option
 	paymentOptionStore.subscribe((value) => {
-		selectedPaymentOption = _paypmentOptions.find((option) => option.name === value);
+		selectedPaymentOption = _paypmentOptions.find((option) => option.name === value)?.name || '';
 	});
+
+	const getPaymentOption = () => {
+		return _paypmentOptions.find((option) => option.name === selectedPaymentOption);
+	};
+
+	let pagomovilData: PagoMovilBankInfo | null = $state(null);
 
 	const _createOrder = async () => {
 		try {
@@ -113,7 +106,7 @@
 	const _onApprove = async (data: OnApproveData) => {
 		try {
 			let orderId = data.orderID;
-			const captureResponse = await captureOrder(orderId);
+			const captureResponse = await captureOrder(orderId, selectedPaymentOption);
 			await sleep(1000);
 			payment_loading = false;
 			// load cart
@@ -139,6 +132,66 @@
 			payment_error = err.message;
 		}
 	};
+
+	const clickPayPagoMovil = async () => {
+		// validate input fields
+
+		payment_loading = true;
+
+		// agregate data
+		let data = {};
+
+		let response = await captureOrder('', 'pagomovil');
+
+		payment_loading = false;
+	};
+
+	/**
+	 * Other
+	 */
+	let copied = $state(false);
+	const copyText = async (textToCopy: string) => {
+		try {
+			await navigator.clipboard.writeText(textToCopy);
+			copied = true;
+			setTimeout(() => (copied = false), 1000);
+		} catch (err) {
+			console.error('Failed to copy text: ', err);
+		}
+	};
+
+	/**
+	 * Mount
+	 */
+
+	onMount(async () => {
+		try {
+			// load cart
+			data_loading = true;
+			let cartData = await getCart();
+			let cartItems = cartData.courses.map((course: any) => course.documentId);
+
+			if (cartItems.length === 0) {
+				data_error = 'No hay articulos en el carrito';
+				return;
+			}
+
+			// load courses
+			let coursesByIds = await getCoursesByIds(cartItems);
+			courses = coursesByIds;
+
+			// load pagomovil data
+			console.log('selectedPaymentOption', selectedPaymentOption);
+			if (selectedPaymentOption == 'pagomovil') {
+				pagomovilData = await getPagomovilBankInfo();
+				console.log('pago movil', pagomovilData);
+			}
+		} catch (err: any) {
+			data_error = err.message;
+		} finally {
+			data_loading = false;
+		}
+	});
 </script>
 
 <div class="text-productsm lg:text-base">
@@ -227,8 +280,8 @@
 				<PaymentOption
 					active={true}
 					controlled={true}
-					img={selectedPaymentOption?.img}
-					imgDark={selectedPaymentOption?.imgDark}
+					img={getPaymentOption()?.img}
+					imgDark={getPaymentOption()?.imgDark}
 				></PaymentOption>
 			{:else}
 				<div>No hay opcion de pago</div>
@@ -242,25 +295,80 @@
 		</div>
 	{/if}
 
-	<div
-		class="flex items-center justify-center"
-		class:pointer-events-none={payment_loading}
-		class:opacity-50={payment_loading}
-	>
-		<div class="w-[300px]">
-			{#if selectedPaymentOption?.name === 'paypal'}
+	<div class="" class:pointer-events-none={payment_loading} class:opacity-50={payment_loading}>
+		{#if selectedPaymentOption === 'paypal'}
+			<div class="mx-auto flex w-[300px] items-center justify-center">
 				<PayPalButton
 					createOrder={_createOrder}
 					onApprove={_onApprove}
 					onError={_onError}
 					onCancel={_onCancel}
 				></PayPalButton>
-			{:else if selectedPaymentOption?.name === 'pago-movil'}
-				<div>Pago Movil</div>
-			{:else}
-				<div class="text-center">Seleccione una opcion de pago valido...</div>
+			</div>
+		{:else if selectedPaymentOption === 'pagomovil'}
+			{#if pagomovilData}
+				<!--prettier-ignore-->
+				{#each [
+					{ value: pagomovilData.bank, label: 'Banco' }, 
+					{ value: pagomovilData.phoneNumber, label: 'Numero de telefono' }, 
+					{ value: pagomovilData.identityDocument, label: 'Documento de Identidad' }, 
+					{ value: 'Pago de Cursos', label: 'Concepto' },
+					{ value: pagomovilData.amountToPay, label: 'Monto a Pagar' }
+				] as item} 
+					<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
+						<div class="w-[300px] text-grey-300">{item.label}:</div>
+						<div class="flex items-center text-blue-500 dark:text-white">
+							{item.value}
+							<button
+								onclick={() => copyText(item.value + "")}
+								class="cursor-pointer"
+								class:opacity-50={copied}
+							>
+								<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+							</button>
+						</div>
+					</div>
+				{/each}
+
+				<div class="mt-10">
+					<div class="mb-4">
+						<TextInput
+							id="pagomovil-phone"
+							label="Numero de telefono del Pagador *"
+							placeholder="Numero de telefono del Pagador"
+						></TextInput>
+					</div>
+
+					<div class="mb-4">
+						<TextInput
+							id="pagomovil-bank-reference"
+							label="Referencia bancaria *"
+							placeholder="Emitido por su banco"
+						></TextInput>
+					</div>
+
+					<div class="mb-4">
+						<CountryPicker value={'de'}></CountryPicker>
+					</div>
+				</div>
+
+				<div class="mb-12 mt-12 flex h-[40px] items-center justify-center">
+					<div class="ml-4">
+						<Button
+							disabled={selectedPaymentOption == ''}
+							onclick={() => {
+								clickPayPagoMovil();
+							}}
+							>Pagar con Pago Movil
+						</Button>
+					</div>
+				</div>
+
+				-
 			{/if}
-		</div>
+		{:else}
+			<div class="text-center">Seleccione una opcion de pago valido...</div>
+		{/if}
 	</div>
 	{#if payment_error}
 		<div class="text-red-500">{payment_error}</div>

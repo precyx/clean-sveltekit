@@ -210,3 +210,17 @@ export interface Order extends BaseEntity {
 	orderStatus: string;
 	orderHistory: string;
 }
+
+/**
+ * Payment
+ */
+
+export interface PagoMovilBankInfo extends BaseEntity {
+	amountToPay: number;
+	bank: string;
+	phoneNumber: string;
+	identityDocument: string;
+	dailyExchangeRateVES: number;
+	dailyExchangeRateVESUpdatedAt: Date;
+	dailyExchangeRateVESUpdatedAtExternal: Date;
+}

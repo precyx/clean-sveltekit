@@ -11,11 +11,24 @@
 		label: string;
 		selectText: string;
 		searchText: string;
-		value: string;
+		value: string; // Country code e.g. "de"
 		required: boolean;
 		error: string;
 	};
-	let { id, label, selectText, searchText, value = $bindable(), required, error }: Props = $props();
+	let {
+		id,
+		label = 'País',
+		selectText = 'Seleccionar país',
+		searchText = 'Buscar país',
+		value = $bindable<string>(), // Country code e.g. "de"
+		required = false,
+		error = ''
+	}: Props = $props();
+
+	type Country = {
+		name: string;
+		code: string;
+	};
 
 	// countries
 	let countries: Country[] = $state([]);
@@ -23,12 +36,7 @@
 	let search: string = $state('');
 	let selectedCountry: Country | null = $state(null);
 	let showPopover: boolean = $state(false);
-	let inputMode: string = $state('select');
-
-	type Country = {
-		name: string;
-		code: string;
-	};
+	let inputMode: 'select' | 'search' = $state('select');
 
 	onMount(async () => {
 		let response = await fetch('/data/country.json');
@@ -36,12 +44,23 @@
 
 		countries = _countries;
 		filteredCountries = _countries;
+
+		// set initial country
+		if (value) {
+			selectedCountry = _countries.find((country) => country.code === value) || null;
+		}
 	});
 
+	// Normalize and remove accents
+	const removeDiacritics = (str: string) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
 	const onSearch = (e) => {
-		filteredCountries = countries.filter((country) =>
-			country.name.toLowerCase().startsWith(search)
-		);
+		const searchQuery = removeDiacritics(e.target.value.trim().toLowerCase());
+
+		filteredCountries = countries.filter((country) => {
+			const nameNormalized = removeDiacritics(country.name.toLowerCase());
+			return nameNormalized.includes(searchQuery);
+		});
 	};
 
 	const clickCountry = (country: Country) => {
@@ -94,7 +113,7 @@
 				{#if selectedCountry}
 					<img
 						class=" w-[24px] rounded-sm"
-						src={`img/flags/4x3/${selectedCountry?.code}.svg`}
+						src={`/img/flags/4x3/${selectedCountry?.code}.svg`}
 						alt={selectedCountry?.name}
 					/>
 				{:else}
@@ -158,7 +177,7 @@
 								<div class="rounded-sm">
 									<img
 										class="mr-4 w-[24px] rounded-sm"
-										src={`img/flags/4x3/${country.code}.svg`}
+										src={`/img/flags/4x3/${country.code}.svg`}
 										alt={country.name}
 									/>
 								</div>

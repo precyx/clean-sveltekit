@@ -6,9 +6,7 @@ export const theme = writable<string>(storedTheme);
 
 theme.subscribe((value) => {
 	if (browser) {
-		if (typeof window !== 'undefined') {
-			localStorage.setItem('theme', value);
-			document.documentElement.classList.toggle('dark', value === 'dark');
-		}
+		localStorage.setItem('theme', value);
+		document.documentElement.classList.toggle('dark', value === 'dark');
 	}
 });

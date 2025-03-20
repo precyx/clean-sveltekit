@@ -83,7 +83,7 @@
 			imgDark: '/img/paypal-logo-white.png'
 		},
 		{
-			name: 'pago-movil',
+			name: 'pagomovil',
 			img: '/img/pago-movil.svg',
 			imgDark: '/img/pago-movil-dark.svg'
 		}
