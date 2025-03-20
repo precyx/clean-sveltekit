@@ -7,7 +7,7 @@
 	{
 		"code": "ax",
 		"name": "Islas de Åland",
-		"phone": "+358-18"
+		"phone": "358 18"
 	},
 	{
 		"code": "al",
@@ -22,7 +22,7 @@
 	{
 		"code": "as",
 		"name": "Samoa Americana",
-		"phone": "+1-684"
+		"phone": "1 684"
 	},
 	{
 		"code": "ad",
@@ -37,12 +37,12 @@
 	{
 		"code": "ai",
 		"name": "Anguila",
-		"phone": "+1-264"
+		"phone": "1 264"
 	},
 	{
 		"code": "ag",
 		"name": "Antigua y Barbuda",
-		"phone": "+1-268"
+		"phone": "1 268"
 	},
 	{
 		"code": "ar",
@@ -77,7 +77,7 @@
 	{
 		"code": "bs",
 		"name": "Bahamas",
-		"phone": "+1-242"
+		"phone": "1 242"
 	},
 	{
 		"code": "bh",
@@ -92,7 +92,7 @@
 	{
 		"code": "bb",
 		"name": "Barbados",
-		"phone": "+1-246"
+		"phone": "1 246"
 	},
 	{
 		"code": "by",
@@ -117,7 +117,7 @@
 	{
 		"code": "bm",
 		"name": "Islas Bermudas",
-		"phone": "+1-441"
+		"phone": "1 441"
 	},
 	{
 		"code": "bt",
@@ -197,7 +197,7 @@
 	{
 		"code": "ky",
 		"name": "Islas Caimán",
-		"phone": "+1-345"
+		"phone": "1 345"
 	},
 	{
 		"code": "cf",
@@ -297,12 +297,17 @@
 	{
 		"code": "dm",
 		"name": "Dominica",
-		"phone": "+1-767"
+		"phone": "1 767"
 	},
 	{
 		"code": "do",
 		"name": "República Dominicana",
-		"phone": "+1-809 and 1-829"
+		"phone": "1 809"
+	},
+	{
+		"code": "do",
+		"name": "República Dominicana",
+		"phone": "1 829"
 	},
 	{
 		"code": "ec",
@@ -427,7 +432,7 @@
 	{
 		"code": "gd",
 		"name": "Granada",
-		"phone": "+1-473"
+		"phone": "1 473"
 	},
 	{
 		"code": "gp",
@@ -437,7 +442,7 @@
 	{
 		"code": "gu",
 		"name": "Guam",
-		"phone": "+1-671"
+		"phone": "1 671"
 	},
 	{
 		"code": "gt",
@@ -447,7 +452,7 @@
 	{
 		"code": "gg",
 		"name": "Guernsey",
-		"phone": "+44-1481"
+		"phone": "44 1481"
 	},
 	{
 		"code": "gn",
@@ -456,7 +461,7 @@
 	},
 	{
 		"code": "gw",
-		"name": "Guinea-Bissau",
+		"name": "Guinea Bissau",
 		"phone": "245"
 	},
 	{
@@ -522,7 +527,7 @@
 	{
 		"code": "im",
 		"name": "Isla de Man",
-		"phone": "+44-1624"
+		"phone": "44 1624"
 	},
 	{
 		"code": "il",
@@ -537,7 +542,7 @@
 	{
 		"code": "jm",
 		"name": "Jamaica",
-		"phone": "+1-876"
+		"phone": "1 876"
 	},
 	{
 		"code": "jp",
@@ -547,7 +552,7 @@
 	{
 		"code": "je",
 		"name": "Jersey",
-		"phone": "+44-1534"
+		"phone": "44 1534"
 	},
 	{
 		"code": "jo",
@@ -717,7 +722,7 @@
 	{
 		"code": "ms",
 		"name": "Montserrat",
-		"phone": "+1-664"
+		"phone": "1 664"
 	},
 	{
 		"code": "ma",
@@ -802,7 +807,7 @@
 	{
 		"code": "mp",
 		"name": "Islas Marianas del Norte",
-		"phone": "+1-670"
+		"phone": "1 670"
 	},
 	{
 		"code": "no",
@@ -862,7 +867,12 @@
 	{
 		"code": "pr",
 		"name": "Puerto Rico",
-		"phone": "+1-787 and 1-939"
+		"phone": "1 787"
+	},
+	{
+		"code": "pr",
+		"name": "Puerto Rico",
+		"phone": "1 939"
 	},
 	{
 		"code": "qa",
@@ -907,12 +917,12 @@
 	{
 		"code": "kn",
 		"name": "San Cristóbal y Nieves",
-		"phone": "+1-869"
+		"phone": "1 869"
 	},
 	{
 		"code": "lc",
 		"name": "Santa Lucía",
-		"phone": "+1-758"
+		"phone": "1 758"
 	},
 	{
 		"code": "mf",
@@ -927,7 +937,7 @@
 	{
 		"code": "vc",
 		"name": "San Vicente y las Granadinas",
-		"phone": "+1-784"
+		"phone": "1 784"
 	},
 	{
 		"code": "ws",
@@ -1107,7 +1117,7 @@
 	{
 		"code": "tt",
 		"name": "Trinidad y Tobago",
-		"phone": "+1-868"
+		"phone": "1 868"
 	},
 	{
 		"code": "tn",
@@ -1122,7 +1132,7 @@
 	{
 		"code": "tc",
 		"name": "Islas Turcas y Caicos",
-		"phone": "+1-649"
+		"phone": "1 649"
 	},
 	{
 		"code": "tv",
@@ -1192,12 +1202,12 @@
 	{
 		"code": "vg",
 		"name": "Islas Vírgenes Británicas",
-		"phone": "+1-284"
+		"phone": "1 284"
 	},
 	{
 		"code": "vi",
 		"name": "Islas Vírgenes de los Estados Unidos",
-		"phone": "+1-340"
+		"phone": "1 340"
 	},
 	{
 		"code": "wf",

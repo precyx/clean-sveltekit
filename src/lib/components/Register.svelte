@@ -8,6 +8,7 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import CountryPicker from '$lib/components/CountryPicker.svelte';
+	import PhonePicker from './PhonePicker.svelte';
 
 	let username = '';
 	let email = '';
@@ -19,6 +20,8 @@
 	let errors: { [key: string]: string } = {};
 	let loading = false;
 	let submitted = false;
+
+	let phoneIsValid = false;
 
 	const removeEmptyStrings = <T extends Record<string, any>>(obj: T): T => {
 		for (const key in obj) {
@@ -50,6 +53,14 @@
 			newErrors.password = 'La contraseña es obligatoria.';
 		} else if (password.length < 2) {
 			newErrors.password = 'La contraseña debe tener al menos 2 caracteres.';
+		}
+
+		if (!country) {
+			newErrors.country = 'El país es obligatorio.';
+		}
+
+		if (!phoneIsValid) {
+			newErrors.phone = 'El teléfono es obligatorio.';
 		}
 
 		errors = { ...newErrors };
@@ -131,41 +142,26 @@
 		/>
 	</div>
 
-	<!-- 
-	<div class="mb-4">
-		<TextInput
-			id="country"
-			label="Pais"
-			placeholder="Pais"
-			type="text"
-			bind:value={country}
-			required={false}
-			error={errors.country}
-		/>
-	</div>
--->
-
 	<div class="mb-4">
 		<CountryPicker
 			error={errors.country}
-			required={false}
+			required={true}
 			id="country"
 			bind:value={country}
-			label="Pais"
+			label="Pais *"
 			searchText="Buscar Pais"
 			selectText="Seleccionar Pais"
 		></CountryPicker>
 	</div>
 
 	<div class="mb-4">
-		<TextInput
-			id="phone"
-			label="Telefono"
-			placeholder="Telefono"
-			type="text"
-			bind:value={phone}
-			required={false}
+		<PhonePicker
 			error={errors.phone}
+			required={true}
+			label="Telefono *"
+			id="phone"
+			bind:value={phone}
+			bind:isValid={phoneIsValid}
 		/>
 	</div>
 	<div class="mt-6">

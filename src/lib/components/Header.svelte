@@ -198,7 +198,7 @@
 
 		<div class="absolute right-2 top-2 flex flex-row items-center">
 			<!-- Cart -->
-			{#if $cart?.courses?.lengthx}
+			{#if $cart?.courses?.length}
 				<CartButton {IS_PERSONAL_PAGE} count={$cart?.courses?.length} href={'/cart/overview'}
 				></CartButton>
 			{/if}

@@ -7,13 +7,13 @@
 	import IconGlobe from '$lib/icons/IconGlobe.svelte';
 
 	type Props = {
-		id: string;
-		label: string;
-		selectText: string;
-		searchText: string;
-		value: string; // Country code e.g. "de"
-		required: boolean;
-		error: string;
+		id?: string;
+		label?: string;
+		selectText?: string;
+		searchText?: string;
+		value?: string; // Country code e.g. "de"
+		required?: boolean;
+		error?: string;
 	};
 	let {
 		id,
@@ -68,6 +68,7 @@
 		showPopover = false;
 		inputMode = 'select';
 		value = country.code;
+		error = '';
 	};
 
 	const clickSearch = () => {
@@ -161,7 +162,7 @@
     ###
     -->
 	{#if showPopover}
-		<div class="absolute left-0 top-[80px] z-10 w-full group-hover:block">
+		<div class="absolute left-0 top-[80px] z-50 w-full group-hover:block">
 			<div
 				class="max-h-[200px] w-full overflow-y-scroll rounded-lg border-2 border-grey-300 bg-grey-0 shadow-[0px_10px_18px_-4px_rgba(0,_0,_0,_0.25)] shadow-lg dark:border-grey-700 dark:bg-grey-900"
 			>

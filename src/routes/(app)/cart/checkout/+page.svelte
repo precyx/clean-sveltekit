@@ -24,6 +24,7 @@
 	import { sleep } from '$lib/utils/Utils';
 	import IconCopy from '$lib/icons/IconCopy.svelte';
 	import CountryPicker from '$lib/components/CountryPicker.svelte';
+	import PhonePicker from '$lib/components/PhonePicker.svelte';
 
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
@@ -31,6 +32,9 @@
 	let data_error: string = $state('');
 	let payment_loading: boolean = $state(false);
 	let payment_error: string = $state('');
+
+	let phone = $state('+584241234567');
+	let country = $state('ve');
 
 	/**
 	 * User
@@ -330,13 +334,13 @@
 					</div>
 				{/each}
 
-				<div class="mt-10">
+				<div class=" mt-10 max-w-[450px]">
 					<div class="mb-4">
-						<TextInput
+						<PhonePicker
 							id="pagomovil-phone"
+							bind:value={phone}
 							label="Numero de telefono del Pagador *"
-							placeholder="Numero de telefono del Pagador"
-						></TextInput>
+						></PhonePicker>
 					</div>
 
 					<div class="mb-4">
@@ -346,16 +350,11 @@
 							placeholder="Emitido por su banco"
 						></TextInput>
 					</div>
-
-					<div class="mb-4">
-						<CountryPicker value={'de'}></CountryPicker>
-					</div>
 				</div>
 
 				<div class="mb-12 mt-12 flex h-[40px] items-center justify-center">
 					<div class="ml-4">
 						<Button
-							disabled={selectedPaymentOption == ''}
 							onclick={() => {
 								clickPayPagoMovil();
 							}}
@@ -363,8 +362,6 @@
 						</Button>
 					</div>
 				</div>
-
-				-
 			{/if}
 		{:else}
 			<div class="text-center">Seleccione una opcion de pago valido...</div>
