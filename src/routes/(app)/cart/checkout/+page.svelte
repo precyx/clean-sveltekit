@@ -45,6 +45,10 @@
 	$effect(() => {
 		user.subscribe((value) => {
 			currentUser = value;
+
+			if (value && value.user) {
+				phone = value.user.phone;
+			}
 		});
 	});
 
@@ -317,7 +321,6 @@
 					{ value: pagomovilData.phoneNumber, label: 'Numero de telefono' }, 
 					{ value: pagomovilData.identityDocument, label: 'Documento de Identidad' }, 
 					{ value: 'Pago de Cursos', label: 'Concepto' },
-					{ value: pagomovilData.amountToPay, label: 'Monto a Pagar' }
 				] as item} 
 					<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
 						<div class="w-[300px] text-grey-300">{item.label}:</div>
@@ -333,6 +336,19 @@
 						</div>
 					</div>
 				{/each}
+				<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
+					<div class="w-[300px] text-grey-300">Monto a pagar:</div>
+					<div class="flex items-center font-semibold text-green-300 dark:text-green-100">
+						{pagomovilData?.amountToPay} VES
+						<button
+							onclick={() => copyText(pagomovilData?.amountToPay + '')}
+							class="cursor-pointer"
+							class:opacity-50={copied}
+						>
+							<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+						</button>
+					</div>
+				</div>
 
 				<div class=" mt-10 max-w-[450px]">
 					<div class="mb-4">
