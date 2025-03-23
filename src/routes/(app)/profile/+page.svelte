@@ -165,6 +165,21 @@
 							<span class="font-medium text-blue-400 dark:text-white">{order.paymentMethod}</span>
 						</div>
 						<div class="ml-4">
+							{#if order.paymentStatus == 'paid'}
+								<div
+									class="inline-flex rounded-full bg-green-200 bg-opacity-30 px-4 text-green-300 dark:text-green-200"
+								>
+									Pagado
+								</div>
+							{:else if order.paymentStatus == 'verifying'}
+								<div
+									class="inline-flex rounded-full bg-orange-200 bg-opacity-30 px-4 text-orange-400 dark:text-orange-300"
+								>
+									Verificando
+								</div>
+							{/if}
+						</div>
+						<div class="ml-4 hidden">
 							<span class="text-grey-300 dark:text-grey-100">ID de Pago: </span>
 							<span class="font-medium text-blue-400 dark:text-white">{order.documentId}</span>
 						</div>
@@ -182,7 +197,7 @@
 								></ImageDisplay>
 							</div>
 							<div class="ml-2 sm:ml-4">
-								<h2 class="mb-1 font-semibold text-blue-500 dark:text-grey-0">{course.title}</h2>
+								<h2 class="text-grey-400 mb-1 font-medium dark:text-grey-0">{course.title}</h2>
 								<p class="font-normal text-grey-300">{course.category}</p>
 								<p class="hidden text-right md:block"></p>
 							</div>

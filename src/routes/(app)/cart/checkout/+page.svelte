@@ -186,7 +186,7 @@
 				></ImageDisplay>
 			</div>
 			<div class="ml-2 sm:ml-4">
-				<h2 class="mb-1 font-semibold text-blue-500 dark:text-grey-0">{course.title}</h2>
+				<h2 class="text-grey-400 mb-1 font-semibold dark:text-grey-0">{course.title}</h2>
 				<p class="font-normal text-grey-300">{course.category}</p>
 				<p class="hidden text-right md:block"></p>
 			</div>

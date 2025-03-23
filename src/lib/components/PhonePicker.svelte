@@ -236,7 +236,7 @@
 						class="relative block w-full w-full cursor-text rounded-r-md border-2 px-4 py-3 focus:ring-0
                         {error
 							? 'border-red-400 bg-red-50 text-red-400  placeholder-red-400 focus:border-red-400 dark:bg-red-900 dark:bg-opacity-20 dark:placeholder-white dark:placeholder-opacity-40'
-							: ' placeholder-grey-400 border-grey-300 bg-grey-50 text-grey-500 focus:border-blue-500 dark:border-grey-700 dark:bg-grey-900 dark:text-grey-200 dark:focus:border-grey-0'}"
+							: ' border-grey-300 bg-grey-50 text-grey-500 placeholder-grey-300 focus:border-blue-500 dark:border-grey-700 dark:bg-grey-900 dark:text-grey-200 dark:focus:border-grey-0'}"
 						onclick={clickPhoneInput}
 						oninput={() => {
 							onInputPhoneText();

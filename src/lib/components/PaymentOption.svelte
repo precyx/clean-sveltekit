@@ -33,7 +33,7 @@
 >
 	<div>
 		<div
-			class="bg-grey-400 flex h-[25px] w-[25px] items-center justify-center rounded-full border border-blue-500 dark:border-blue-300"
+			class="flex h-[25px] w-[25px] items-center justify-center rounded-full border border-blue-500 dark:border-blue-300"
 		>
 			{#if active}
 				<IconCheck classes="w-4 h-4 text-blue-500 dark:text-blue-300"></IconCheck>
