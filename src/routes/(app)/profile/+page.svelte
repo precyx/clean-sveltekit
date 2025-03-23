@@ -151,7 +151,7 @@
 			<div class="text-red-500">{ordersError}</div>
 		{:else}
 			{#each orders as order}
-				<div class="mb-12">
+				<div class="mb-16">
 					<div class="mb-4 text-productbase font-bold text-blue-400 dark:text-blue-100 lg:text-lg">
 						{order?.courses.length} Articulos:
 						<span class="hidden font-normal italic text-blue-100 dark:text-grey-700"

@@ -217,7 +217,7 @@
 
 		{#if showMobileProfile}
 			<div
-				class="absolute left-[0px] top-[70px] flex w-[250px] w-full bg-black py-2"
+				class="absolute left-[0px] top-[70px] flex w-[250px] w-full bg-black py-2 shadow-lg"
 				use:clickOutside={() => {
 					showMobileProfile = false;
 				}}
@@ -226,7 +226,7 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<nav class="flex w-full flex-col">
 						{#if !currentUser}
-							<a href={'/login'} class="px-4 py-2">Iniciar sesión</a>
+							<a href={'/login'} class="bg-pink-200 px-4 py-2">Iniciar sesión</a>
 						{:else}
 							<a class="px-4 py-2" href={'/my-courses'}>Mis Cursos</a>
 							<a class="px-4 py-2" href={'/profile'}>Perfil</a>
@@ -236,7 +236,7 @@
 						{/if}
 						<button
 							onclick={toggleTheme}
-							class="ml-[10px] flex transform items-center p-2 active:opacity-60"
+							class="flex transform items-center border-t border-blue-400/20 p-4 pb-2 pl-5 active:opacity-60"
 						>
 							{#if $theme === 'dark'}
 								<IconSun classes={`h-6 w-6 text-white `}></IconSun>
