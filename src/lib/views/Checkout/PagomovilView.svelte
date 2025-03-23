@@ -71,12 +71,12 @@
 		} catch (err: any) {
 			console.error('Error Pagomovil', err);
 			payment_error = err.message;
-		} finally {
-			payment_loading = false;
 		}
 
 		// load cart
 		await getCart();
+		payment_loading = false;
+
 		// redirect to success
 		goto(`/cart/success?orderId=${newOrder?.documentId}`);
 	};
@@ -140,7 +140,7 @@
                         class="cursor-pointer"
                         class:opacity-50={copied}
                     >
-                        <IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+                        <IconCopy classes="w-[18px] ml-3 text-blue-400"></IconCopy>
                     </button>
                 </div>
             </div>
@@ -154,7 +154,7 @@
 						class="cursor-pointer"
 						class:opacity-50={copied}
 					>
-						<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+						<IconCopy classes="w-[18px] ml-3 text-blue-400"></IconCopy>
 					</button>
 				</div>
 			</div>
