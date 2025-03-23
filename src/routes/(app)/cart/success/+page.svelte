@@ -137,7 +137,7 @@
 			</div>
 		</div>
 		<div class="mb-8 mt-8 flex flex-col items-center justify-center sm:flex-row">
-			<div class="mb-2 mr-0 sm:mb-0 sm:mr-4">
+			<div class="mb-4 mr-0 sm:mb-0 sm:mr-4">
 				<Button secondary={true} onclick={gotoMyProfile}>Ver mis Pedidos</Button>
 			</div>
 			<div>

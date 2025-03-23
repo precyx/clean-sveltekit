@@ -171,14 +171,16 @@
 					use:clickOutside={() => {
 						showMobileNav = false;
 					}}
-					class="absolute left-[-8px] top-[62px] z-10 flex w-[250px] bg-black p-4"
+					class=" absolute left-[-8px] top-[62px] z-10 flex w-screen shadow-lg"
 				>
-					<nav class="flex flex-col space-y-3">
-						<a class="active:opacity-60" href={'/landing'}>Home</a>
-						<a class="active:opacity-60" href={'/courses'}>Cursos</a>
-						<a class="active:opacity-60" href={'/products'}>Productos</a>
-						<a class="active:opacity-60" href={'/contact'}>Contacto</a>
-						<a class="active:opacity-60" href={'/about-us'}>Sobre Nosotros</a>
+					<nav
+						class="flex w-full flex-col bg-white py-2 text-blue-500 dark:bg-grey-1100 dark:text-white"
+					>
+						<a class="w-full px-4 py-2 active:opacity-60" href={'/landing'}>Home</a>
+						<a class="px-4 py-2 active:opacity-60" href={'/courses'}>Cursos</a>
+						<a class="px-4 py-2 active:opacity-60" href={'/products'}>Productos</a>
+						<a class="px-4 py-2 active:opacity-60" href={'/contact'}>Contacto</a>
+						<a class="px-4 py-2 active:opacity-60" href={'/about-us'}>Sobre Nosotros</a>
 					</nav>
 				</div>
 			{/if}
@@ -211,46 +213,46 @@
 					classes={`h-6 w-6 dark:text-gray-50 active:opacity-60 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
 				></IconUser>
 			</button>
-
-			{#if showMobileProfile}
-				<div
-					class="absolute right-[-8px] top-[62px] flex w-[250px] bg-black p-4"
-					use:clickOutside={() => {
-						showMobileProfile = false;
-					}}
-				>
-					<div class=" flex justify-center bg-black">
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<nav class="flex flex-col space-y-3">
-							{#if !currentUser}
-								<NavLink href={'/login'}>Iniciar sesión</NavLink>
-							{:else}
-								<a href={'/my-courses'}>Mis Cursos</a>
-								<a href={'/profile'}>Perfil</a>
-								<button class="text-left text-red-400 dark:text-red-400" onclick={logout}
-									>Cerrar sesión</button
-								>
-							{/if}
-							<button
-								onclick={toggleTheme}
-								class="flex transform items-center p-2 active:opacity-60"
-							>
-								{#if $theme === 'dark'}
-									<IconSun
-										classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
-									></IconSun>
-								{:else}
-									<IconMoon
-										classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
-									></IconMoon>
-								{/if}
-								<span class="ml-2">{$theme === 'dark' ? 'Claro' : 'Oscurro'}</span>
-							</button>
-						</nav>
-					</div>
-				</div>
-			{/if}
 		</div>
+
+		{#if showMobileProfile}
+			<div
+				class="absolute left-[0px] top-[70px] flex w-[250px] w-full bg-black py-2"
+				use:clickOutside={() => {
+					showMobileProfile = false;
+				}}
+			>
+				<div class=" flex w-full justify-center bg-black">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<nav class="flex w-full flex-col">
+						{#if !currentUser}
+							<NavLink href={'/login'}>Iniciar sesión</NavLink>
+						{:else}
+							<a class="px-4 py-2" href={'/my-courses'}>Mis Cursos</a>
+							<a class="px-4 py-2" href={'/profile'}>Perfil</a>
+							<button class="px-4 py-2 text-left text-red-400 dark:text-red-400" onclick={logout}
+								>Cerrar sesión</button
+							>
+						{/if}
+						<button
+							onclick={toggleTheme}
+							class="ml-[10px] flex transform items-center p-2 active:opacity-60"
+						>
+							{#if $theme === 'dark'}
+								<IconSun
+									classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+								></IconSun>
+							{:else}
+								<IconMoon
+									classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
+								></IconMoon>
+							{/if}
+							<span class="ml-2">{$theme === 'dark' ? 'Claro' : 'Oscurro'}</span>
+						</button>
+					</nav>
+				</div>
+			</div>
+		{/if}
 	</div>
 
 	<div class="container mx-auto flex hidden h-full items-center lg:flex">
