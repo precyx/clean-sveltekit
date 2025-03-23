@@ -174,7 +174,7 @@
 					class=" absolute left-[-8px] top-[62px] z-10 flex w-screen shadow-lg"
 				>
 					<nav
-						class="flex w-full flex-col bg-white py-2 text-blue-500 dark:bg-grey-1100 dark:text-white"
+						class="flex w-full touch-manipulation select-none flex-col bg-white py-2 text-blue-500 dark:bg-grey-1100 dark:text-white"
 					>
 						<a class="w-full px-4 py-2 active:opacity-60" href={'/landing'}>Home</a>
 						<a class="px-4 py-2 active:opacity-60" href={'/courses'}>Cursos</a>
@@ -224,9 +224,9 @@
 			>
 				<div class=" flex w-full justify-center bg-black">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<nav class="flex w-full flex-col">
+					<nav class="flex w-full touch-manipulation select-none flex-col">
 						{#if !currentUser}
-							<a href={'/login'} class="bg-pink-200 px-4 py-2">Iniciar sesión</a>
+							<a href={'/login'} class="  px-4 py-2">Iniciar sesión</a>
 						{:else}
 							<a class="px-4 py-2" href={'/my-courses'}>Mis Cursos</a>
 							<a class="px-4 py-2" href={'/profile'}>Perfil</a>
