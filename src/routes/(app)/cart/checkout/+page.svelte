@@ -114,13 +114,13 @@
 	const _onApprove = async (data: OnApproveData) => {
 		try {
 			let orderId = data.orderID;
-			const captureResponse = await captureOrder(orderId, selectedPaymentOption);
+			let newOrder = await captureOrder(orderId, selectedPaymentOption);
 			await sleep(1000);
 			payment_loading = false;
 			// load cart
 			await getCart();
 			// redirect to success
-			goto(`/cart/success?orderId=${orderId}`);
+			goto(`/cart/success?orderId=${newOrder.documentId}`);
 		} catch (err: any) {
 			console.log('🤖 APPROVE ORDER ERROR', err.message);
 			payment_loading = false;

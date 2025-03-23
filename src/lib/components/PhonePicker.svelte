@@ -40,13 +40,16 @@
 		phone: string;
 	};
 
-	// data
+	// ui values
 	let selectedCountry: Country | null = $state(null);
 	let phoneText: string = $state('');
 
+	// data
 	let sortedPhonePrefixes: string[] = $state([]);
 	let countries: Country[] = $state([]);
 	let filteredCountries: Country[] = $state([]);
+
+	// search
 	let search: string = $state('');
 	let showPopover: boolean = $state(false);
 	let inputMode: 'select' | 'search' = $state('select');
@@ -103,10 +106,7 @@
 		showPopover = false;
 		inputMode = 'select';
 		value = '+' + country.phone + phoneText;
-	};
-
-	const clickSearch = () => {
-		//showPopover = true;
+		if (phoneText) validate();
 	};
 
 	const clickOpenCountryPicker = () => {
@@ -135,6 +135,15 @@
 			value = _fullPhoneAfter;
 
 			// validate
+			validate();
+			//console.log('value', value);
+		}
+	};
+
+	const validate = () => {
+		if (selectedCountry) {
+			let _fullPhone = '+' + selectedCountry?.phone + phoneText;
+			let newPhone = parsePhoneNumberFromString(_fullPhone);
 			let _isValid = newPhone?.isValid();
 			if (!_isValid) {
 				error = 'Número de teléfono inválido';
@@ -143,8 +152,6 @@
 				error = '';
 				isValid = true;
 			}
-
-			//console.log('value', value);
 		}
 	};
 </script>
@@ -168,7 +175,6 @@
 				placeholder={searchText}
 				{required}
 				oninput={onSearch}
-				onclick={clickSearch}
 				use:clickOutside={() => {
 					showPopover = false;
 					inputMode = 'select';
@@ -224,11 +230,12 @@
                     -->
 					<input
 						bind:value={phoneText}
+						placeholder="00 000 000"
 						type="text"
 						class="relative block w-full w-full cursor-text rounded-r-md border-2 px-4 py-3 focus:ring-0
                         {error
 							? 'border-red-400 bg-red-50 text-red-400  placeholder-red-400 focus:border-red-400 dark:bg-red-900 dark:bg-opacity-20 dark:placeholder-white dark:placeholder-opacity-40'
-							: ' border-grey-300 bg-grey-50 text-grey-500 placeholder-grey-300 focus:border-blue-500 dark:border-grey-700 dark:bg-grey-900 dark:text-grey-200 dark:focus:border-grey-0'}"
+							: ' placeholder-grey-400 border-grey-300 bg-grey-50 text-grey-500 focus:border-blue-500 dark:border-grey-700 dark:bg-grey-900 dark:text-grey-200 dark:focus:border-grey-0'}"
 						onclick={clickPhoneInput}
 						oninput={() => {
 							onInputPhoneText();

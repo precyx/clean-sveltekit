@@ -297,7 +297,7 @@ export const createOrder = async (ids: string[]): Promise<PayPalOrder> => {
 	});
 };
 
-export const captureOrder = async (orderId: string, paymentMethod: string): Promise<any> => {
+export const captureOrder = async (orderId: string, paymentMethod: string): Promise<Order> => {
 	return await AUTH_ApiRequest('POST', '/payment/capture-order', { orderId, paymentMethod });
 };
 
@@ -337,4 +337,8 @@ export const deleteCart = async (courseId: string): Promise<Cart> => {
 
 export const getOrdersByUser = async (): Promise<Order[]> => {
 	return AUTH_ApiRequest('GET', '/orders');
+};
+
+export const getOrderByUser = async (orderId: string): Promise<Order> => {
+	return AUTH_ApiRequest('GET', `/orders/${orderId}`);
 };
