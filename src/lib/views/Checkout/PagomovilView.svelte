@@ -64,8 +64,6 @@
 			amount: pagomovilData?.amountToPay.toString() || ''
 		} as const;
 
-		await sleep(1000);
-
 		let newOrder;
 		try {
 			newOrder = await captureOrder('pagomovil', paymentDetails);
