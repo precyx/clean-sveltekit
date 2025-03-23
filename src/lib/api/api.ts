@@ -14,7 +14,8 @@ import type {
 	PayPalOrder,
 	Cart,
 	Order,
-	PagoMovilBankInfo
+	PagoMovilBankInfo,
+	PaymentDetails
 } from '$lib/api/types.ts';
 
 import type { ServiceError } from '$lib/api/types';
@@ -297,8 +298,14 @@ export const createOrder = async (ids: string[]): Promise<PayPalOrder> => {
 	});
 };
 
-export const captureOrder = async (orderId: string, paymentMethod: string): Promise<Order> => {
-	return await AUTH_ApiRequest('POST', '/payment/capture-order', { orderId, paymentMethod });
+export const captureOrder = async (
+	paymentMethod: string,
+	paymentDetails: PaymentDetails
+): Promise<Order> => {
+	return await AUTH_ApiRequest('POST', '/payment/capture-order', {
+		paymentMethod,
+		paymentDetails
+	});
 };
 
 export const getPagomovilBankInfo = async (): Promise<PagoMovilBankInfo> => {

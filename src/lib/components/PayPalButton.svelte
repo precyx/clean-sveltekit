@@ -4,6 +4,7 @@
 
 	import { paypal } from '$lib/stores/paypal';
 	import type { PayPalNamespace, CreateOrderData, OnApproveData } from '@paypal/paypal-js';
+	import { sleep } from '$lib/utils/Utils';
 
 	// Props for the component
 	export let createOrder: () => Promise<string>;
@@ -12,16 +13,21 @@
 	export let onCancel: (data: Record<string, unknown>) => void;
 
 	onMount(() => {
-		setTimeout(async () => {
-			renderPayPalButton();
-		}, 500); // Delay to ensure the PayPal SDK is fully loaded
+		checkPaypal();
 	});
+
+	const checkPaypal = async () => {
+		for (let i = 0; i < 5; i++) {
+			if (renderPayPalButton()) return;
+			await sleep(1000);
+		}
+	};
 
 	// Function to render the PayPal button
 	function renderPayPalButton() {
 		if (!$paypal || !$paypal.Buttons) {
 			console.error('PayPal SDK not loaded.');
-			return;
+			return false;
 		}
 
 		$paypal
@@ -40,6 +46,8 @@
 				}
 			})
 			.render('#paypal-button');
+
+		return true;
 	}
 </script>
 

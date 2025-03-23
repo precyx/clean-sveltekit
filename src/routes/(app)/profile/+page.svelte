@@ -153,9 +153,11 @@
 							new Date(order.orderDate)
 						)}
 					</div>
-					<div class="mb-2 border-b border-blue-100 pb-2 dark:border-grey-900">
-						<span class="text-grey-300 dark:text-grey-100">Total:</span>
-						<span class="text-green-200 dark:text-green-100">$ {order.totalPrice}</span>
+					<div class="mb-2 flex border-b border-blue-100 pb-2 dark:border-grey-900">
+						<div class="">
+							<span class="text-grey-300 dark:text-grey-100">Forma de Pago: </span>
+							<span class="font-medium text-blue-400 dark:text-white">{order.paymentMethod}</span>
+						</div>
 					</div>
 					{#each order.courses as course}
 						<div
@@ -181,6 +183,16 @@
 							</div>
 						</div>
 					{/each}
+					<div
+						class="mb-10 flex h-[50px] items-center justify-center rounded-md bg-grey-50 text-productlg dark:bg-grey-900"
+					>
+						<div class="flex">
+							<div class="mr-2 font-normal text-grey-300 dark:text-white">Total:</div>
+							<div class="font-semibold text-green-300 dark:text-green-100">
+								$ {order.totalPrice}
+							</div>
+						</div>
+					</div>
 				</div>
 			{/each}
 		{/if}

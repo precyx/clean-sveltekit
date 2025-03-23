@@ -20,7 +20,7 @@
 	const validate = () => {
 		if (!submitted) return;
 
-		let newErrors: any = {}; // Create a new object
+		let newErrors: any = {};
 
 		if (!email) {
 			newErrors.email = 'El correo electrónico es obligatorio.';

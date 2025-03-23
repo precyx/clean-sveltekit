@@ -1,0 +1,193 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { getPagomovilBankInfo, captureOrder, getCart } from '$lib/api/api.js';
+	import type { PagoMovilBankInfo } from '$lib/api/types.ts';
+	import { goto } from '$app/navigation';
+
+	import IconCopy from '$lib/icons/IconCopy.svelte';
+	import PhonePicker from '$lib/components/PhonePicker.svelte';
+	import TextInput from '$lib/components/TextInput.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { user } from '$lib/stores/user';
+	import { sleep } from '$lib/utils/Utils';
+
+	let pagomovilData: PagoMovilBankInfo | null = $state(null);
+	let phone = $state('+584241234567');
+	let phoneIsValid = $state(false);
+	let referencia = $state('');
+
+	let payment_loading = $state(false);
+	let payment_error = $state('');
+	let errors: { [key: string]: string } = $state({});
+
+	/**
+	 * User
+	 */
+
+	$effect(() => {
+		user.subscribe((value) => {
+			if (value && value.user) {
+				phone = value.user.phone;
+			}
+		});
+	});
+
+	/**
+	 * Payment
+	 */
+
+	let copied = $state(false);
+	const copyText = async (textToCopy: string) => {
+		try {
+			await navigator.clipboard.writeText(textToCopy);
+			copied = true;
+			setTimeout(() => (copied = false), 600);
+		} catch (err) {
+			console.error('Failed to copy text: ', err);
+		}
+	};
+
+	const clickPagoMovilPay = async () => {
+		// validate input fields
+		if (!validate()) return;
+		payment_loading = true;
+
+		// payment details
+		const paymentDetails = {
+			type: 'pagomovil',
+			senderPhone: phone,
+			bankReference: referencia,
+			amount: pagomovilData?.amountToPay.toString() || ''
+		} as const;
+
+		await sleep(1000);
+
+		let newOrder;
+		try {
+			newOrder = await captureOrder('pagomovil', paymentDetails);
+			console.log('Response Pagomovil', newOrder);
+		} catch (err: any) {
+			console.error('Error Pagomovil', err);
+			payment_error = err.message;
+		} finally {
+			payment_loading = false;
+		}
+
+		// load cart
+		await getCart();
+		// redirect to success
+		goto(`/cart/success?orderId=${newOrder?.documentId}`);
+	};
+
+	const validate = () => {
+		let newErrors: any = {}; // Create a new object
+
+		if (!referencia) {
+			newErrors.referencia = 'La referencia es obligatorio.';
+		}
+		if (!phoneIsValid) {
+			newErrors.phone = 'El telefono es obligatorio.';
+		}
+
+		errors = { ...newErrors };
+
+		//console.log('err', errors);
+		console.log('fields', errors, referencia, phone);
+		return Object.keys(errors).length === 0;
+	};
+
+	/**
+	 * On Mount
+	 */
+
+	onMount(async () => {
+		pagomovilData = await getPagomovilBankInfo();
+		console.log('pago movil', pagomovilData);
+	});
+</script>
+
+<div class="xxx">
+	<div class:opacity-50={payment_loading} class:pointer-events-none={payment_loading}>
+		<!--prettier-ignore-->
+		{#each [
+            { value: pagomovilData?.bank, label: 'Banco' }, 
+            { value: pagomovilData?.phoneNumber, label: 'Numero de telefono' }, 
+            { value: pagomovilData?.identityDocument, label: 'Documento de Identidad' }, 
+            { value: 'Pago de Cursos', label: 'Concepto' },
+        ] as item} 
+            <div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
+                <div class="w-[300px] text-grey-300">{item.label}:</div>
+                <div class="flex items-center text-blue-500 dark:text-white">
+                    {item.value}
+                    <button
+                        onclick={() => copyText(item.value + "")}
+                        class="cursor-pointer"
+                        class:opacity-50={copied}
+                    >
+                        <IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+                    </button>
+                </div>
+            </div>
+        {/each}
+		<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
+			<div class="w-[300px] text-grey-300">Monto a pagar:</div>
+			<div class="flex items-center font-semibold text-green-300 dark:text-green-100">
+				{pagomovilData?.amountToPay} VES
+				<button
+					onclick={() => copyText(pagomovilData?.amountToPay + '')}
+					class="cursor-pointer"
+					class:opacity-50={copied}
+				>
+					<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+				</button>
+			</div>
+		</div>
+
+		<div class=" mt-10 max-w-[450px]">
+			<div class="mb-4">
+				<PhonePicker
+					id="pagomovil-phone"
+					bind:value={phone}
+					bind:isValid={phoneIsValid}
+					error={errors.phone}
+					label="Numero de telefono del Pagador *"
+				></PhonePicker>
+			</div>
+
+			<div class="mb-4">
+				<TextInput
+					bind:value={referencia}
+					id="pagomovil-bank-reference"
+					label="Referencia bancaria *"
+					placeholder="Emitido por su banco"
+					error={errors.referencia}
+					required={true}
+					oninput={validate}
+				></TextInput>
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-12 mt-12 flex items-center justify-center">
+		<div class="ml-4 flex flex-wrap justify-center">
+			<div class="flex items-center justify-center"></div>
+			<Button
+				disabled={payment_loading}
+				onclick={() => {
+					clickPagoMovilPay();
+				}}
+			>
+				{#if payment_loading}
+					<div class=" mr-[5px] flex">
+						<Spinner classes="border-white"></Spinner>
+					</div>
+				{/if}
+				<div>Pagar con Pago Movil</div>
+			</Button>
+			{#if payment_error}
+				<div class="mt-4 text-red-500">{payment_error}</div>
+			{/if}
+		</div>
+	</div>
+</div>

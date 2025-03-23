@@ -201,6 +201,7 @@ export interface Order extends BaseEntity {
 	total: number;
 	orderId: string;
 	paymentMethod: string;
+	paymentStatus: string;
 	totalPrice: number;
 	prices: {
 		price: number;
@@ -209,6 +210,8 @@ export interface Order extends BaseEntity {
 	orderDate: string;
 	orderStatus: string;
 	orderHistory: string;
+	//
+	paymentDetails: PaymentDetails;
 }
 
 /**
@@ -224,3 +227,16 @@ export interface PagoMovilBankInfo extends BaseEntity {
 	dailyExchangeRateVESUpdatedAt: Date;
 	dailyExchangeRateVESUpdatedAtExternal: Date;
 }
+
+interface PaymentDetailsPaypal {
+	type: 'paypal';
+	orderId: string;
+}
+interface PaymentDetailsPagomovil {
+	type: 'pagomovil';
+	bankReference: string;
+	senderPhone: string;
+	amount: string;
+}
+
+export type PaymentDetails = PaymentDetailsPaypal | PaymentDetailsPagomovil;

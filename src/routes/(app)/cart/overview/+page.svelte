@@ -163,7 +163,7 @@
 		class="mb-10 flex h-[50px] items-center justify-center rounded-md bg-grey-50 text-productlg dark:bg-grey-900"
 	>
 		<div class="flex">
-			<div class="mr-2 font-semibold text-blue-500 dark:text-white">Total:</div>
+			<div class="mr-2 font-normal text-grey-300 dark:text-white">Total:</div>
 			<div class="font-semibold text-green-300 dark:text-green-100">
 				$ {totalPrice}
 			</div>

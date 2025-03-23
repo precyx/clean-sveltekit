@@ -2,19 +2,11 @@
 	import { goto } from '$app/navigation';
 	import { cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
-	import {
-		getCoursesByIds,
-		getCart,
-		createOrder,
-		captureOrder,
-		getPagomovilBankInfo
-	} from '$lib/api/api.js';
-	import type { Course, ApiResponse, PagoMovilBankInfo } from '$lib/api/types.ts';
+	import { getCoursesByIds, getCart, createOrder, captureOrder } from '$lib/api/api.js';
+	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import TextInput from '$lib/components/TextInput.svelte';
-	import Button from '$lib/components/Button.svelte';
 
 	import type { CreateOrderData, OnApproveData } from '@paypal/paypal-js';
 	import { user } from '$lib/stores/user';
@@ -22,9 +14,7 @@
 	import PaymentOption from '$lib/components/PaymentOption.svelte';
 	import PayPalButton from '$lib/components/PayPalButton.svelte';
 	import { sleep } from '$lib/utils/Utils';
-	import IconCopy from '$lib/icons/IconCopy.svelte';
-	import CountryPicker from '$lib/components/CountryPicker.svelte';
-	import PhonePicker from '$lib/components/PhonePicker.svelte';
+	import PagomovilView from '$lib/views/Checkout/PagomovilView.svelte';
 
 	let courses: ApiResponse<Course[]> | undefined = $state(undefined);
 
@@ -32,9 +22,6 @@
 	let data_error: string = $state('');
 	let payment_loading: boolean = $state(false);
 	let payment_error: string = $state('');
-
-	let phone = $state('+584241234567');
-	let country = $state('ve');
 
 	/**
 	 * User
@@ -45,10 +32,6 @@
 	$effect(() => {
 		user.subscribe((value) => {
 			currentUser = value;
-
-			if (value && value.user) {
-				phone = value.user.phone;
-			}
 		});
 	});
 
@@ -90,8 +73,6 @@
 		return _paypmentOptions.find((option) => option.name === selectedPaymentOption);
 	};
 
-	let pagomovilData: PagoMovilBankInfo | null = $state(null);
-
 	const _createOrder = async () => {
 		try {
 			payment_loading = true;
@@ -113,8 +94,8 @@
 	};
 	const _onApprove = async (data: OnApproveData) => {
 		try {
-			let orderId = data.orderID;
-			let newOrder = await captureOrder(orderId, selectedPaymentOption);
+			const paymentDetails = { type: 'paypal', orderId: data.orderID } as const; // const for enforced typing
+			let newOrder = await captureOrder(selectedPaymentOption, paymentDetails);
 			await sleep(1000);
 			payment_loading = false;
 			// load cart
@@ -141,33 +122,6 @@
 		}
 	};
 
-	const clickPayPagoMovil = async () => {
-		// validate input fields
-
-		payment_loading = true;
-
-		// agregate data
-		let data = {};
-
-		let response = await captureOrder('', 'pagomovil');
-
-		payment_loading = false;
-	};
-
-	/**
-	 * Other
-	 */
-	let copied = $state(false);
-	const copyText = async (textToCopy: string) => {
-		try {
-			await navigator.clipboard.writeText(textToCopy);
-			copied = true;
-			setTimeout(() => (copied = false), 1000);
-		} catch (err) {
-			console.error('Failed to copy text: ', err);
-		}
-	};
-
 	/**
 	 * Mount
 	 */
@@ -187,13 +141,6 @@
 			// load courses
 			let coursesByIds = await getCoursesByIds(cartItems);
 			courses = coursesByIds;
-
-			// load pagomovil data
-			console.log('selectedPaymentOption', selectedPaymentOption);
-			if (selectedPaymentOption == 'pagomovil') {
-				pagomovilData = await getPagomovilBankInfo();
-				console.log('pago movil', pagomovilData);
-			}
 		} catch (err: any) {
 			data_error = err.message;
 		} finally {
@@ -255,7 +202,7 @@
 		class="mb-10 flex h-[50px] items-center justify-center rounded-md bg-grey-50 text-productlg dark:bg-grey-900"
 	>
 		<div class="flex">
-			<div class="mr-2 font-semibold text-blue-500 dark:text-white">Total:</div>
+			<div class="mr-2 font-normal text-grey-300 dark:text-white">Total:</div>
 			<div class="font-semibold text-green-300 dark:text-green-100">
 				$ {totalPrice}
 			</div>
@@ -314,71 +261,7 @@
 				></PayPalButton>
 			</div>
 		{:else if selectedPaymentOption === 'pagomovil'}
-			{#if pagomovilData}
-				<!--prettier-ignore-->
-				{#each [
-					{ value: pagomovilData.bank, label: 'Banco' }, 
-					{ value: pagomovilData.phoneNumber, label: 'Numero de telefono' }, 
-					{ value: pagomovilData.identityDocument, label: 'Documento de Identidad' }, 
-					{ value: 'Pago de Cursos', label: 'Concepto' },
-				] as item} 
-					<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
-						<div class="w-[300px] text-grey-300">{item.label}:</div>
-						<div class="flex items-center text-blue-500 dark:text-white">
-							{item.value}
-							<button
-								onclick={() => copyText(item.value + "")}
-								class="cursor-pointer"
-								class:opacity-50={copied}
-							>
-								<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
-							</button>
-						</div>
-					</div>
-				{/each}
-				<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
-					<div class="w-[300px] text-grey-300">Monto a pagar:</div>
-					<div class="flex items-center font-semibold text-green-300 dark:text-green-100">
-						{pagomovilData?.amountToPay} VES
-						<button
-							onclick={() => copyText(pagomovilData?.amountToPay + '')}
-							class="cursor-pointer"
-							class:opacity-50={copied}
-						>
-							<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
-						</button>
-					</div>
-				</div>
-
-				<div class=" mt-10 max-w-[450px]">
-					<div class="mb-4">
-						<PhonePicker
-							id="pagomovil-phone"
-							bind:value={phone}
-							label="Numero de telefono del Pagador *"
-						></PhonePicker>
-					</div>
-
-					<div class="mb-4">
-						<TextInput
-							id="pagomovil-bank-reference"
-							label="Referencia bancaria *"
-							placeholder="Emitido por su banco"
-						></TextInput>
-					</div>
-				</div>
-
-				<div class="mb-12 mt-12 flex h-[40px] items-center justify-center">
-					<div class="ml-4">
-						<Button
-							onclick={() => {
-								clickPayPagoMovil();
-							}}
-							>Pagar con Pago Movil
-						</Button>
-					</div>
-				</div>
-			{/if}
+			<PagomovilView></PagomovilView>
 		{:else}
 			<div class="text-center">Seleccione una opcion de pago valido...</div>
 		{/if}

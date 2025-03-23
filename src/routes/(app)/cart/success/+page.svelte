@@ -13,7 +13,6 @@
 	let currentUser = $state($user);
 	let userOrder: Order | null = $state(null);
 	let courseTitles: string = $state('');
-	let isPaid: string = $state('');
 
 	let loading: boolean = $state(true);
 	let error: string = $state('');
@@ -57,14 +56,6 @@
 			let _userOrder = await getOrderByUser(orderId);
 			userOrder = _userOrder;
 			courseTitles = userOrder?.courses.map((item) => item.title).join(',');
-
-			if (userOrder.paymentMethod == 'paypal') {
-				let _isPaid = userOrder.orderHistory
-					.split(',')
-					.map((w) => w.trim())
-					.includes('paypal captured');
-				isPaid = _isPaid ? 'Pagado' : 'Pendiente';
-			}
 			console.log('userOrder', userOrder);
 		} catch (e) {
 			error = 'Orden no encontrada';
@@ -106,8 +97,8 @@
 					{ value: "$ " + userOrder?.totalPrice, label: 'Total' }, 
 					{ value: userOrder?.paymentMethod, label: 'Método de Pago' }, 
 					{ value: userOrder?.orderDate ? formatDate(new Date(userOrder?.orderDate)) : "", label: 'Fecha' },
-					{ value: userOrder?.orderId, label: 'ID de Compra' },
-					{ value: isPaid, label: 'Estado de Pago', special: true },
+					{ value: userOrder?.documentId, label: 'ID de Orden' },
+					{ value: userOrder?.paymentStatus, label: 'Estado de Pago', special: true },
 				] as item}
 				<div class="flex text-sm font-medium sm:mb-1 mb-2 sm:flex-row flex-col">
 					{#if !item.special}
@@ -121,13 +112,17 @@
 								{item.label}:
 							</div>
 							<div class="text-grey-300 dark:text-white text-left w-1/2">
-								{#if item.value == "Pagado"}
+								{#if item.value == "paid"}
 									<div class="inline-flex px-4  bg-green-200 bg-opacity-30 text-green-400 dark:text-green-300 rounded-full">
-										{item.value}
+										Pagado
+									</div>
+								{:else if item.value == "verifying"}
+									<div class="inline-flex px-4 bg-orange-200 bg-opacity-30 text-orange-400 dark:text-orange-300 rounded-full">
+										Verificando
 									</div>
 								{:else}
 									<div class="inline-flex px-4 bg-orange-200 bg-opacity-30 text-orange-400 dark:text-orange-300 rounded-full">
-										{item.value}
+										Inconocido
 									</div>
 								{/if}
 								
