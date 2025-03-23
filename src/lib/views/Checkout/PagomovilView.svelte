@@ -17,6 +17,9 @@
 	let phoneIsValid = $state(false);
 	let referencia = $state('');
 
+	let data_loading = $state(true);
+	let data_error = $state('');
+
 	let payment_loading = $state(false);
 	let payment_error = $state('');
 	let errors: { [key: string]: string } = $state({});
@@ -102,15 +105,29 @@
 	 */
 
 	onMount(async () => {
-		pagomovilData = await getPagomovilBankInfo();
-		console.log('pago movil', pagomovilData);
+		try {
+			pagomovilData = await getPagomovilBankInfo();
+			console.log('pago movil', pagomovilData);
+		} catch (err: any) {
+			data_error = err.message;
+		} finally {
+			data_loading = false;
+		}
 	});
 </script>
 
-<div class="xxx">
-	<div class:opacity-50={payment_loading} class:pointer-events-none={payment_loading}>
-		<!--prettier-ignore-->
-		{#each [
+{#if data_error}
+	<div>
+		<div class="text-blue-500 dark:text-white">Pagomovil View</div>
+		<div class="text-red-500">{data_error}</div>
+	</div>
+{:else if data_loading}
+	<div></div>
+{:else}
+	<div class="xxx">
+		<div class:opacity-50={payment_loading} class:pointer-events-none={payment_loading}>
+			<!--prettier-ignore-->
+			{#each [
             { value: pagomovilData?.bank, label: 'Banco' }, 
             { value: pagomovilData?.phoneNumber, label: 'Numero de telefono' }, 
             { value: pagomovilData?.identityDocument, label: 'Documento de Identidad' }, 
@@ -130,64 +147,65 @@
                 </div>
             </div>
         {/each}
-		<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
-			<div class="w-[300px] text-grey-300">Monto a pagar:</div>
-			<div class="flex items-center font-semibold text-green-300 dark:text-green-100">
-				{pagomovilData?.amountToPay} VES
-				<button
-					onclick={() => copyText(pagomovilData?.amountToPay + '')}
-					class="cursor-pointer"
-					class:opacity-50={copied}
+			<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
+				<div class="w-[300px] text-grey-300">Monto a pagar:</div>
+				<div class="flex items-center font-semibold text-green-300 dark:text-green-100">
+					{pagomovilData?.amountToPay} VES
+					<button
+						onclick={() => copyText(pagomovilData?.amountToPay + '')}
+						class="cursor-pointer"
+						class:opacity-50={copied}
+					>
+						<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
+					</button>
+				</div>
+			</div>
+
+			<div class=" mt-10 max-w-[450px]">
+				<div class="mb-4">
+					<PhonePicker
+						id="pagomovil-phone"
+						bind:value={phone}
+						bind:isValid={phoneIsValid}
+						error={errors.phone}
+						label="Numero de telefono del Pagador *"
+					></PhonePicker>
+				</div>
+
+				<div class="mb-4">
+					<TextInput
+						bind:value={referencia}
+						id="pagomovil-bank-reference"
+						label="Referencia bancaria *"
+						placeholder="Emitido por su banco"
+						error={errors.referencia}
+						required={true}
+						oninput={validate}
+					></TextInput>
+				</div>
+			</div>
+		</div>
+
+		<div class="mb-12 mt-12 flex items-center justify-center">
+			<div class="ml-4 flex flex-wrap justify-center">
+				<div class="flex items-center justify-center"></div>
+				<Button
+					disabled={payment_loading}
+					onclick={() => {
+						clickPagoMovilPay();
+					}}
 				>
-					<IconCopy classes="w-[16px] ml-3 text-blue-400"></IconCopy>
-				</button>
-			</div>
-		</div>
-
-		<div class=" mt-10 max-w-[450px]">
-			<div class="mb-4">
-				<PhonePicker
-					id="pagomovil-phone"
-					bind:value={phone}
-					bind:isValid={phoneIsValid}
-					error={errors.phone}
-					label="Numero de telefono del Pagador *"
-				></PhonePicker>
-			</div>
-
-			<div class="mb-4">
-				<TextInput
-					bind:value={referencia}
-					id="pagomovil-bank-reference"
-					label="Referencia bancaria *"
-					placeholder="Emitido por su banco"
-					error={errors.referencia}
-					required={true}
-					oninput={validate}
-				></TextInput>
-			</div>
-		</div>
-	</div>
-
-	<div class="mb-12 mt-12 flex items-center justify-center">
-		<div class="ml-4 flex flex-wrap justify-center">
-			<div class="flex items-center justify-center"></div>
-			<Button
-				disabled={payment_loading}
-				onclick={() => {
-					clickPagoMovilPay();
-				}}
-			>
-				{#if payment_loading}
-					<div class=" mr-[5px] flex">
-						<Spinner classes="border-white"></Spinner>
-					</div>
+					{#if payment_loading}
+						<div class=" mr-[5px] flex">
+							<Spinner classes="border-white"></Spinner>
+						</div>
+					{/if}
+					<div>Pagar con Pago Movil</div>
+				</Button>
+				{#if payment_error}
+					<div class="mt-4 text-red-500">{payment_error}</div>
 				{/if}
-				<div>Pagar con Pago Movil</div>
-			</Button>
-			{#if payment_error}
-				<div class="mt-4 text-red-500">{payment_error}</div>
-			{/if}
+			</div>
 		</div>
 	</div>
-</div>
+{/if}

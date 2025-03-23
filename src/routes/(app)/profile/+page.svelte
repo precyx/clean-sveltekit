@@ -149,14 +149,20 @@
 			{#each orders as order}
 				<div class="mb-12">
 					<div class="mb-4 text-productbase font-bold text-blue-400 dark:text-blue-100 lg:text-lg">
-						Pedido <span class="font-normal italic text-blue-200">{order.documentId}</span> de {formatDate(
-							new Date(order.orderDate)
-						)}
+						{order?.courses.length} Articulos:
+						<span class="hidden font-normal italic text-blue-100 dark:text-grey-700"
+							>{order.documentId}</span
+						>
+						de {formatDate(new Date(order.orderDate))}
 					</div>
 					<div class="mb-2 flex border-b border-blue-100 pb-2 dark:border-grey-900">
 						<div class="">
 							<span class="text-grey-300 dark:text-grey-100">Forma de Pago: </span>
 							<span class="font-medium text-blue-400 dark:text-white">{order.paymentMethod}</span>
+						</div>
+						<div class="ml-4">
+							<span class="text-grey-300 dark:text-grey-100">ID de Pago: </span>
+							<span class="font-medium text-blue-400 dark:text-white">{order.documentId}</span>
 						</div>
 					</div>
 					{#each order.courses as course}
@@ -177,8 +183,11 @@
 								<p class="hidden text-right md:block"></p>
 							</div>
 							<div class="text-right">
-								<p class="mt-1 text-base font-medium text-green-300 dark:text-green-100">
-									$ {course.price}
+								<p
+									class="mt-1 text-base font-medium text-green-300 dark:text-green-100"
+									data-current-price={course.price}
+								>
+									$ {order.prices.find((p) => p.documentId === course.documentId)?.price}
 								</p>
 							</div>
 						</div>

@@ -203,10 +203,12 @@ export interface Order extends BaseEntity {
 	paymentMethod: string;
 	paymentStatus: string;
 	totalPrice: number;
-	prices: {
-		price: number;
-		documentId: string;
-	};
+	prices: [
+		{
+			price: number;
+			documentId: string;
+		}
+	];
 	orderDate: string;
 	orderStatus: string;
 	orderHistory: string;

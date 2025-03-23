@@ -105,7 +105,7 @@
 						<div class="text-left text-grey-500 dark:text-grey-600 w-1/2">
 							{item.label}:
 						</div>
-						<div class="text-grey-300 dark:text-white text-left w-1/2">{item.value}</div>
+						<div class="text-grey-300 dark:text-white text-left sm:w-1/2 w-auto break-words overflow-wrap break-word whitespace-normal">{item.value}</div>
 					{:else}
 						{#if item.label == "Estado de Pago"}
 							<div class="text-left text-grey-500 dark:text-grey-600 w-1/2">
@@ -113,7 +113,7 @@
 							</div>
 							<div class="text-grey-300 dark:text-white text-left w-1/2">
 								{#if item.value == "paid"}
-									<div class="inline-flex px-4  bg-green-200 bg-opacity-30 text-green-400 dark:text-green-300 rounded-full">
+									<div class="inline-flex px-4  bg-green-200 bg-opacity-30 text-green-300 dark:text-green-200 rounded-full">
 										Pagado
 									</div>
 								{:else if item.value == "verifying"}
