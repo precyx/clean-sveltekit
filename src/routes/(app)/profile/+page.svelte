@@ -43,7 +43,11 @@
 
 			// get orders
 			ordersLoading = true;
-			orders = await getOrdersByUser();
+			let _orders = await getOrdersByUser();
+			orders = _orders.sort(
+				(a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+			);
+
 			ordersLoading = false;
 
 			if (orders.length == 0) {

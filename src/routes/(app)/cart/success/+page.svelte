@@ -72,8 +72,11 @@
 		<div></div>
 	{:else}
 		<div class="mb-6 mt-4 flex justify-center">
-			<div class="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-green-200">
-				<IconCheckBig classes="w-[100px] h-[100px] text-white"></IconCheckBig>
+			<div
+				class="flex h-[100px] w-[100px] items-center justify-center rounded-full bg-green-200 sm:h-[150px] sm:w-[150px]"
+			>
+				<IconCheckBig classes="w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] text-white"
+				></IconCheckBig>
 			</div>
 		</div>
 		<div class="w-full text-center">
@@ -89,7 +92,7 @@
 			</h2>
 
 			<div
-				class="mx-auto mt-4 max-w-[350px] rounded-lg bg-white p-5 text-base shadow-lg dark:bg-grey-1000"
+				class="mx-auto mt-4 max-w-[400px] rounded-lg bg-white p-5 text-base shadow-lg dark:bg-grey-1000"
 			>
 				<!-- prettier-ignore -->
 				{#each [
@@ -100,7 +103,7 @@
 					{ value: userOrder?.documentId, label: 'ID de Orden' },
 					{ value: userOrder?.paymentStatus, label: 'Estado de Pago', special: true },
 				] as item}
-				<div class="flex text-sm font-medium sm:mb-1 mb-2 sm:flex-row flex-col">
+				<div class="flex text-base font-medium sm:mb-1 mb-4 sm:flex-row flex-col">
 					{#if !item.special}
 						<div class="text-left text-grey-500 dark:text-grey-600 w-1/2">
 							{item.label}:
