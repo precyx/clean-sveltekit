@@ -239,9 +239,9 @@
 							class="flex transform items-center border-t border-blue-400/20 p-4 pb-2 pl-5 active:opacity-60"
 						>
 							{#if $theme === 'dark'}
-								<IconSun classes={`h-6 w-6 text-white `}></IconSun>
+								<IconSun classes={`h-6 w-6 text-white pointer-events-none `}></IconSun>
 							{:else}
-								<IconMoon classes={`h-6 w-6 text-blue-400 `}></IconMoon>
+								<IconMoon classes={`h-6 w-6 text-blue-400 pointer-events-none`}></IconMoon>
 							{/if}
 							<span class="ml-2">{$theme === 'dark' ? 'Claro' : 'Oscurro'}</span>
 						</button>
