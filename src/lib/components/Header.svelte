@@ -226,7 +226,7 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<nav class="flex w-full flex-col">
 						{#if !currentUser}
-							<NavLink href={'/login'}>Iniciar sesión</NavLink>
+							<a href={'/login'} class="px-4 py-2">Iniciar sesión</a>
 						{:else}
 							<a class="px-4 py-2" href={'/my-courses'}>Mis Cursos</a>
 							<a class="px-4 py-2" href={'/profile'}>Perfil</a>
@@ -239,13 +239,9 @@
 							class="ml-[10px] flex transform items-center p-2 active:opacity-60"
 						>
 							{#if $theme === 'dark'}
-								<IconSun
-									classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
-								></IconSun>
+								<IconSun classes={`h-6 w-6 text-white `}></IconSun>
 							{:else}
-								<IconMoon
-									classes={`h-6 w-6 dark:text-gray-50 ${IS_PERSONAL_PAGE ? ' text-grey-0' : ' text-blue-500'}`}
-								></IconMoon>
+								<IconMoon classes={`h-6 w-6 text-blue-400 `}></IconMoon>
 							{/if}
 							<span class="ml-2">{$theme === 'dark' ? 'Claro' : 'Oscurro'}</span>
 						</button>
