@@ -140,22 +140,36 @@
                         class="cursor-pointer"
                         class:opacity-50={copied}
                     >
-                        <IconCopy classes="w-[18px] ml-3 text-blue-400"></IconCopy>
+                        <IconCopy classes="w-[20px] ml-3 text-blue-400"></IconCopy>
                     </button>
                 </div>
             </div>
         {/each}
+			<!--
+			Monto a pagar
+			-->
 			<div class="mb-4 flex flex-col sm:mb-1 sm:flex-row">
 				<div class="w-[300px] text-grey-300">Monto a pagar:</div>
-				<div class="flex items-center font-semibold text-green-300 dark:text-green-100">
-					{pagomovilData?.amountToPay} VES
-					<button
-						onclick={() => copyText(pagomovilData?.amountToPay + '')}
-						class="cursor-pointer"
-						class:opacity-50={copied}
-					>
-						<IconCopy classes="w-[18px] ml-3 text-blue-400"></IconCopy>
-					</button>
+				<div
+					class="flex-start items-left flex flex-col font-semibold text-green-300 dark:text-green-100"
+				>
+					<div>
+						{pagomovilData?.amountToPay} VES
+						<button
+							onclick={() => copyText(pagomovilData?.amountToPay + '')}
+							class="cursor-pointer"
+							class:opacity-50={copied}
+						>
+							<IconCopy classes="w-[20px] ml-3 text-blue-400"></IconCopy>
+						</button>
+					</div>
+					<div class="mt-2 inline-flex flex-row">
+						<div
+							class="rounded-full bg-orange-200 bg-opacity-30 px-4 font-normal text-orange-400 dark:text-orange-300"
+						>
+							Transferir Monto exacto!
+						</div>
+					</div>
 				</div>
 			</div>
 

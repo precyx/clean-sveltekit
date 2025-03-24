@@ -24,7 +24,7 @@
 </script>
 
 <button
-	class="group mb-2 flex w-full cursor-pointer items-center rounded-md border-2 border-blue-400 border-opacity-0 bg-grey-50 p-3 dark:border-blue-300 dark:bg-grey-900 sm:p-6"
+	class="group mb-2 flex h-[60px] w-full cursor-pointer items-center rounded-md border-2 border-blue-400 border-opacity-0 bg-grey-50 p-3 dark:border-blue-300 dark:bg-grey-900 sm:h-[80px] sm:p-4"
 	class:border-opacity-100={active}
 	class:border-opacity-0={!active}
 	class:dark:border-opacity-100={active}

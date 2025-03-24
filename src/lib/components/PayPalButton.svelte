@@ -51,4 +51,4 @@
 	}
 </script>
 
-<div id="paypal-button"></div>
+<div id="paypal-button" class="w-full"></div>

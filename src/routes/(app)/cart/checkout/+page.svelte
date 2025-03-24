@@ -252,7 +252,7 @@
 
 	<div class="" class:pointer-events-none={payment_loading} class:opacity-50={payment_loading}>
 		{#if selectedPaymentOption === 'paypal'}
-			<div class="mx-auto flex w-[300px] items-center justify-center">
+			<div class="mx-auto flex max-w-[300px] items-center justify-center">
 				<PayPalButton
 					createOrder={_createOrder}
 					onApprove={_onApprove}
