@@ -47,7 +47,7 @@
 
 		// set initial country
 		if (value) {
-			selectedCountry = _countries.find((country) => country.code === value) || null;
+			selectedCountry = _countries.find((country) => country.code === value.toLowerCase()) || null;
 		}
 	});
 

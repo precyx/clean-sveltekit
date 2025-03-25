@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { register, getCart } from '$lib/api/api';
 	import { goto } from '$app/navigation';
 	import { sleep } from '$lib/utils/Utils';
@@ -9,6 +10,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import CountryPicker from '$lib/components/CountryPicker.svelte';
 	import PhonePicker from './PhonePicker.svelte';
+	import { getGeoInfo } from '$lib/api/external';
 
 	let username = '';
 	let email = '';
@@ -22,6 +24,8 @@
 	let submitted = false;
 
 	let phoneIsValid = false;
+
+	let geoDataLoaded = false;
 
 	const removeEmptyStrings = <T extends Record<string, any>>(obj: T): T => {
 		for (const key in obj) {
@@ -99,86 +103,105 @@
 		password;
 		validate();
 	}
+
+	/**
+	 * Mount
+	 */
+	onMount(async () => {
+		try {
+			const geoInfo = await getGeoInfo();
+			if (geoInfo) {
+				country = geoInfo.country;
+				phone = geoInfo.phone;
+			}
+		} catch (err: any) {
+			console.log('Geo Data Error', err);
+		} finally {
+			geoDataLoaded = true;
+		}
+	});
 </script>
 
-<form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
-	<h2 class="mb-2 mb-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
-		Registrarse
-	</h2>
+{#if geoDataLoaded}
+	<form on:submit|preventDefault={handleRegister} novalidate class="w-full max-w-md rounded-lg">
+		<h2 class="mb-2 mb-4 text-lg font-extrabold text-blue-500 dark:text-grey-0 lg:text-xl">
+			Registrarse
+		</h2>
 
-	<div class="mb-4">
-		<TextInput
-			id="username"
-			label="Nombre *"
-			placeholder="Nombre *"
-			type="text"
-			bind:value={username}
-			required={true}
-			error={errors.username}
-		/>
-	</div>
+		<div class="mb-4">
+			<TextInput
+				id="username"
+				label="Nombre *"
+				placeholder="Nombre *"
+				type="text"
+				bind:value={username}
+				required={true}
+				error={errors.username}
+			/>
+		</div>
 
-	<div class="mb-4">
-		<TextInput
-			id="email"
-			label="Correo electrónico *"
-			placeholder="Correo electrónico *"
-			type="email"
-			bind:value={email}
-			required={true}
-			error={errors.email}
-		/>
-	</div>
+		<div class="mb-4">
+			<TextInput
+				id="email"
+				label="Correo electrónico *"
+				placeholder="Correo electrónico *"
+				type="email"
+				bind:value={email}
+				required={true}
+				error={errors.email}
+			/>
+		</div>
 
-	<div class="mb-4">
-		<TextInput
-			id="password"
-			label="Contraseña *"
-			placeholder="Contraseña *"
-			type="password"
-			bind:value={password}
-			required={true}
-			error={errors.password}
-		/>
-	</div>
+		<div class="mb-4">
+			<TextInput
+				id="password"
+				label="Contraseña *"
+				placeholder="Contraseña *"
+				type="password"
+				bind:value={password}
+				required={true}
+				error={errors.password}
+			/>
+		</div>
 
-	<div class="mb-4">
-		<CountryPicker
-			error={errors.country}
-			required={true}
-			id="country"
-			bind:value={country}
-			label="Pais *"
-			searchText="Buscar Pais"
-			selectText="Seleccionar Pais"
-		></CountryPicker>
-	</div>
+		<div class="mb-4">
+			<CountryPicker
+				error={errors.country}
+				required={true}
+				id="country"
+				bind:value={country}
+				label="Pais *"
+				searchText="Buscar Pais"
+				selectText="Seleccionar Pais"
+			></CountryPicker>
+		</div>
 
-	<div class="mb-4">
-		<PhonePicker
-			error={errors.phone}
-			required={true}
-			label="Telefono *"
-			id="phone"
-			bind:value={phone}
-			bind:isValid={phoneIsValid}
-		/>
-	</div>
-	<div class="mt-6">
-		{#if loading}
-			<p class="mb-4 text-sm text-red-500">{error}</p>
-		{/if}
-
-		{#if error}
-			<p class="mb-4 text-sm text-red-500">{error}</p>
-		{/if}
-
-		<Button type="submit" disabled={loading}>
+		<div class="mb-4">
+			<PhonePicker
+				error={errors.phone}
+				required={true}
+				label="Telefono *"
+				id="phone"
+				bind:value={phone}
+				bind:isValid={phoneIsValid}
+			/>
+		</div>
+		<div class="mt-6">
 			{#if loading}
-				<Spinner classes="border-white" /> Registrándose...
-			{:else}
-				Registrarse
+				<p class="mb-4 text-sm text-red-500">{error}</p>
 			{/if}
-		</Button>
-	</div>
-</form>
+
+			{#if error}
+				<p class="mb-4 text-sm text-red-500">{error}</p>
+			{/if}
+
+			<Button type="submit" disabled={loading}>
+				{#if loading}
+					<Spinner classes="border-white" /> Registrándose...
+				{:else}
+					Registrarse
+				{/if}
+			</Button>
+		</div>
+	</form>
+{/if}

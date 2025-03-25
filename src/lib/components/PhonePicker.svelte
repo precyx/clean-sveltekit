@@ -70,7 +70,10 @@
 			let initialPhone = getInitialPhoneNumber(value.replace('+', ''));
 			selectedCountry = initialPhone?.country || null;
 			phoneText = initialPhone?.phone || '';
-			validate();
+
+			if (phoneText) {
+				validate();
+			}
 		}
 	});
 
