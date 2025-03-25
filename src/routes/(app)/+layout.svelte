@@ -27,9 +27,7 @@
 </script>
 
 <Header
-	customClasses={' ' +
-		' dark:bg-gradient-to-t dark:from-[rgba(38,40,43,0)] dark:from-0% dark:via-30% dark:to-100% dark:via-[rgba(38,40,43,0.5)] dark:to-[rgba(38,40,43,1)] ' +
-		' from-0% via-60% to-100% bg-gradient-to-b from-[rgba(240,252,255,1)] via-[rgba(255,255,255,0.75)] to-[rgba(255,255,255,0)]'}
+	customClasses={' dark:bg-grey-1100 dark:bg-opacity-90 bg-opacity-75 dark:backdrop-blur-lg backdrop-blur-lg bg-white '}
 />
 <main class="mx-auto mt-0 w-full max-w-5xl flex-1 flex-grow px-5 lg:mt-12">
 	<slot />

@@ -6,9 +6,7 @@
 
 <div class="app font-raleway dark:bg-grey-1100">
 	<Header
-		customClasses={' ' +
-			' dark:bg-gradient-to-t dark:from-[rgba(10,71,96,0)] dark:from-0% dark:via-30% dark:to-100% dark:via-[rgba(10,71,96,0.5)] dark:to-[rgba(10,71,96,1)] ' +
-			' from-0% via-60% to-100% bg-gradient-to-b from-[rgba(240,252,255,1)] via-[rgba(255,255,255,0.75)] to-[rgba(255,255,255,0)]'}
+		customClasses={' dark:bg-blue-600 dark:bg-opacity-75 bg-opacity-75 dark:backdrop-blur-lg backdrop-blur-lg bg-white'}
 	/>
 
 	<div class=" absolute left-0 top-0 h-[100px] w-full bg-white dark:bg-blue-600"></div>
