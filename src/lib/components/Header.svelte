@@ -110,7 +110,7 @@
 				'bg-gradient-to-r from-[#8FC04B] to-[#2695C7] dark:from-[#384520] dark:to-[#0C3B56]';
 		} else {
 			IS_PERSONAL_PAGE = false;
-			headerClasses = '';
+			headerClasses = customClasses;
 		}
 	});
 
@@ -138,7 +138,7 @@
 
 <div class="h-[70px] w-full"></div>
 <header
-	class={`fixed top-0 z-50 w-full text-grey-300 dark:text-grey-100 ${headerClasses} ${customClasses} h-[70px]`}
+	class={`fixed top-0 z-50 w-full text-grey-300 dark:text-grey-100 ${headerClasses} h-[70px]`}
 >
 	<!-- Header Gradient-->
 	<!--
@@ -173,9 +173,10 @@
 					}}
 					class=" absolute left-[-8px] top-[62px] z-10 flex w-screen shadow-lg"
 				>
+					<!-- prettier-ignore -->
 					<nav
-						class="flex w-full touch-manipulation select-none flex-col bg-white py-2 text-blue-500 dark:bg-grey-1100 dark:text-white"
-					>
+						id="app-mobile-nav"
+						class="flex w-full touch-manipulation select-none flex-col bg-white py-2 text-blue-500 dark:bg-grey-1100 dark:text-white ">
 						<a class="w-full px-4 py-2 active:opacity-60" href={'/landing'}>Home</a>
 						<a class="px-4 py-2 active:opacity-60" href={'/courses'}>Cursos</a>
 						<a class="px-4 py-2 active:opacity-60" href={'/products'}>Productos</a>
