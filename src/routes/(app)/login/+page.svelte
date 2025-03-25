@@ -11,7 +11,7 @@
 </script>
 
 <div class="mx-auto flex max-w-[450px] flex-col items-center">
-	<div class="border-color-gray-200 mb-10 w-full rounded-xl p-0 sm:border sm:p-10">
+	<div class="mb-10 w-full rounded-xl border-grey-200 p-0 dark:border-grey-900 sm:border sm:p-10">
 		{#if loginMode == 'login'}
 			<Login></Login>
 		{:else}
@@ -27,7 +27,7 @@
 	</div>
 
 	<div
-		class="border-color-gray-200 mb-5 w-full rounded-none border-t p-0 pt-10 sm:rounded-xl sm:border sm:p-10"
+		class="mb-5 w-full rounded-none border-t border-grey-200 p-0 pt-10 dark:border-grey-900 sm:rounded-xl sm:border sm:p-10"
 	>
 		{#if loginMode == 'register'}
 			<Register></Register>
