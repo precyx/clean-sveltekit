@@ -107,7 +107,7 @@
 		if (isPersonalPage(page.url.pathname)) {
 			IS_PERSONAL_PAGE = true;
 			headerClasses =
-				'bg-gradient-to-r from-[#8FC04B] to-[#2695C7] dark:from-[#384520] dark:to-[#0C3B56]';
+				'bg-gradient-to-r from-[rgba(143,192,75,1)] to-[rgba(38,149,199,1)] dark:from-[rgba(56,69,32,1)] dark:to-[rgba(12,59,86,1)]';
 		} else {
 			IS_PERSONAL_PAGE = false;
 			headerClasses = customClasses;
