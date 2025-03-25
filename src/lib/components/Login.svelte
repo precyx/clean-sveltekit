@@ -102,7 +102,7 @@
 		<p class="mb-4 text-sm text-red-500">{error}</p>
 	{/if}
 
-	<Button type="submit" disabled={loading}>
+	<Button type="submit" disabled={loading} classes="w-full text-center items-center justify-center">
 		{#if loading}
 			<Spinner classes="border-white" /> Iniciando sesión...
 		{:else}
