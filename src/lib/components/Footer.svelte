@@ -2,6 +2,9 @@
 	import { page } from '$app/state';
 	import { theme } from '$lib/stores/theme';
 	import { isPersonalPage } from '$lib/utils/Utils';
+	import NavLink from '$lib/components/NavLink.svelte';
+	import IconInstagram from '$lib/icons/IconInstagram.svelte';
+	import IconTiktok from '$lib/icons/IconTiktok.svelte';
 
 	let LOGO = '/img/logo-color.png';
 	let LOGO_WHITE = '/img/logo-white.png';
@@ -43,8 +46,13 @@
 		</div>
 
 		<!-- Right Column -->
-		<div class="text-center">
-			<p></p>
+		<div class="flex justify-end pr-10 text-right">
+			<a href="#">
+				<IconInstagram classes="w-[28px] mr-6"></IconInstagram>
+			</a>
+			<a href="#">
+				<IconTiktok classes="w-[28px]"></IconTiktok>
+			</a>
 		</div>
 	</div>
 </div>
