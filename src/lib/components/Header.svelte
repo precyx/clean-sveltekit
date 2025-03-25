@@ -42,17 +42,21 @@
 		const loginToken = localStorage.getItem('loginToken');
 		if (loginToken) {
 			// load cart
-			await getCart();
+			if (!$cart) {
+				await getCart();
+			}
 
 			try {
 				// get user
-				let userData = await getUser();
-				userData = {
-					...userData
-				};
-				// set user
-				$user.user = userData;
-				$user.status = 'set';
+				if ($user.status == '') {
+					let userData = await getUser();
+					userData = {
+						...userData
+					};
+					// set user
+					$user.user = userData;
+					$user.status = 'set';
+				}
 			} catch (err) {
 				console.error('Failed to fetch user:', err);
 				localStorage.removeItem('loginToken');
