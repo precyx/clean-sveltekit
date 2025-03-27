@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getPagomovilBankInfo, captureOrder, getCart } from '$lib/api/api.js';
+	import { getPagomovilBankInfo, captureOrderPagomovil, getCart } from '$lib/api/api.js';
 	import type { PagoMovilBankInfo } from '$lib/api/types.ts';
 	import { goto } from '$app/navigation';
 
@@ -60,17 +60,18 @@
 		const paymentDetails = {
 			type: 'pagomovil',
 			senderPhone: phone,
-			bankReference: referencia,
-			amount: pagomovilData?.amountToPay.toString() || ''
+			bankReference: referencia
 		} as const;
 
 		let newOrder;
 		try {
-			newOrder = await captureOrder('pagomovil', paymentDetails);
+			newOrder = await captureOrderPagomovil(paymentDetails);
 			console.log('Response Pagomovil', newOrder);
 		} catch (err: any) {
+			payment_loading = false;
 			console.error('Error Pagomovil', err);
 			payment_error = err.message;
+			return;
 		}
 
 		// load cart
@@ -153,10 +154,10 @@
 				<div
 					class="flex-start items-left flex flex-col font-semibold text-green-300 dark:text-green-100"
 				>
-					<div>
-						{pagomovilData?.amountToPay} VES
+					<div class="flex items-center">
+						{pagomovilData?.amount} VES
 						<button
-							onclick={() => copyText(pagomovilData?.amountToPay + '')}
+							onclick={() => copyText(pagomovilData?.amount + '')}
 							class="cursor-pointer"
 							class:opacity-50={copied}
 						>
@@ -199,8 +200,7 @@
 		</div>
 
 		<div class="mb-12 mt-12 flex items-center justify-center">
-			<div class="ml-4 flex flex-wrap justify-center">
-				<div class="flex items-center justify-center"></div>
+			<div class="ml-4 flex flex-col items-center justify-center">
 				<Button
 					disabled={payment_loading}
 					onclick={() => {
@@ -214,6 +214,7 @@
 					{/if}
 					<div>Pagar con Pago Movil</div>
 				</Button>
+
 				{#if payment_error}
 					<div class="mt-4 text-red-500">{payment_error}</div>
 				{/if}

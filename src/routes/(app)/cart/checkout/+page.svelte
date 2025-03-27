@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { cart } from '$lib/stores/cart.js';
 	import { onMount } from 'svelte';
-	import { getCoursesByIds, getCart, createOrder, captureOrder } from '$lib/api/api.js';
+	import { getCoursesByIds, getCart, createOrderPaypal, captureOrderPaypal } from '$lib/api/api.js';
 	import type { Course, ApiResponse } from '$lib/api/types.ts';
 	import ImageDisplay from '$lib/components/ImageDisplay.svelte';
 	import ArrowIcon from '$lib/icons/IconArrow.svelte';
@@ -82,7 +82,7 @@
 			if (cartIds.length === 0) return;
 
 			// Step 1: Create Order
-			const orderResponse = await createOrder(cartIds);
+			const orderResponse = await createOrderPaypal(cartIds);
 			const orderId = orderResponse.id;
 
 			return orderId;
@@ -95,7 +95,7 @@
 	const _onApprove = async (data: OnApproveData) => {
 		try {
 			const paymentDetails = { type: 'paypal', orderId: data.orderID } as const; // const for enforced typing
-			let newOrder = await captureOrder(selectedPaymentOption, paymentDetails);
+			let newOrder = await captureOrderPaypal(paymentDetails);
 			await sleep(1000);
 			payment_loading = false;
 			// load cart

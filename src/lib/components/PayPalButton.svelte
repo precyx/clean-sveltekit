@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	//import { createOrder, captureOrder } from '$lib/api/api';
 
 	import { paypal } from '$lib/stores/paypal';
 	import type { PayPalNamespace, CreateOrderData, OnApproveData } from '@paypal/paypal-js';

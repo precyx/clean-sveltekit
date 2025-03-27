@@ -292,18 +292,20 @@ export const getVideo = async (id: string): Promise<ApiResponse<Video>> => {
  * Payment
  */
 
-export const createOrder = async (ids: string[]): Promise<PayPalOrder> => {
-	return await AUTH_ApiRequest('POST', '/payment/create-order', {
+export const createOrderPaypal = async (ids: string[]): Promise<PayPalOrder> => {
+	return await AUTH_ApiRequest('POST', '/payment/create-order-paypal', {
 		ids: ids
 	});
 };
 
-export const captureOrder = async (
-	paymentMethod: string,
-	paymentDetails: PaymentDetails
-): Promise<Order> => {
-	return await AUTH_ApiRequest('POST', '/payment/capture-order', {
-		paymentMethod,
+export const captureOrderPaypal = async (paymentDetails: PaymentDetails): Promise<Order> => {
+	return await AUTH_ApiRequest('POST', '/payment/capture-order-paypal', {
+		paymentDetails
+	});
+};
+
+export const captureOrderPagomovil = async (paymentDetails: PaymentDetails): Promise<Order> => {
+	return await AUTH_ApiRequest('POST', '/payment/capture-order-pagomovil', {
 		paymentDetails
 	});
 };

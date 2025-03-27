@@ -221,7 +221,7 @@ export interface Order extends BaseEntity {
  */
 
 export interface PagoMovilBankInfo extends BaseEntity {
-	amountToPay: number;
+	amount: number;
 	bank: string;
 	phoneNumber: string;
 	identityDocument: string;
@@ -238,7 +238,7 @@ interface PaymentDetailsPagomovil {
 	type: 'pagomovil';
 	bankReference: string;
 	senderPhone: string;
-	amount: string;
+	amount?: number;
 }
 
 export type PaymentDetails = PaymentDetailsPaypal | PaymentDetailsPagomovil;
