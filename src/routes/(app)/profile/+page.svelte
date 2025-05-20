@@ -35,11 +35,15 @@
 		try {
 			// get user
 			currentUser = await getUser();
+		} catch {
+			goto('/login');
+		}
 
+		try {
 			let response = await fetch('/data/country.json');
 			let _countries: Country[] = await response.json();
 
-			country = _countries.find((c) => c.code === currentUser?.country) || null;
+			country = _countries.find((c) => c.code === currentUser?.country.toLowerCase()) || null;
 
 			// get orders
 			ordersLoading = true;
